@@ -29,15 +29,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- LÓGICA DO CARROSSEL DE PRODUÇÕES ---
     const productions = [
-        { id: "era-uma-vez-em-cordel", title: "Era Uma Vez em Cordel", type: "Curta", poster: "cartaz/cartaz-era-uma-vez-em-cordel.jpg", url: "cordel.html" },
+       
         { id: "tracos-de-uma-nova-pagina", title: "Traços de Uma Nova Página", type: "Longa", poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&q=80", url: "Traçospágina.html" },
         { id: "familia-fergus", title: "Família Fergus", type: "Série", poster: "https://images.unsplash.com/photo-1574267432644-f1d8bc3bd213?w=800&q=80", url: "familia.html" },
-        { id: "cyberfunk", title: "CyberFunk", type: "Curta", poster: "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=800&q=80", url: "Cyberfunk.html" },
         { id: "era-uma-vez-serie", title: "Era Uma Vez - Série", type: "Série", poster: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80", url: "eraumavez.html" },
         { id: "erva-daninha", title: "Erva Daninha", type: "Curta", poster: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&q=80", url: "Erva daninha.html" },
-        { id: "lembrancas-de-uma-caminhada", title: "Lembranças de Uma Caminhada", type: "Curta", poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&q=80", url: "lembrancas.html" },
         { id: "interludio", title: "Interlúdio", type: "Curta", poster: "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=800&q=80", url: "Interlúdio.html" },
-    ];
+  {
+    id: "era-uma-vez-em-cordel",
+    title: "Era Uma Vez em Cordel",
+    type: "Curta",
+    poster: "cartaz-era-uma-vez-em-cordel.jpg",
+    url: "cordel.html"
+  },
+  {
+    id: "cyberfunk",
+    title: "CyberFunk",
+    type: "Curta",
+    poster: "Cartaz-Cyberfunk.png",
+    url: "cyberfunk.html"
+  },
+  {
+    id: "lembrancas-de-uma-caminhada",
+    title: "Lembranças de Uma Caminhada",
+    type: "Curta",
+    poster: "LEMBRANÇAS-DE-UMA-CAMINHADA-2.png",
+    url: "lembrancas.html"
+  }
+];
+
 
     const carouselTrack = document.getElementById('carousel-track');
     const dotsContainer = document.getElementById('carousel-dots');
