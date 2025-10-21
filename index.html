@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alomnesia - Produção Cinematográfica</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar" id="main-nav">
+        <nav class="navbar-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line></svg>
+                </div>
+                <span class="logo-text">Alomnesia</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Início</a>
+                <a href="producoes.html" class="nav-link">Produções</a>
+                <a href="equipe.html" class="nav-link">Equipe</a> <a href="sobre alomnesia.html" class="nav-link">Sobre a Alomnésia</a>
+            </div>
+
+            <button class="menu-toggle" id="menu-toggle">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon-close"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </nav>
+
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html" class="mobile-link active">Início</a>
+            <a href="producoes.html" class="mobile-link">Produções</a>
+            <a href="equipe.html" class="mobile-link">Equipe</a>
+            <a href="sobre alomnesia.html" class="mobile-link">Sobre a Alomnésia</a>
+        </div>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="hero-background">
+                <img src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=1920&q=80" alt="Cadeiras de cinema">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1>Alomnesia</h1>
+                <div class="hero-separator">
+                    <div class="line"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.25 4.5h-16.5A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5z"></path><path d="m11.25 15 3-3-3-3"></path><path d="m6.75 15 3-3-3-3"></path></svg>
+                    <div class="line"></div>
+                </div>
+                <p>Produtora audiovisual especializada em contar histórias que emocionam, inspiram e transformam através do cinema</p>
+                <div class="hero-buttons">
+                 <a href="sobre alomnesia.html" class="hero-btn">Conheça a Alomnésia →</a>
+               </div>
+            </div>
+        
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-container">
+                <h2>Sobre a Alomnesia</h2>
+                <div class="title-underline"></div>
+                <p class="description">
+                    A Alomnesia é uma produtora cinematográfica fundada em 2019, dedicada a criar 
+                    narrativas visuais que tocam o coração e desafiam a mente. Nossa equipe de 
+                    profissionais apaixonados trabalha em cada projeto com atenção meticulosa aos 
+                    detalhes, desde o desenvolvimento do roteiro até a pós-produção final. 
+                    Especializamo-nos em curtas-metragens, longas-metragens e séries que exploram 
+                    a condição humana através de uma lente cinematográfica única.
+                </p>
+            </div>
+        </section>
+
+        <section class="section bg-light">
+            <div class="section-container wide">
+                <div class="section-header">
+                    <h2>Nossas Produções</h2>
+                    <div class="title-underline"></div>
+                    <p class="description">Explore nosso portfólio de longas-metragens, séries e curtas-metragens</p>
+                </div>
+
+                <div class="carousel-wrapper">
+                    <button class="carousel-arrow" id="prev-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <div class="carousel-container" id="carousel-container">
+                        <div class="carousel-track" id="carousel-track">
+                            </div>
+                    </div>
+                    <button class="carousel-arrow" id="next-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+                <div class="carousel-dots" id="carousel-dots">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+        <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line></svg>
+                        </div>
+                        <span class="text-xl font-bold">Alomnésia</span>
+                    </a>
+                    <p class="footer-description">Produtora audiovisual especializada em conteúdo cinematográfico de qualidade.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="footer-title">Navegação</h3>
+                    <div class="footer-links">
+                        <a href="index.html">Início</a>
+                        <a href="producoes.html">Produções</a>
+                        <a href="equipe.html">Equipe</a>
+                        <a href="sobre alomnesia.html">Sobre a Alomnésia</a>
+                    </div>
+                </div>
+    
+                <div class="footer-colu">
+      <h3>Contato</h3>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=alomnesia@gmail.com">📧 alomnesia@gmail.com</a>
+      <a href="https://wa.me/552198871005" target="_blank" rel="noopener noreferrer">📞 +55 21 988871005</a>
+      <a href="https://www.instagram.com/alomnesiafilmes/">🌐 alomnesiafilmes</a>
+    </div></div>
+            </div>
+            
+            <div class="footer-bottom">
+                © 2019 Alomnésia. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
