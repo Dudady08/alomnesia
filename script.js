@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: "familia-fergus", title: "Família Fergus", type: "Série", poster: "https://images.unsplash.com/photo-1574267432644-f1d8bc3bd213?w=800&q=80", url: "familia.html" },
         { id: "era-uma-vez-serie", title: "Era Uma Vez - Série", type: "Série", poster: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80", url: "eraumavez.html" },
         { id: "erva-daninha", title: "Erva Daninha", type: "Curta", poster: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&q=80", url: "Ervadaninha.html" },
-        { id: "interludio", title: "Interlúdio", type: "Curta", poster: "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=800&q=80", url: "Interlúdio.html" },
+        { id: "interludio", title: "Interlúdio", type: "Curta", poster: "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=800&q=80", url: "interludio.html" },
   {
     id: "era-uma-vez-em-cordel",
     title: "Era Uma Vez em Cordel",
