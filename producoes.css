@@ -1,13 +1,17 @@
-/* FONTES E RESET BÁSICO */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
+/* CORREÇÃO: @import movido para o topo, onde deve estar */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;700;900&display=swap');
 
+/* FONTES E RESET BÁSICO */
 :root {
     --navy: #0A1628;
     --orange: #FF6B35;
     --white: #FAFAF9;
     --navy-light: #1A2942;
+    /* Adicionando a variável --gold que faltava para o footer */
+    --gold: #FFD700; 
 }
 
+/* CORREÇÃO: Reset único */
 * {
     margin: 0;
     padding: 0;
@@ -15,6 +19,7 @@
     font-family: 'Inter', sans-serif;
 }
 
+/* CORREÇÃO: Regra 'body' única */
 body {
     background-color: var(--white); /* Fundo claro para páginas de conteúdo */
     color: var(--navy);
@@ -39,7 +44,7 @@ a {
     left: 0;
     right: 0;
     z-index: 50;
-    background: #233a42;
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -141,6 +146,11 @@ a {
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     z-index: 49;
     padding: 1rem 0;
+    /* Garante que o menu mobile apareça abaixo do navbar fixo */
+    position: fixed;
+    top: 74px; /* Altura aproximada do navbar */
+    left: 0;
+    right: 0;
 }
 .mobile-menu.open {
     display: block;
@@ -186,7 +196,7 @@ a {
 .hero-overlay-dark {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(to bottom, rgba(10, 22, 40, 0.8), rgba(10, 22, 40, 0.6), var(--navy));
+    background-image: linear-gradient(to bottom, rgba(10, 22, 40, 0.667), rgba(10, 22, 40, 0.486), var(--navy));
 }
 
 .hero-content {
@@ -194,6 +204,12 @@ a {
     z-index: 10;
     text-align: center;
     padding: 1.5rem;
+    /* Garante que o conteúdo do hero não fique atrás do navbar */
+    padding-top: 74px; 
+}
+
+.hero-content p {
+    margin-top: 1.5rem ;
 }
 
 .short-hero h1 {
@@ -210,109 +226,159 @@ a {
     margin: 0 auto;
 }
 
-
-/* ============ SEÇÕES GERAIS ============ */
-.section {
-    padding: 6rem 1.5rem;
-}
-.section.bg-light {
-    background-color: #FAFAF9;
-}
-.section.bg-white {
-    background-color: white;
-}
-.section-container {
-    max-width: 80rem;
-    margin: 0 auto;
+/* ============ GALERIA DE FILMES ============ */
+.gallery-wrapper {
+    padding-top: 0.3rem; /* Adicionado espaço superior */
+    padding-bottom: 8rem; /* pb-32 */
+    padding-left: 1.5rem; /* px-6 */
+    padding-right: 1.5rem;
+    background-color: var(--navy); /* Fundo escuro para a galeria */
 }
 
-/* ============ SEÇÃO DE PRODUÇÕES ============ */
-.section-title-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 3rem;
-    border-bottom: 1px solid #E5E7EB;
-    padding-bottom: 1.5rem;
+.gallery-container {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.title-icon {
-    width: 3rem;
-    height: 3rem;
-    background-color: var(--orange);
-    color: white;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-.title-icon svg {
-    width: 1.75rem;
-    height: 1.75rem;
-}
-.section-title-wrapper h2 {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--navy);
-    margin: 0;
-}
-
-.production-grid {
+.grid {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(1, 1fr); /* Padrão mobile: 1 coluna */
+    gap: 2.5rem; /* gap-6 md:gap-8 lg:gap-10 */
 }
 
-.production-card {
-    display: block;
+/* ============ CARD DE FILME INDIVIDUAL ============ */
+.film-card {
     position: relative;
+    display: block;
     aspect-ratio: 2 / 3;
-    border-radius: 0.75rem;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-radius: 0.125rem; /* rounded-sm */
+    overflow: hidden; /* Importante para o hover e bordas */
+    
+    /* Estado inicial da animação de entrada */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
-.card-image {
+
+/* Classe que será adicionada pelo JS para animar a entrada */
+.film-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Imagem do Pôster */
+.film-poster {
     width: 100%;
     height: 100%;
+    overflow: hidden;
+    background-color: #F3F4F6; /* bg-gray-100 */
+    border-radius: 0.5rem;
 }
-.card-image img {
+
+.film-poster img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.7s ease;
+    transition: transform 0.7s ease-out;
 }
-.production-card:hover .card-image img {
+
+.film-card:hover .film-poster img {
     transform: scale(1.1);
+    
 }
-.card-overlay {
+
+/* Overlay (Aparece no Hover) */
+.overlay {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(to top, rgba(10, 22, 40, 0.9), transparent);
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
     display: flex;
-    align-items: flex-end;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem; /* p-6 */
 }
-.card-overlay h3 {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: 700;
-    transform: translateY(8px);
-    opacity: 0.9;
-    transition: all 0.3s ease;
+
+.film-card:hover .overlay {
+    opacity: 1;
 }
-.production-card:hover .card-overlay h3 {
+
+.overlay h3,
+.overlay .tags,
+.overlay .details-button {
+    /* Animação de "deslizar para cima" */
+    transform: translateY(1rem);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.film-card:hover h3,
+.film-card:hover .tags,
+.film-card:hover .details-button {
     transform: translateY(0);
     opacity: 1;
 }
 
-/* ============ RODAPÉ (VERSÃO CORRIGIDA E DETALHADA) ============ */ 
+.overlay h3 {
+    color: white;
+    font-weight: 500; /* font-medium */
+    font-size: 1.5rem; /* text-xl md:text-2xl */
+    margin-bottom: 0.75rem; /* mb-3 */
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem; /* gap-2 */
+    margin-bottom: 1rem; /* mb-4 */
+    transition-delay: 75ms; /* delay-75 */
+}
+
+.tag {
+    padding: 0.25rem 0.75rem; /* px-3 py-1 */
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.3rem; /* rounded-sm */
+    color: white;
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 300; /* font-light */
+    letter-spacing: 0.025em; /* tracking-wide */
+}
+
+.details-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* gap-2 */
+    background-color: white;
+    color: black;
+    padding: 0.625rem 1.25rem; /* px-5 py-2.5 */
+    border-radius: 0.3rem; /* rounded-sm */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    transition: all 0.3s;
+    transition-delay: 100ms; /* delay-100 */
+}
+
+.details-button:hover {
+    background-color: #F3F4F6; /* hover:bg-gray-100 */
+}
+
+.details-button svg {
+    width: 1rem; /* w-4 */
+    height: 1rem; /* h-4 */
+}
+
 /* ============ RODAPÉ ============ */
 .footer {
-    background: rgb(0, 0, 87);
+     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
     border-top: 1px solid rgba(202, 138, 4, 0.2);
-    margin-top: 4rem;
+    /* margin-top: 4rem; */ /* Removido para o .gallery-wrapper controlar o espaçamento */
     padding: 3rem 1.5rem;
     color: white;
 }
@@ -332,27 +398,29 @@ a {
     margin-bottom: 1rem;
     margin-top: auto;
 }
-.footer-colu a{
-    margin-top: 0.8rem;
-     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
+
+/* CORREÇÃO: Seletor .footer-colu corrigido para .footer-column */
+.footer-column h3 {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: white;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
 }
+
 .footer-description {
-    color: #ffffff;
+    color: white;
     font-size: 0.875rem;
     line-height: 1.75;
 }
 .footer-title {
-    font-size: 1.125rem;
+    color: white;
+    font-size: 1.2rem;
     font-weight: 300;
-    color: var(--gold);
     margin-bottom: 1.5rem;
     letter-spacing: 0.05em;
 }
-.footer-links,
-.footer-contact {
+.footer-links {
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -362,23 +430,16 @@ a {
     color: #ffffff;
     font-size: 0.875rem;
     transition: color 0.3s ease;
+    
+    /* Adicionado para alinhar ícones se houver */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 .footer-links a:hover {
     color: var(--orange);
 }
-.footer-contact li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: #ffffff;
-    font-size: 0.875rem;
-}
-.footer-contact svg {
-    color: var(--yellow-600);
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-}
+
 .footer-bottom {
     text-align: center;
     width: 100%;
@@ -386,33 +447,46 @@ a {
     font-size: 14px;
     border-top: 1px solid #333;
     margin-top: 1.3rem;
-    margin-bottom: -2.7rem;
-}
-.footer-copyright p {
-    color: #ffffff;
-    font-size: 0.875rem;
-    margin: 0;
+     margin-bottom: -2.7rem;
 }
 
 /* ============ RESPONSIVIDADE ============ */
+
+/* Telas pequenas (sm) */
+@media (min-width: 640px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .short-hero h1 {
+        font-size: 4.5rem; /* md:text-7xl */
+    }
+}
+
+/* Telas médias (md) */
 @media (min-width: 768px) {
     .nav-links { display: flex; }
     .menu-toggle { display: none; }
-    .production-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .mobile-menu { display: none !important; } /* Garante que o menu mobile suma */
+
     .footer-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    .footer-contacts {
-        align-items: center;
+}
+
+/* Telas médias (lg) */
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem; /* lg:gap-10 */
     }
-    .footer-copyright {
-        text-align: right;
+    .short-hero h1 {
+        font-size: 5rem; /* lg:text-8xl */
     }
 }
-@media (min-width: 1024px) {
-    .production-grid {
+
+/* Telas grandes (xl) */
+@media (min-width: 1280px) {
+    .grid {
         grid-template-columns: repeat(4, 1fr);
     }
 }

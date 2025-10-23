@@ -39,7 +39,7 @@ a {
     left: 0;
     right: 0;
     z-index: 50;
-    background: #233a42;
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -141,6 +141,11 @@ a {
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     z-index: 49;
     padding: 1rem 0;
+    /* Garante que o menu mobile apareça abaixo do navbar fixo */
+    position: fixed;
+    top: 74px; /* Altura aproximada do navbar */
+    left: 0;
+    right: 0;
 }
 .mobile-menu.open {
     display: block;
