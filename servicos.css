@@ -331,8 +331,9 @@ a {
 
 /* ============ RODAPÉ ============ */
 .footer {
-    background: rgb(0, 0, 87);
+     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
     border-top: 1px solid rgba(202, 138, 4, 0.2);
+    /* margin-top: 4rem; */ /* Removido para o .gallery-wrapper controlar o espaçamento */
     padding: 3rem 1.5rem;
     color: white;
 }
@@ -352,27 +353,29 @@ a {
     margin-bottom: 1rem;
     margin-top: auto;
 }
-.footer-colu a{
-    margin-top: 0.8rem;
-     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
+
+/* CORREÇÃO: Seletor .footer-colu corrigido para .footer-column */
+.footer-column h3 {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: white;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
 }
+
 .footer-description {
-    color: #ffffff;
+    color: white;
     font-size: 0.875rem;
     line-height: 1.75;
 }
 .footer-title {
-    font-size: 1.125rem;
+    color: white;
+    font-size: 1.2rem;
     font-weight: 300;
-    color: var(--gold);
     margin-bottom: 1.5rem;
     letter-spacing: 0.05em;
 }
-.footer-links,
-.footer-contact {
+.footer-links {
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -382,23 +385,16 @@ a {
     color: #ffffff;
     font-size: 0.875rem;
     transition: color 0.3s ease;
+    
+    /* Adicionado para alinhar ícones se houver */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 .footer-links a:hover {
     color: var(--orange);
 }
-.footer-contact li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: #ffffff;
-    font-size: 0.875rem;
-}
-.footer-contact svg {
-    color: var(--yellow-600);
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-}
+
 .footer-bottom {
     text-align: center;
     width: 100%;
@@ -406,12 +402,7 @@ a {
     font-size: 14px;
     border-top: 1px solid #333;
     margin-top: 1.3rem;
-    margin-bottom: -2.7rem;
-}
-.footer-copyright p {
-    color: #ffffff;
-    font-size: 0.875rem;
-    margin: 0;
+     margin-bottom: -2.7rem;
 }
 
 /* ============ RESPONSIVIDADE ============ */

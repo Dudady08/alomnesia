@@ -1,8 +1,8 @@
 // script.js (Versão Google Apps Script)
 document.addEventListener('DOMContentLoaded', function() {
     
-    // --- URL DO SEU NOVO APLICATIVO WEB ---
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyf5hVI10ukwDI6OS34ZKC_shkkOUtWJuC1X9PH1C3xIfzXsMntUYDCxVm-z2WL3-h5/exec"; // <-- SEU NOVO LINK ATUALIZADO!
+    // --- URL DO SEU APLICATIVO WEB ---
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyf5hVI10ukwDI6OS34ZKC_shkkOUtWJuC1X9PH1C3xIfzXsMntUYDCxVm-z2WL3-h5/exec"; // <-- SEU LINK ATUAL
 
     // --- Seletores (Sem alteração) ---
     const form = document.getElementById('contact-form');
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let isSubmitting = false;
 
-    // --- Lógica de Envio (Agora chama seu Google Script) ---
+    // --- Lógica de Envio (Chama o Google Script) ---
     if (form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Envia os dados para o seu Google Apps Script
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'cors',
+                mode: 'cors', // Necessário para requisições entre domínios
                 cache: 'no-cache',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 console.log("Resposta do Apps Script:", data);
                 if (data.result === "success") {
+                    // SUCESSO!
                     setSubmitSuccess(true);
                     clearForm();
                     
@@ -56,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         setSubmitSuccess(false);
                     }, 5000);
                 } else {
-                    // Se o Google Script retornar um erro, mostra aqui
+                    // Erro (Ex: Nome da aba não encontrado)
                     throw new Error(data.message);
                 }
             })
             .catch(error => {
-                // Se o navegador falhar (como o erro de CORS)
+                // Erro (Ex: CORS, falha de rede)
                 console.error("Erro ao enviar para o Google Script:", error);
                 alert('Ocorreu um erro ao enviar a mensagem. Tente novamente.');
             })

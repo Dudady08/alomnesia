@@ -339,6 +339,7 @@ a {
 /* ===== CARTÃO ALTERNADO (para o segundo, tipo Fernanda) ===== */
 .team-card.reverse {
     flex-direction: row-reverse;
+    margin-bottom: 2.5rem;
 }
 
 /* ===== RESPONSIVIDADE ===== */
