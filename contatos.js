@@ -1,10 +1,9 @@
-// script.js (Versão v5 - Bypass CORS Preflight)
+// contatos.js (Versão Corrigida)
 document.addEventListener('DOMContentLoaded', function() {
     
-    // O seu link de implantação (não precisa mudar)
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyf5hVI10ukwDI6OS34ZKC_shkkOUtWJuC1X9PH1C3xIfzXsMntUYDCxVm-z2WL3-h5/exec";
 
-    // --- Seletores (Sem alteração) ---
+    // --- Seletores ---
     const form = document.getElementById('contact-form');
     const formContainer = document.getElementById('form-container');
     const successMessage = document.getElementById('success-message');
@@ -19,38 +18,38 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let isSubmitting = false;
 
-    // --- Lógica de Envio (MODIFICADA) ---
+    // --- Lógica de Envio CORRIGIDA ---
     if (form) {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             if (isSubmitting) return;
 
             setSubmitting(true);
 
-            // *** MUDANÇA IMPORTANTE AQUI ***
-            // Em vez de JSON, criamos 'URLSearchParams' (dados de formulário)
-            // Os nomes (ex: 'nome') devem bater com o 'e.parameter' no Apps Script
-            const formData = new URLSearchParams();
-            formData.append('nome', nomeInput.value);
-            formData.append('email', emailInput.value);
-            formData.append('mensagem', mensagemInput.value);
+            try {
+                const formData = {
+                    nome: nomeInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    mensagem: mensagemInput.value.trim()
+                };
 
-            // Envia os dados para o seu Google Apps Script
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-cache',
-                headers: {
-                    // *** MUDANÇA IMPORTANTE AQUI ***
-                    // Este Content-Type é "simples" e NÃO dispara o erro de CORS
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                redirect: 'follow',
-                body: formData.toString() // Transforma em "nome=...&email=...&mensagem=..."
-            })
-            .then(res => res.json()) // A *resposta* do Google ainda é JSON
-            .then(data => {
+                // Validação básica
+                if (!formData.nome || !formData.email || !formData.mensagem) {
+                    throw new Error('Por favor, preencha todos os campos.');
+                }
+
+                // Envia como JSON (mais robusto)
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
                 console.log("Resposta do Apps Script:", data);
+                
                 if (data.result === "success") {
                     setSubmitSuccess(true);
                     clearForm();
@@ -59,20 +58,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         setSubmitSuccess(false);
                     }, 5000);
                 } else {
-                    throw new Error(data.message);
+                    throw new Error(data.message || 'Erro ao enviar mensagem.');
                 }
-            })
-            .catch(error => {
-                console.error("Erro ao enviar para o Google Script:", error);
-                alert('Ocorreu um erro ao enviar a mensagem. Tente novamente.');
-            })
-            .finally(() => {
-                setSubmitting(false); // Para o carregamento
-            });
+                
+            } catch (error) {
+                console.error("Erro ao enviar formulário:", error);
+                alert(error.message || 'Ocorreu um erro ao enviar a mensagem. Tente novamente.');
+            } finally {
+                setSubmitting(false);
+            }
         });
     }
 
-    // --- RESTANTE DO SCRIPT (Sem alteração) ---
+    // --- Restante do código (sem alterações) ---
     if (scrollToFormBtn && formSection) {
         scrollToFormBtn.addEventListener('click', () => {
             formSection.scrollIntoView({
@@ -100,11 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
         mensagemInput.value = "";
     }
 
+    // Animações
     const animatedElements = document.querySelectorAll('[data-animate]');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isInteracting) {
+            if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
                 const delay = entry.target.dataset.delay;
                 if (delay) {
