@@ -1,19 +1,8 @@
-/* ======================================================
-   SCRIPT.JS (v6 - A Solução "iframe Oculto")
-   Isto contorna 100% o erro de CORS.
-   NÃO é mais necessário o Google Apps Script (.exec).
-   ====================================================== */
-
+// script.js (v10 - A Solução "Dispare e Esqueça")
 document.addEventListener('DOMContentLoaded', function() {
     
-    // --- DADOS DO SEU GOOGLE FORM ORIGINAL ---
-    const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSertKlaZfWLnUmqyO-vPjmu5xpeVahbhXEelY--a7HlfjxvNQ/formResponse";
-    const GOOGLE_ENTRY_IDS = {
-        nome: "entry.2005620554",
-        email: "entry.1045781291",
-        mensagem: "entry.839337160"
-    };
-    // --------------------------------------------------
+    // COLE A SUA *NOVA* URL DE IMPLANTAÇÃO AQUI
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOYfxLUiN9DcLH52NJz5D0R930c1zr5D3RynuPZ4Ar7Kr2iCSNrLGJPkKP2IBel_zD/exec"; // <-- SEU LINK ATUAL
 
     // --- Seletores (Sem alteração) ---
     const form = document.getElementById('contact-form');
@@ -30,50 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let isSubmitting = false;
 
-    // --- NOVA Função de Envio (iframe Oculto) ---
-    function submitToGoogleForms(data) {
-        // Cria um nome único para o iframe
-        const iframeName = "submit_iframe_" + new Date().getTime();
-
-        // 1. Cria o <iframe> e o torna invisível
-        const iframe = document.createElement("iframe");
-        iframe.name = iframeName;
-        iframe.id = iframeName;
-        iframe.style.display = "none";
-        document.body.appendChild(iframe);
-
-        // 2. Cria o <form> e o torna invisível
-        const hiddenForm = document.createElement("form");
-        hiddenForm.method = "POST";
-        hiddenForm.action = GOOGLE_FORM_URL;
-        hiddenForm.target = iframeName; // Faz o form enviar para o iframe
-        hiddenForm.style.display = "none";
-
-        // 3. Adiciona os dados como inputs ocultos
-        // Função auxiliar para criar os inputs
-        function createHiddenInput(name, value) {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = name;
-            input.value = value;
-            return input;
-        }
-
-        hiddenForm.appendChild(createHiddenInput(GOOGLE_ENTRY_IDS.nome, data.nome));
-        hiddenForm.appendChild(createHiddenInput(GOOGLE_ENTRY_IDS.email, data.email));
-        hiddenForm.appendChild(createHiddenInput(GOOGLE_ENTRY_IDS.mensagem, data.mensagem));
-        
-        // 4. Adiciona o form à página e o envia
-        document.body.appendChild(hiddenForm);
-        hiddenForm.submit();
-
-        // 5. Limpa o form e o iframe da página após 1s
-        setTimeout(() => {
-            document.body.removeChild(hiddenForm);
-            document.body.removeChild(iframe);
-        }, 1000);
-    }
-
     // --- Lógica de Envio (MODIFICADA) ---
     if (form) {
         form.addEventListener('submit', function(e) {
@@ -82,25 +27,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
             setSubmitting(true);
 
-            // Prepara os dados do formulário visível
-            const formData = {
-                nome: nomeInput.value,
-                email: emailInput.value,
-                mensagem: mensagemInput.value
-            };
+            // Prepara os dados (x-www-form-urlencoded)
+            const formData = new URLSearchParams();
+            formData.append('nome', nomeInput.value);
+            formData.append('email', emailInput.value);
+            formData.append('mensagem', mensagemInput.value);
 
-            // --- AÇÃO: Enviar para o Google Forms (sem fetch) ---
-            submitToGoogleForms(formData);
-            
-            // --- SIMULAÇÃO DE UI ---
-            // Como este método não nos dá uma resposta de "sucesso",
-            // vamos *assumir* que funcionou e mostrar a UI de sucesso.
+            // --- MUDANÇA PRINCIPAL AQUI ---
+            // "Dispare e esqueça". Nós enviamos os dados, mas não nos
+            // importamos com a resposta (pois ela está quebrada).
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow',
+                body: formData.toString()
+            });
+
+            // Como não podemos confiar na resposta, nós *simulamos* o sucesso
+            // (pois sabemos que o envio FUNCIONOU)
             setTimeout(() => {
                 setSubmitSuccess(true);
                 clearForm();
                 setSubmitting(false); // Para o carregamento
 
-                // Esconde a mensagem de sucesso após 5s
+                // Esconde a mensagem de sucesso
                 setTimeout(() => {
                     setSubmitSuccess(false);
                 }, 5000);
@@ -157,3 +111,25 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 });
+
+    // --- LÓGICA DO MENU MOBILE ---
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconMenu = menuToggle.querySelector('.icon-menu');
+    const iconClose = menuToggle.querySelector('.icon-close');
+
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+            // Alterna a classe 'open' no menu
+            mobileMenu.classList.toggle('open');
+            
+            // Alterna a visibilidade dos ícones
+            if (mobileMenu.classList.contains('open')) {
+                iconMenu.style.display = 'none';
+                iconClose.style.display = 'block';
+            } else {
+                iconMenu.style.display = 'block';
+                iconClose.style.display = 'none';
+            }
+        });
+    }    

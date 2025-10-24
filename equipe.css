@@ -19,7 +19,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #0A1628; /* mesma cor do topo */
+  background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy)) /* mesma cor do topo */
 }
 
 
@@ -38,7 +38,7 @@ a {
     left: 0;
     right: 0;
     z-index: 50;
-    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -135,7 +135,7 @@ a {
 /* ============ MENU MOBILE ============ */
 .mobile-menu {
     display: none;
-    background-color: var(--navy);
+     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     z-index: 49;
@@ -179,17 +179,10 @@ a {
 .hero-background {
     position: absolute;
     inset: 0;
-    background-color: var(--navy);
+     background-image: linear-gradient(to bottom, rgba(10, 22, 40, 0.667), rgba(10, 22, 40, 0.486));
 }
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.hero-overlay-dark {
-    position: absolute;
-    inset: 0;
-}
+
+
 .hero-content {
     position: relative;
     z-index: 10;
@@ -243,13 +236,14 @@ a {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    background-image: linear-gradient(to bottom, rgba(10, 22, 40, 0.667), rgba(10, 22, 40, 0.486));
 }
 
 /* ===== CARTÕES ===== */
 .team-card {
     display: flex;
     align-items: center;
-    background-color: white;
+    background-color: rgb(237, 237, 237);
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
@@ -265,15 +259,17 @@ a {
 .card-image {
     position: relative;
     width: 40%;
-    aspect-ratio: 1 / 1;
+    height: 90vh;
     overflow: hidden;
+    display: flex;
 }
 
 .card-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s ease;
+    object-fit: cover; /* garante que a imagem ocupe todo o espaço */
+    object-position: center; /* centraliza o enquadramento */
+    display: block;
 }
 
 .team-card:hover .card-image img {
@@ -289,7 +285,7 @@ a {
 }
 
 .team-card:hover .card-image-overlay {
-    opacity: 0.9;
+    opacity: 10;
 }
 
 /* ===== CONTEÚDO ===== */
@@ -362,7 +358,7 @@ a {
 
 /* ============ RODAPÉ ============ */
 .footer {
-     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
+     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
     border-top: 1px solid rgba(202, 138, 4, 0.2);
     /* margin-top: 4rem; */ /* Removido para o .gallery-wrapper controlar o espaçamento */
     padding: 3rem 1.5rem;
