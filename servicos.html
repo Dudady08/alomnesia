@@ -9,6 +9,7 @@
 
 
     <link rel="stylesheet" href="servicos.css" />
+    <link rel="icon" href="./logo para cima.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -30,8 +31,7 @@
         <nav class="navbar-container">
             <a href="index.html" class="logo">
                 <div class="logo-icon-wrapper">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line></svg>
-                </div>
+                     <img src="./logo.svg" alt="Logo alomnesia" class="logo-img"></div>
                 <span class="logo-text">Alomnesia</span>
             </a>
 
@@ -75,61 +75,39 @@
             </div>
         </section>
 
-        <!-- ============ GRADE DE SERVIÇOS ============ -->
-
-          
-
-        <section class="section bg-light">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2>Soluções Completas em Audiovisual</h2>
-                    <p class="description">
-                        Da concepção à entrega final, oferecemos um portfólio completo de serviços 
-                        para transformar sua visão em realidade cinematográfica.
-                    </p>
+    <div class="decorative-blur blur-1"></div>
+    <div class="decorative-blur blur-2"></div>
+        <section class="filter-section container" data-animate="fade-up" data-delay="100">
+            <div class="filter-box">
+                <div class="filter-header">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46V19l4 2v-8.54L22 3z"/></svg>
+                    <h2>Filtrar por Categoria</h2>
                 </div>
-<section class="filters">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="web">Web</button>
-            <button class="filter-btn" data-filter="mobile">Mobile</button>
-            <button class="filter-btn" data-filter="criacao">Criação própria</button>
-            <button class="filter-btn" data-filter="treino">Treino</button>
-        </section> 
-                <div class="services-grid">
-                    <!-- Serviço: Roteiro -->
-                    <div class="service-card">
-                        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path></svg></div>
-                        <h3>Roteiro Personalizado</h3>
-                        <p>Desenvolvimento completo de roteiros únicos</p>
+                <div class="filter-buttons" id="filter-buttons">
                     </div>
-                    <!-- Serviço: Argumento -->
-                    <div class="service-card">
-                        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></div>
-                        <h3>Argumento</h3>
-                        <p>Criação de argumentos para curtas, filmes e séries</p>
-                    </div>
-                    <!-- Serviço: Produção Executiva -->
-                    <div class="service-card">
-                        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path></svg></div>
-                        <h3>Produção Executiva</h3>
-                        <p>Gestão completa de projetos audiovisuais</p>
-                    </div>
-                    <!-- Adicione mais 18 cards de serviço aqui, seguindo o mesmo modelo -->
+                <div class="filter-footer">
+                    <p id="filter-count">Mostrando X categorias</p>
                 </div>
             </div>
         </section>
 
-        <!-- ============ CTA ============ -->
-        <section class="section bg-dark-navy">
-            <div class="section-container small">
-                <h2>Pronto para Começar Seu Projeto?</h2>
-                <p class="description light-text">
-                    Entre em contato conosco e vamos transformar suas ideias em realidade.
-                </p>
-                <a href="./contatos.html" class="cta-button">Fale Conosco</a>
+        <section class="services-grid-section container">
+            <div class="services-grid-wrapper" id="services-grid-wrapper">
+                <div class="services-grid" id="services-grid">
+                    </div>
             </div>
         </section>
-    </main>
+
+        <section class="cta-section container" data-animate="fade-up" data-delay="200">
+            <div class="cta-box">
+                 <div class="cta-bg-pattern"></div>
+                 <div class="cta-content">
+                    <h2>Deseja alguma coisa nova?</h2>
+                    <p>Entre em contato e descubra como podemos transformar suas ideias em realidade audiovisual</p>
+                    <a href="contatos.html" class="cta-button">Solicitar novo serviço</a>
+                 </div>
+            </div>
+        </section>
 
    <footer class="footer">
     <div class="footer-container">

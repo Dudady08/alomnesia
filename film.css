@@ -8,7 +8,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-body { background-color: var(--white); color: var(--navy); display: flex; flex-direction: column; min-height: 100vh; }
+body { background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));; color: white; display: flex; flex-direction: column; min-height: 100vh; }
 main { flex-grow: 1; }
 a { text-decoration: none; color: inherit; }
 
@@ -148,15 +148,14 @@ a { text-decoration: none; color: inherit; }
 }
 /* ============ HERO (DETALHES DO FILME) ============ */
 .hero.short-hero { position: relative; height: 70vh; min-height: 450px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.hero-background { position: absolute; inset: 0; background-color: var(--navy); }
-.hero-background img { width: 100%; height: 100%; object-fit: cover; }
+.hero-background {  background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40)); }
 .hero-overlay-dark { position: absolute; inset: 0; background-color: rgba(10, 22, 40, 0.7); }
 .hero-content { position: relative; z-index: 10; text-align: center; padding: 1.5rem; }
 .short-hero .hero-content h1 { font-size: 4rem; font-weight: 900; color: white; }
 
 /* ============ SEÇÃO DE DETALHES (CORREÇÃO) ============ */
 .section { padding: 5rem 1.5rem; }
-.bg-white { background-color: white; }
+.bg-white {background-image: linear-gradient(to bottom, rgba(6, 15, 30, 0.763), rgba(10, 22, 40, 0.746));}
 .bg-light { background-color: #FAFAF9; }
 
 .details-container {
@@ -188,7 +187,7 @@ a { text-decoration: none; color: inherit; }
 .content-title {
     font-size: 2.5rem;
     font-weight: 900;
-    color: var(--navy);
+    color: white;
     margin-bottom: 0.2rem;
 }
 .title-underline {
@@ -205,7 +204,7 @@ a { text-decoration: none; color: inherit; }
 .description {
     font-size: 1.125rem;
     line-height: 1.75;
-    color: #374151;
+    color: whitesmoke;
 }
 .meta-info {
     display: grid;
@@ -215,8 +214,8 @@ a { text-decoration: none; color: inherit; }
 }
 .meta-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;}
 .meta-item svg { color: var(--orange); flex-shrink: 0; }
-.meta-label { font-size: 0.875rem; color: #64748B; text-transform: uppercase; }
-.meta-value { font-size: 1rem; font-weight: 600; color: var(--navy); }
+.meta-label { font-size: 0.875rem; color: whitesmoke; text-transform: uppercase; }
+.meta-value { font-size: 1rem; font-weight: 600; color: whitesmoke; }
 
 /* Conteúdo que fica abaixo do grid */
 .full-width-content {
