@@ -22,7 +22,7 @@
 /* CORREÇÃO: Regra 'body' única */
 body {
     background-color: var(--white); /* Fundo claro para páginas de conteúdo */
-    color: var(--navy);
+    color: whitesmoke;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -58,31 +58,12 @@ a {
     justify-content: space-between;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
 
-.logo-icon-wrapper {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-image: linear-gradient(to bottom right, var(--orange), #FF8C61);
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s;
-}
-
-.logo:hover .logo-icon-wrapper {
-    transform: scale(1.1);
-}
-
-.logo span {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--white);
+/* Regra correta para o logo */
+.navbar .logo-img {
+  height: 64px;
+  width: auto;
+  display: block;
 }
 
 .nav-links {
@@ -97,6 +78,7 @@ a {
     padding-bottom: 0.5rem;
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.3s;
+    text-decoration: none;
 }
 
 .nav-link::after {
@@ -109,6 +91,27 @@ a {
     background-color: var(--orange);
     transition: width 0.3s;
 }
+
+.logo.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.logo.vertical img {
+  width: 45px;
+  height: auto;
+}
+
+.logo.vertical span {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #f1f5f9;
+  text-align: center;
+}
+
 
 .nav-link:hover {
     color: white;
@@ -141,14 +144,13 @@ a {
 /* ============ MENU MOBILE ============ */
 .mobile-menu {
     display: none;
-     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     z-index: 49;
     padding: 1rem 0;
-    /* Garante que o menu mobile apareça abaixo do navbar fixo */
     position: fixed;
-    top: 74px; /* Altura aproximada do navbar */
+    top: 74px;
     left: 0;
     right: 0;
 }
@@ -162,6 +164,7 @@ a {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.8);
     transition: all 0.2s;
+    text-decoration: none;
 }
 .mobile-link:hover {
     background-color: rgba(255, 255, 255, 0.05);
@@ -171,7 +174,6 @@ a {
     background-color: rgba(255, 107, 53, 0.1);
     color: var(--orange);
 }
-
 /* ============ HERO (VERSÃO CURTA) ============ */
 .hero.short-hero {
     position: relative;
@@ -374,38 +376,80 @@ a {
     height: 1rem; /* h-4 */
 }
 
-/* ============ RODAPÉ ============ */
+/* =====================================================
+   MENSAGEM DE SUCESSO
+   ===================================================== */
+.success-card {
+    max-width: 768px;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border-color: rgba(30, 58, 138, 0.5);
+    animation: fade-in-scale 0.5s ease-out forwards;
+}
+
+.success-icon-wrapper {
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(37, 99, 235, 0.2);
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.success-icon-wrapper .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--blue-400);
+}
+
+.success-text h3 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.success-text p {
+    color: var(--slate-400);
+    font-weight: 300;
+}
+
+/* =====================================================
+   RODAPÉ
+   ===================================================== */
 .footer {
-     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
     border-top: 1px solid rgba(202, 138, 4, 0.2);
-    /* margin-top: 4rem; */ /* Removido para o .gallery-wrapper controlar o espaçamento */
     padding: 3rem 1.5rem;
     color: white;
 }
+
 .footer-container {
     max-width: 80rem;
     margin: 0 auto;
 }
+
 .footer-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 3rem;
 }
+
 .footer-column .logo {
+    color: white;
     display: flex;
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1rem;
-    margin-top: auto;
 }
 
-/* CORREÇÃO: Seletor .footer-colu corrigido para .footer-column */
 .footer-column h3 {
     font-size: 1.2rem;
     font-weight: 300;
-    color: white;
     margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
 }
 
 .footer-description {
@@ -413,29 +457,35 @@ a {
     font-size: 0.875rem;
     line-height: 1.75;
 }
-.footer-title {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 300;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
-}
+
 .footer-links {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
+.logo {
+  display: flex;
+  gap: 0.6rem; /* espaço entre o ícone e o texto */
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.logo img {
+  width: 60px; /* ajuste o tamanho conforme quiser */
+  height: auto;
+}
+
 .footer-links a {
-    color: #ffffff;
+    color: white;
     font-size: 0.875rem;
-    transition: color 0.3s ease;
-    
-    /* Adicionado para alinhar ícones se houver */
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
+
 .footer-links a:hover {
     color: var(--orange);
 }
@@ -447,7 +497,7 @@ a {
     font-size: 14px;
     border-top: 1px solid #333;
     margin-top: 1.3rem;
-     margin-bottom: -2.7rem;
+    margin-bottom: -2.7rem;
 }
 
 /* ============ RESPONSIVIDADE ============ */

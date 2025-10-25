@@ -18,19 +18,24 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-EQDN3BWDSD');
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EQDN3BWDSD"></script>
 </head>
 <body>
 
-  <!-- ============ CABEÇALHO ============ -->
     <header class="navbar" id="main-nav">
         <nav class="navbar-container">
             <a href="index.html" class="logo">
                 <div class="logo-icon-wrapper">
+                    <div class="logo vertical">
                      <img src="./logo.svg" alt="Logo alomnesia" class="logo-img"></div>
-                <span class="logo-text">Alomnesia</span>
+                <span class="logo-text">Alomnésia</span></div>
+                </div>
             </a>
 
             <div class="nav-links">
@@ -38,8 +43,8 @@
                 <a href="producoes.html" class="nav-link">Produções</a>
                 <a href="equipe.html" class="nav-link">Equipe</a>
                 <a href="sobrealomnesia.html" class="nav-link">Sobre a Alomnésia</a>
-                 <a href="contatos.html" class="nav-link">Contatos</a>
-                    <a href="servicos.html" class="nav-link">Serviços</a>
+                <a href="contatos.html" class="nav-link">Contatos</a>
+                <a href="servicos.html" class="nav-link">Serviços</a>
             </div>
 
             <button class="menu-toggle" id="menu-toggle">
@@ -48,115 +53,110 @@
             </button>
         </nav>
 
-        <!-- Menu Mobile -->
         <div class="mobile-menu" id="mobile-menu">
             <a href="index.html" class="mobile-link active">Início</a>
             <a href="producoes.html" class="mobile-link">Produções</a>
             <a href="equipe.html" class="mobile-link">Equipe</a>
             <a href="sobrealomnesia.html" class="mobile-link">Sobre a Alomnésia</a>
-            <a href="sobrealomnesia.html" class="mobile-link">Contatos</a>
-            <a href="sobrealomnesia.html" class="mobile-link">Serviços</a>
+            <a href="contatos.html" class="mobile-link">Contatos</a>
+            <a href="servicos.html" class="mobile-link">Serviços</a>
         </div>
     </header>
-    
-    <main>
-        <section class="hero">
-            <div class="hero-background">
-                <img src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=1920&q=80" alt="Cadeiras de cinema">
-                <div class="hero-overlay"></div>
-            </div>
-            <div class="hero-content">
-                <h1>Alomnesia</h1>
-                <div class="hero-separator">
-                    <div class="line"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.25 4.5h-16.5A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5z"></path><path d="m11.25 15 3-3-3-3"></path><path d="m6.75 15 3-3-3-3"></path></svg>
-                    <div class="line"></div>
+
+    <main id="main-content">
+        <section id="video-carousel-hero" class="video-carousel">
+            <div class="video-carousel-slides" id="video-carousel-slides">
                 </div>
-                <p>Produtora audiovisual especializada em contar histórias que emocionam, inspiram e transformam através do cinema</p>
-                <div class="hero-buttons">
-                 <a href="sobrealomnesia.html" class="hero-btn">Conheça a Alomnésia →</a>
-               </div>
-            </div>
-        
-            </div>
-        </section>
 
-        <section class="section bg-light">
-            <div class="section-container wide">
-                
-
-                <div class="carousel-wrapper">
-                    <button class="carousel-arrow" id="prev-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    </button>
-                    <div class="carousel-container" id="carousel-container">
-                        <div class="carousel-track" id="carousel-track">
-                            </div>
+            <div class="video-carousel-ui">
+                <div class="video-carousel-ui-content">
+                    <div class="video-carousel-dots" id="video-carousel-dots">
+                        </div>
+                    <div class="video-carousel-title-container" id="video-carousel-title-container">
+                        <div class="video-carousel-title">
+                            <h1 id="video-carousel-title-text">Título</h1>
+                            <div class="video-carousel-title-underline"></div>
+                        </div>
                     </div>
-                    <button class="carousel-arrow" id="next-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </button>
                 </div>
-                <div class="carousel-dots" id="carousel-dots">
-                    </div>
+            </div>
+
+            <div class="video-carousel-scroll-indicator" id="video-carousel-scroll-indicator">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+
+            <div class="video-carousel-progress-bar">
+                <div class="video-carousel-progress-inner" id="video-carousel-progress-inner"></div>
             </div>
         </section>
-    </main>
-
-        <section class="section">
-            <div class="section-container">
-                <h2>Sobre a Alomnesia</h2>
-                <div class="title-underline"></div>
-                <p class="description">
-                   Alomnésia Filmes é uma produtora audiovisual independente dedicada à criação de obras que unem arte, 
-                   cultura e impacto social. Entre seus curtas premiados, destaca-se Era uma Vez... em Cordel, 
-                   vencedor de Melhor Filme (Caruaru), Melhor Direção (Miracine) e Melhor Filme do Dia (Mangaratiba), 
-                   além de exibições na Mostra Saci e Incuba Filmes. No campo das séries, a produtora realiza Família Fergus – Juntos Pelo Mundo e
-                    Era uma Vez.... 
-                   Atualmente, finaliza o longa documental Traços de Uma Nova Página.
-                </p>
-            </div>
-        </section>
-
-       <footer class="footer">
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line></svg>
+        <div id="content-below-hero" class="content-below-hero">
+            <section class="section bg-light">
+                <div class="section-container wide">
+                    <div class="carousel-wrapper">
+                        <button class="carousel-arrow" id="image-prev-btn"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <div class="carousel-container" id="image-carousel-container"> <div class="carousel-track" id="image-carousel-track"> </div>
+                        </div>
+                        <button class="carousel-arrow" id="image-next-btn"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
                     </div>
-                    <span class="text-xl font-bold">Alomnésia</span>
-                </a>
-                <p class="footer-description">Produtora audiovisual especializada em conteúdo cinematográfico de qualidade.</p>
-            </div>
-            
+                    <div class="carousel-dots" id="image-carousel-dots"> </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-container">
+                    <h2>Sobre a Alomnesia</h2>
+                    <div class="title-underline"></div>
+                    <p class="description">
+                       Alomnésia Filmes é uma produtora audiovisual independente dedicada à criação de obras que unem arte,
+                       cultura e impacto social. Entre seus curtas premiados, destaca-se Era uma Vez... em Cordel,
+                       vencedor de Melhor Filme (Caruaru), Melhor Direção (Miracine) e Melhor Filme do Dia (Mangaratiba),
+                       além de exibições na Mostra Saci e Incuba Filmes. No campo das séries, a produtora realiza Família Fergus – Juntos Pelo Mundo e
+                        Era uma Vez....
+                       Atualmente, finaliza o longa documental Traços de Uma Nova Página.
+                    </p>
+                </div>
+            </section>
+        </div>
+        </main>
+
+     <!-- ============ RODAPÉ ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-grid">
       <div class="footer-column">
-                <h3 class="footer-title">Navegação</h3>
-                <div class="footer-links">
-                    <a href="index.html">Início</a>
-                    <a href="producoes.html">Produções</a>
-                    <a href="equipe.html">Equipe</a>
-                    <a href="sobrealomnesia.html">Sobre Alomnésia</a>
-                    <a href="contatos.html">Contatos</a>
-                    <a href="servicos.html">Serviços</a>
-                </div>
-            </div>
-    
-            <div class="footer-column">
-                <h3 class="footer-title">Contato</h3>
-                <div class="footer-links">
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=alomnesia@gmail.com">📧 alomnesia@gmail.com</a>
-                    <a href="https://wa.me/552198871005" target="_blank" rel="noopener noreferrer">📞 +55 21 988871005</a>
-                    <a href="https://www.instagram.com/alomnesiafilmes/">🌐 alomnesiafilmes</a>
-                </div>
-            </div>
+        <a href="index.html" class="logo">
+          <div class="logo-icon-wrapper"> 
+            <div class="logo">
+                     <img src="./logo.svg" alt="Logo alomnesia" class="logo-img"></div>
         </div>
-        
-        <div class="footer-bottom">
-            © 2019 Alomnésia. Todos os direitos reservados.
+          <span class="text-xl font-bold">Alomnésia</span>
+        </a>
+        <p class="footer-description">Produtora audiovisual especializada em conteúdo cinematográfico de qualidade.</p>
+      </div>
+      <div class="footer-column">
+        <h3 class="footer-title">Navegação</h3>
+        <div class="footer-links">
+          <a href="index.html">Início</a>
+          <a href="producoes.html">Produções</a>
+          <a href="equipe.html">Equipe</a>
+          <a href="sobrealomnesia.html">Sobre Alomnésia</a>
+          <a href="contatos.html">Contatos</a>
+          <a href="servicos.html">Serviços</a>
         </div>
+      </div>
+      <div class="footer-column">
+        <h3 class="footer-title">Contato</h3>
+        <div class="footer-links">
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=alomnesia@gmail.com">📧 alomnesia@gmail.com</a>
+          <a href="https://wa.me/552198871005" target="_blank" rel="noopener noreferrer">📞 +55 21 988871005</a>
+          <a href="https://www.instagram.com/alomnesiafilmes/">🌐 alomnesiafilmes</a>
+        </div>
+      </div>
     </div>
+    <div class="footer-bottom">© 2019 Alomnésia. Todos os direitos reservados.</div>
+  </div>
 </footer>
 
     <script src="script.js"></script>

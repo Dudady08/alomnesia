@@ -1,3 +1,7 @@
+/* ============================================== */
+/* === SEU CSS ORIGINAL + CSS DO VIDEO CAROUSEL === */
+/* ============================================== */
+
 /* FONTES E RESET BÁSICO */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
 
@@ -15,9 +19,16 @@
     font-family: 'Inter', sans-serif;
 }
 
+/* Garante que scroll inicial seja 0 */
+html {
+    scroll-behavior: smooth; /* Mantém scroll suave para links internos */
+}
+
+
 body {
-    background-color: var(--white);
-    color: var(--navy);
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40)); /* Fundo escuro padrão */
+    color: whitesmoke;
+    min-height: 100vh;
 }
 
 a {
@@ -32,7 +43,7 @@ a {
     left: 0;
     right: 0;
     z-index: 50;
-    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
+   background-image: linear-gradient(to bottom, rgba(6, 15, 30, 0.9), rgba(10, 22, 40, 0.7), rgba(10, 22, 40, 0.4), transparent);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -46,31 +57,16 @@ a {
     justify-content: space-between;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+.navbar.scrolled {
+     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
+     backdrop-filter: blur(10px);
 }
 
-.logo-icon-wrapper {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-image: linear-gradient(to bottom right, var(--orange), #FF8C61);
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s;
-}
-
-.logo:hover .logo-icon-wrapper {
-    transform: scale(1.1);
-}
-
-.logo span {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--white);
+/* Regra correta para o logo */
+.navbar .logo-img {
+  height: 64px;
+  width: auto;
+  display: block;
 }
 
 .nav-links {
@@ -85,6 +81,7 @@ a {
     padding-bottom: 0.5rem;
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.3s;
+    text-decoration: none;
 }
 
 .nav-link::after {
@@ -97,6 +94,27 @@ a {
     background-color: var(--orange);
     transition: width 0.3s;
 }
+
+.logo.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.logo.vertical img {
+  width: 45px;
+  height: auto;
+}
+
+.logo.vertical span {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #f1f5f9;
+  text-align: center;
+}
+
 
 .nav-link:hover {
     color: white;
@@ -129,14 +147,13 @@ a {
 /* ============ MENU MOBILE ============ */
 .mobile-menu {
     display: none;
-     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     z-index: 49;
     padding: 1rem 0;
-    /* Garante que o menu mobile apareça abaixo do navbar fixo */
     position: fixed;
-    top: 74px; /* Altura aproximada do navbar */
+    top: 74px;
     left: 0;
     right: 0;
 }
@@ -150,6 +167,7 @@ a {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.8);
     transition: all 0.2s;
+    text-decoration: none;
 }
 .mobile-link:hover {
     background-color: rgba(255, 255, 255, 0.05);
@@ -159,315 +177,100 @@ a {
     background-color: rgba(255, 107, 53, 0.1);
     color: var(--orange);
 }
-/* ============ SEÇÃO HERO ============ */
-.hero {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
 
-.hero-background {
-    position: absolute;
-    inset: 0;
-    background-color: var(--navy);
-}
-
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(to bottom, rgba(10, 22, 40, 0.7), rgba(10, 22, 40, 0.5), var(--navy));
-}
-
-.hero-content {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    padding: 1.5rem;
-}
-
-.hero h1 {
-    font-size: 6rem;
-    font-weight: 900;
-    color: white;
-    margin-bottom: 1rem;
-}
-
-.hero-separator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    color: var(--orange);
-    margin-bottom: 1.5rem;
-}
-
-.hero-buttons {
-    margin-top: 2rem;
-}
-
-.hero-btn {
-    background-color: #ff6b00;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.hero-btn:hover {
-    background-color: #e55e00;
-}
-
-.line {
-    height: 1px;
-    width: 4rem;
-    background-color: var(--orange);
-}
-
-.hero p {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 42rem;
-    margin: 0 auto;
-    font-weight: 300;
-}
-
-.scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
-    40% { transform: translate(-50%, -15px); }
-    60% { transform: translate(-50%, -7px); }
-}
-
-.mouse-icon {
-    width: 1.5rem;
-    height: 2.5rem;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 9999px;
-    display: flex;
-    justify-content: center;
-    padding-top: 0.5rem;
-}
-.scroll-wheel {
-    width: 0.25rem;
-    height: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 9999px;
-}
 
 /* ============ SEÇÕES GERAIS ============ */
-.section {
-    padding: 6rem 1.5rem;
-}
-
-.section.bg-light {
-    background-color: #FAFAF9;
-}
-
-.section-container {
-    max-width: 56rem;
-    margin: 0 auto;
-    text-align: center;
-}
-.section-container.wide {
-    max-width: 80rem;
-}
-
-.section-header {
-    margin-bottom: 4rem;
-}
-
-.section-container h2 {
-    font-size: 3rem;
-    font-weight: 900;
-    color: var(--navy);
-    margin-bottom: 1rem;
-}
-
-.title-underline {
-    width: 5rem;
-    height: 4px;
-    background-color: var(--orange);
-    margin: 0 auto 2rem;
-}
-
-.description {
-    font-size: 1.125rem;
-    color: #475569;
-    line-height: 1.75;
-}
-
-/* ============ CARROSSEL (CORREÇÕES) ============ */
-.carousel-wrapper {
+main#main-content {
+    padding-top: 0; /* Navbar é transparente sobre o hero */
     position: relative;
-    padding: 0 4rem; /* Adiciona espaço para as setas não ficarem em cima */
 }
 
-.carousel-container {
-    overflow: hidden;
-}
-
-.carousel-track {
-    display: flex;
-    gap: 1.5rem;
-    transition: transform 0.5s ease-out;
-}
-
-.carousel-slide {
-    flex: 0 0 100%;
-}
-
-.carousel-slide a {
-    display: block;
-}
-
-.carousel-slide .slide-content {
-    position: relative;
-    aspect-ratio: 2 / 3;
-    border-radius: 0.75rem;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-.carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s ease;
-}
-
-.carousel-slide:hover img {
-    transform: scale(1.1);
-}
-
-.slide-overlay {
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+/* Wrapper para conteúdo abaixo do hero */
+.content-below-hero {
     opacity: 0;
-    transition: opacity 0.3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.5rem;
-}
-
-.carousel-slide:hover .slide-overlay {
-    opacity: 1;
-}
-
-.slide-type {
-    display: inline-block;
-    background-color: var(--orange);
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    margin-bottom: 0.5rem;
-}
-
-.slide-overlay h3 {
-    color: white;
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-
-.carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3rem;
-    height: 3rem;
-    background-color: rgba(10, 22, 40, 0.8);
-    backdrop-filter: blur(4px);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    z-index: 20; /* Garante que os botões fiquem na frente */
-    display: flex; /* CORRIGIDO: Garante alinhamento do ícone */
-    align-items: center; /* CORRIGIDO: Alinha verticalmente */
-    justify-content: center; /* CORRIGIDO: Alinha horizontalmente */
-}
-.carousel-arrow:hover {
+    pointer-events: none;
+    transition: opacity 0.5s ease-in;
+    position: relative;
+    z-index: 5;
     background-color: var(--navy);
-}
-#prev-btn { left: 0; }
-#next-btn { right: 0; }
-
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-}
-.dot {
-    height: 0.5rem;
-    width: 0.5rem;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.2);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-.dot.active {
-    width: 2rem;
-    background-color: var(--orange);
+    padding-top: 65px; /* Adiciona padding para compensar a navbar quando o hero some */
 }
 
-/* ============ RODAPÉ ============ */
+.section { padding: 6rem 1.5rem; background-color: var(--navy); }
+.section.bg-light {background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));; color: var(--navy); } /* Mudado para branco puro */
+.section-container { max-width: 56rem; margin: 0 auto; text-align: center; }
+.section-container.wide { max-width: 80rem; }
+.section-header { margin-bottom: 4rem; }
+.section-container h2 { font-size: 3rem; font-weight: 900; color: var(--white); margin-bottom: 1rem; }
+.section.bg-light .section-container h2 { color: var(--navy); }
+.title-underline { width: 5rem; height: 4px; background-color: var(--orange); margin: 0 auto 2rem; }
+.description { font-size: 1.125rem; color: #cbd5e1; line-height: 1.75; }
+.section.bg-light .description { color: #475569; }
+
+/* ============ CARROSSEL DE IMAGENS ORIGINAL ============ */
+.carousel-wrapper { position: relative; padding: 0 4rem; }
+.carousel-container { overflow: hidden; }
+.carousel-track { display: flex; gap: 1.5rem; transition: transform 0.5s ease-out; }
+.carousel-slide { flex: 0 0 100%; aspect-ratio: 2 / 3; border-radius: 0.75rem; overflow: hidden; position: relative; }
+@media (min-width: 768px) { .carousel-slide { flex-basis: calc((100% / 3) - 1rem); } }
+.carousel-slide a.slide-content { display: block; width: 100%; height: 100%; position: relative; }
+.carousel-slide img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+.carousel-slide a:hover img { transform: scale(1.1); }
+.slide-overlay { position: absolute; inset: 0; background-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent 60%); opacity: 0; transition: opacity 0.3s ease; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; color: white; }
+.carousel-slide a:hover .slide-overlay { opacity: 1; }
+.slide-type { display: inline-block; background-color: var(--orange); color: white; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; margin-bottom: 0.5rem; }
+.slide-overlay h3 { font-size: 1.25rem; font-weight: 700; margin: 0; }
+.carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 3rem; height: 3rem; background-color: rgb(250, 101, 47); backdrop-filter: blur(4px); color: white; border: none; border-radius: 50%; cursor: pointer; transition: background-color 0.3s; z-index: 20; display: flex; align-items: center; justify-content: center; }
+.carousel-arrow:hover { background-color: rgb(200, 60, 9); }
+#image-prev-btn { left: 0; }
+#image-next-btn { right: 0; }
+
+/* ESTILOS ESPECÍFICOS PARA OS PONTOS DO CARROSSEL DE IMAGENS */
+#image-carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; }
+#image-carousel-dots .dot {
+    height: 0.5rem; width: 0.5rem; border-radius: 50%;
+    /* CORRIGIDO: Cor mais escura para contraste no fundo claro */
+    background-color: rgba(255, 68, 0, 0.612); /* Cinza escuro translúcido */
+    border: none; cursor: pointer; transition: all 0.3s ease; padding: 0;
+}
+#image-carousel-dots .dot.active {
+    width: 2rem; border-radius: 0.25rem; background-color: var(--orange);
+}
+
+
+/* =====================================================
+   RODAPÉ
+   ===================================================== */
 .footer {
-     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
     border-top: 1px solid rgba(202, 138, 4, 0.2);
-    /* margin-top: 4rem; */ /* Removido para o .gallery-wrapper controlar o espaçamento */
     padding: 3rem 1.5rem;
     color: white;
 }
+
 .footer-container {
     max-width: 80rem;
     margin: 0 auto;
 }
+
 .footer-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 3rem;
 }
+
 .footer-column .logo {
+    color: white;
     display: flex;
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1rem;
-    margin-top: auto;
 }
 
-/* CORREÇÃO: Seletor .footer-colu corrigido para .footer-column */
 .footer-column h3 {
     font-size: 1.2rem;
     font-weight: 300;
-    color: white;
     margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
 }
 
 .footer-description {
@@ -475,29 +278,38 @@ a {
     font-size: 0.875rem;
     line-height: 1.75;
 }
-.footer-title {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 300;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
-}
+
 .footer-links {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
+.logo {
+  display: flex;
+  gap: 0.6rem; /* espaço entre o ícone e o texto */
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.logo img {
+  width: 60px; /* ajuste o tamanho conforme quiser */
+  height: auto;
+}
+
+
+
+
 .footer-links a {
-    color: #ffffff;
+    color: white;
     font-size: 0.875rem;
-    transition: color 0.3s ease;
-    
-    /* Adicionado para alinhar ícones se houver */
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
+
 .footer-links a:hover {
     color: var(--orange);
 }
@@ -509,15 +321,60 @@ a {
     font-size: 14px;
     border-top: 1px solid #333;
     margin-top: 1.3rem;
-     margin-bottom: -2.7rem;
+    margin-bottom: -2.7rem;
 }
 
-/* ============ RESPONSIVIDADE ============ */
+/* ============ RESPONSIVIDADE GERAL ============ */
 @media (min-width: 768px) {
     .nav-links { display: flex; }
     .menu-toggle { display: none; }
-    .hero-title { font-size: 8rem; }
+    .mobile-menu { display: none !important; }
     .section-container h2 { font-size: 4rem; }
-    .carousel-slide { flex-basis: calc(100% / 3); }
     .footer-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ============================================== */
+/* === ESTILOS ATUALIZADOS P/ CARROSSEL DE VÍDEO === */
+/* ============================================== */
+
+.video-carousel {
+    height: 100vh; width: 100%; overflow: hidden;
+    position: relative; background-color: #000;
+    opacity: 1; pointer-events: auto;
+    transition: opacity 0.7s ease-out, pointer-events 0s linear 0.7s;
+    z-index: 10;
+}
+.video-carousel.hidden {
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.7s ease-out, pointer-events 0s linear 0s;
+    /* Alterado: Não muda mais height ou display */
+    position: fixed; /* Tira do fluxo quando escondido */
+    top: 0; left: 0;
+}
+
+.video-carousel-slides { position: absolute; inset: 0; z-index: 0; }
+.video-carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease-in-out; z-index: 0; }
+.video-carousel-slide.active { opacity: 1; z-index: 1; }
+.video-carousel-slide video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.video-carousel-overlay { position: absolute; inset: 0; background-color: rgba(0, 0, 0, 0.4); z-index: 1; }
+.video-carousel-ui { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.video-carousel-ui-content { display: flex; align-items: center; gap: 2rem; pointer-events: auto; padding: 1rem; }
+#video-carousel-dots { display: flex; flex-direction: column; gap: 0.75rem; } /* ID específico */
+
+.video-carousel-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: rgba(255, 255, 255, 0.4); border: none; cursor: pointer; transition: all 0.3s ease; padding: 0; }
+.video-carousel-dot:hover { background-color: rgba(255, 255, 255, 0.6); transform: scale(1.1); }
+.video-carousel-dot.active { background-color: white; transform: scale(1.2); }
+
+.video-carousel-title-container { text-align: center; position: relative; width: 250px; min-height: 70px; display: flex; align-items: center; justify-content: center; }
+.video-carousel-title { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+.video-carousel-title.visible { opacity: 1; transform: translateY(0); }
+.video-carousel-title h1 { font-size: 1.75rem; font-weight: 700; color: white; letter-spacing: -0.025em; margin: 0; }
+.video-carousel-title-underline { margin-top: 1rem; height: 4px; width: 6rem; background-color: rgba(255, 255, 255, 0.8); margin-left: auto; margin-right: auto; }
+
+@keyframes bounce-indicator { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+.video-carousel-scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2; animation: bounce-indicator 1.5s infinite; opacity: 1; transition: opacity 0.3s ease-out; }
+.video-carousel-scroll-indicator.hidden { opacity: 0; }
+.video-carousel-scroll-indicator svg { width: 2rem; height: 2rem; color: rgba(255, 255, 255, 0.7); }
+
+.video-carousel-progress-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background-color: rgba(255, 255, 255, 0.2); z-index: 2; }
+.video-carousel-progress-inner { height: 100%; background-color: white; width: 0%; transition: width 0.3s ease-out; }
