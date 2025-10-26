@@ -3,122 +3,122 @@
 # Objetivo: Redirecionamentos 301 (Permanentes) para Cloudflare Pages
 # =================================================================
 
-/quem-somos
+/quem-somos/
   Location: /equipe.html
   Status: 301
 
-/clipes
+/clipes/
   Location: /
   Status: 301
 
-/cinema
+/cinema/
   Location: /producoes.html
   Status: 301
 
-/contato
+/contato/
   Location: /contatos.html
   Status: 301
 
-/o-que-fazemos-produtora-de-audiovisual
+/o-que-fazemos-produtora-de-audiovisual/
   Location: /sobrealomnesia.html
   Status: 301
 
-/servicos
+/servicos/
   Location: /prestacaodeservicos.html
   Status: 301
 
-/teatro
+/teatro/
   Location: /
   Status: 301
 
-/projetos
+/projetos/
   Location: /producoes.html
   Status: 301
 
-/fotos-evento
+/fotos-evento/
   Location: /
   Status: 301
 
-/foto-evento
+/foto-evento/
   Location: /
   Status: 301
 
-/ensaios
+/ensaios/
   Location: /
   Status: 301
 
-/projetos/abrickadabra
+/projetos/abrickadabra/
   Location: /
   Status: 301
 
-/retorica
+/retorica/
   Location: /
   Status: 301
 
-/cazuza-conversa
+/cazuza-conversa/
   Location: /
   Status: 301
 
-/dance-hitorinhas
+/dance-hitorinhas/
   Location: /
   Status: 301
 
-/sala-de-reunioes
+/sala-de-reunioes/
   Location: /
   Status: 301
 
-/quem-somos-copy-2
+/quem-somos-copy-2/
   Location: /equipe.html
   Status: 301
 
-/curtas-e-documentarios
+/curtas-e-documentarios/
   Location: /producoes.html
   Status: 301
 
-/making-off
+/making-off/
   Location: /
   Status: 301
 
-/portfolio-fotos
+/portfolio-fotos/
   Location: /producoes.html
   Status: 301
 
-/quem-somos-copy
+/quem-somos-copy/
   Location: /equipe.html
   Status: 301
 
-/portfolio-videos
+/portfolio-videos/
   Location: /producoes.html
   Status: 301
 
-/construcao
+/construcao/
   Location: /
   Status: 301
 
-/portfolio_page
+/portfolio_page/
   Location: /producoes.html
   Status: 301
 
-/portfolio_page/vimeo-fx-showreel
+/portfolio_page/vimeo-fx-showreel/
   Location: /producoes.html
   Status: 301
 
-/portfolio_page/venice-art-pavilion
+/portfolio_page/venice-art-pavilion/
   Location: /producoes.html
   Status: 301
 
-/portfolio_page/berlin-design-week
+/portfolio_page/berlin-design-week/
   Location: /producoes.html
   Status: 301
 
-/portfolio_page/stockholm-fashion
+/portfolio_page/stockholm-fashion/
   Location: /producoes.html
   Status: 301
 
-/portfolio_page/last-iceland-sunshine
+/portfolio_page/last-iceland-sunshine/
   Location: /producoes.html
   Status: 301
 
-/portfolio_page/art-design-blvd
+/portfolio_page/art-design-blvd/
   Location: /producoes.html
   Status: 301
