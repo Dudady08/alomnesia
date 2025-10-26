@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileMenu.classList.toggle('open');
             if (mobileMenu.classList.contains('open')) {
                 if (iconMenu) iconMenu.style.display = 'none';
-                if (iconClose) iconClose.style.display = 'block';
+               if (iconClose) iconClose.style.display = 'block';
             } else {
                 if (iconMenu) iconMenu.style.display = 'block';
                 if (iconClose) iconClose.style.display = 'none';
