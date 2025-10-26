@@ -32,8 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Por enquanto, ela é sempre escura.
         });
     }
-document.addEventListener('DOMContentLoaded', function() {
-    // ... (seu código existente do menu, formulário, etc.) ...
 
     // --- LÓGICA PARA LINK DO WHATSAPP ---
     const whatsappLink = document.getElementById('whatsapp-link');
@@ -59,4 +57,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- FIM LÓGICA WHATSAPP ---
 
 }); // Fim do DOMContentLoaded
-});

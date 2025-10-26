@@ -658,14 +658,13 @@ body {
 
 /* CÓDIGO CORRIGIDO */
 .footer-bottom {
-  text-align: center;
-  width: 100%;
-  padding: 10px 0;
-  font-size: 14px;
-  border-top: 1px solid #333;
-  margin-top: 1.3rem;
-  /* margin-bottom: -2.7rem; */ /* Remova ou comente esta linha */
-  margin-bottom: 1rem; /* Opcional: Adicione uma pequena margem positiva se necessário */
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 14px;
+    border-top: 1px solid #333;
+    margin-top: 1.3rem;
+     margin-bottom: -2.7rem;
 }
 /* FORÇAR CLIQUE (Adicione se os passos 1 e 2 não funcionarem) */
 .footer-column .footer-links a {

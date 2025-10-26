@@ -59,12 +59,6 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    grid-template-areas:
-        "header header"
-        "nav main"
-        "footer footer";
-      grid-template-columns: 200px 1fr;
-      grid-template-rows: auto 1fr auto;
 }
 
 main {
@@ -355,7 +349,7 @@ body {
 .services-grid-section { padding-top: 2rem; padding-bottom: 4rem; /* py-8 md:py-16 */ }
 .services-grid-wrapper {
     /* Styles for fade transition */
-    transition: opacity 0.4s ease-out;
+    transition: opacity 0.4s ease-out; 
 }
 .services-grid-wrapper.fade-out {
     opacity: 0;
