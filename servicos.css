@@ -59,6 +59,12 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    grid-template-areas:
+        "header header"
+        "nav main"
+        "footer footer";
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: auto 1fr auto;
 }
 
 main {
@@ -535,6 +541,7 @@ body {
     line-height: 1.75;
 }
 
+
 .footer-links {
     list-style: none;
     display: flex;
@@ -590,6 +597,7 @@ body {
     .footer-grid { grid-template-columns: repeat(3, 1fr); }
     .footer-contacts { align-items: center; }
     .footer-copyright { text-align: right; }
+   
 }
 @media (min-width: 1024px) {
     .services-grid { grid-template-columns: repeat(3, 1fr); }

@@ -107,8 +107,74 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.addEventListener('click', handleDotClick); videoDotsContainer.appendChild(dot);
         });
 
-        window.addEventListener('wheel', handleGlobalWheel, { passive: false });
+// --- LÓGICA DE DETECÇÃO DE SCROLL/SWIPE (Desktop & Mobile) ---
+    let touchStartY = 0;
+    let touchEndY = 0;
+    const swipeThreshold = 50; // Mínimo de pixels para considerar um swipe
 
+    function handleTouchStart(e) {
+        // Ignora se for pinch zoom
+        if (e.touches.length > 1) return;
+        touchStartY = e.touches[0].clientY;
+        touchEndY = touchStartY; // Reseta o endY
+    }
+
+    function handleTouchMove(e) {
+        // Ignora se for pinch zoom
+        if (e.touches.length > 1) return;
+        touchEndY = e.touches[0].clientY;
+        // Previne o scroll padrão APENAS se o carrossel estiver visível
+        if (isCarouselVisible) {
+             e.preventDefault();
+        }
+    }
+
+    function handleTouchEnd(e) {
+        // Ignora se for pinch zoom
+        if (e.changedTouches.length > 1) return;
+
+        const deltaY = touchStartY - touchEndY; // Positivo = Swipe para cima, Negativo = Swipe para baixo
+
+        if (Math.abs(deltaY) > swipeThreshold) { // Verifica se foi um swipe significativo
+            if (isCarouselVisible) {
+                // Lógica DENTRO do carrossel (semelhante ao handleCarouselWheel)
+                if (isScrolling) return; // Ignora se já está processando
+                 if (deltaY > 0) { // Swipe para Cima (Avançar / Mostrar Conteúdo)
+                    if (currentIndex < movies.length - 1) {
+                         setIsScrolling(true);
+                        updateUI(currentIndex + 1);
+                        setTimeout(() => setIsScrolling(false), 800);
+                    } else {
+                        transitionToMainContent();
+                    }
+                } else { // Swipe para Baixo (Voltar)
+                    if (currentIndex > 0) {
+                        setIsScrolling(true);
+                        updateUI(currentIndex - 1);
+                        setTimeout(() => setIsScrolling(false), 800);
+                     }
+                 }
+            } else {
+                // Lógica FORA do carrossel (semelhante ao handlePageWheel)
+                const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0;
+                 if (deltaY < 0 && contentTop >= 0 && window.scrollY < 50) { // Swipe para Baixo e no topo do conteúdo
+                     // Não previne default aqui, mas chama a transição
+                     transitionToVideoCarousel();
+                }
+             }
+         }
+         // Reseta as posições para o próximo toque
+         touchStartY = 0;
+         touchEndY = 0;
+     }
+
+    // Adiciona os listeners
+    window.addEventListener('wheel', handleGlobalWheel, { passive: false }); // Mantém para Desktop
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: false });
+    // --- FIM LÓGICA DE DETECÇÃO DE SCROLL/SWIPE ---
+    
         contentBelowHero.style.opacity = '0'; contentBelowHero.style.pointerEvents = 'none';
         videoCarouselHero.classList.remove('hidden'); isCarouselVisible = true;
 
