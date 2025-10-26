@@ -1,6 +1,15 @@
+// FORÇA O NAVEGADOR A NÃO RESTAURAR O SCROLL AUTOMATICAMENTE NO LOAD
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- LÓGICA DO MENU MOBILE ---
+    // --- FORÇA SCROLL PARA O TOPO (DENTRO DO DOMCONTENTLOADED) ---
+    setTimeout(() => window.scrollTo(0, 0), 0);
+
+    // --- LÓGICA DO MENU MOBILE (Preservada) ---
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
 
@@ -20,205 +29,257 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // --- FIM LÓGICA DO MENU MOBILE ---
 
-    // --- Dados dos Serviços e Filtros (COM DESCRIÇÕES) ---
-    const servicos = [
-        { id: 1, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>`, categoria: "Pré-Produção", slug: "pre-producao", items: [{ nome: "Roteiro Personalizado", descricao: "Desenvolvemos roteiros originais e adaptados, focados na sua mensagem e público, para filmes, séries ou vídeos institucionais." },{ nome: "Argumento (Curtas, Filmes e Séries)", descricao: "Estruturamos a base narrativa do seu projeto, criando argumentos sólidos que guiarão toda a produção audiovisual." }] },
-        { id: 2, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 1 0 .836L16 20.818V13Z"/><rect width="14" height="18" x="2" y="3" rx="2"/></svg>`, categoria: "Produção e Captação", slug: "producao", items: [{ nome: "Produção Executiva", descricao: "Gerenciamos todos os aspectos logísticos e financeiros da sua produção, garantindo a execução eficiente do projeto." },{ nome: "Co-produção Cinematográfica", descricao: "Colaboramos em parceria com outras produtoras para viabilizar projetos cinematográficos de maior escala." },{ nome: "Captação de Imagem e Vídeo", descricao: "Realizamos filmagens com equipamentos de alta qualidade e equipe técnica especializada para capturar a essência da sua história." },{ nome: "Captação de Som Direto", descricao: "Garantimos a qualidade sonora da sua produção com captação profissional de áudio durante as filmagens." },{ nome: "Making Of", descricao: "Registramos os bastidores da sua produção, criando conteúdo extra valioso para divulgação e documentação." }] },
-        { id: 3, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M6.5 8.76V19h11V8.76L12 14l-5.5-5.24Z"/><path d="M12 14v7"/><path d="M6.5 19H17.5"/></svg>`, categoria: "Pós-Produção Completa", slug: "pos-producao", items: [{ nome: "Edição e Montagem", descricao: "Estruturamos e damos ritmo à sua narrativa visual, transformando o material bruto em um produto final coeso e impactante." },{ nome: "Design Gráfico", descricao: "Criamos elementos visuais, vinhetas, legendas e motion graphics que complementam e enriquecem sua produção." },{ nome: "Color Grading", descricao: "Realizamos o tratamento de cor profissional para garantir a estética visual desejada e a consistência em todo o projeto." },{ nome: "Design de Som e Mixagem", descricao: "Criamos a paisagem sonora do seu projeto, incluindo efeitos, diálogos e música, com mixagem profissional para cinema ou web." },{ nome: "Trilha Sonora Original", descricao: "Composição de músicas exclusivas que potencializam a emoção e a identidade da sua obra audiovisual." },{ nome: "VFX (Efeitos Visuais)", descricao: "Integramos efeitos visuais digitais para criar cenas impactantes, corrigir imperfeições ou construir mundos fantásticos." },{ nome: "Finalização e Fechamento de Arquivos", descricao: "Preparamos os arquivos finais da sua produção nos formatos adequados para distribuição em diversas plataformas (cinema, TV, web)." }] },
-        { id: 4, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>`, categoria: "Conteúdo de Marca e Corporativo", slug: "corporativo", items: [{ nome: "Produção de Vídeos Publicitários", descricao: "Criamos comerciais e vídeos promocionais criativos e eficazes para divulgar sua marca, produto ou serviço." },{ nome: "Produção de Conteúdo para Redes Sociais", descricao: "Desenvolvemos vídeos curtos e dinâmicos, otimizados para engajamento em plataformas como Instagram, TikTok e YouTube." },{ nome: "Vídeos de Treinamento e EAD", descricao: "Produzimos materiais didáticos em vídeo para treinamentos corporativos, cursos online e plataformas de ensino a distância." }] },
-        { id: 5, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg>`, categoria: "Formatos Especiais e Eventos", slug: "eventos", items: [{ nome: "Produção de Documentários", descricao: "Contamos histórias reais com profundidade e sensibilidade, desde a pesquisa inicial até a finalização do filme." },{ nome: "Cobertura de Eventos", descricao: "Registramos seus eventos corporativos, culturais ou sociais com qualidade cinematográfica, criando um vídeo memorável." },{ nome: "Transmissão Ao Vivo (Live Streaming)", descricao: "Realizamos a transmissão ao vivo de eventos, palestras ou shows com múltiplas câmeras e qualidade profissional." }] },
-        { id: 6, icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`, categoria: "Infraestrutura e Suporte", slug: "infraestrutura", items: [{ nome: "Aluguel de Equipamentos e Estúdio", descricao: "Disponibilizamos equipamentos de filmagem profissionais e estrutura de estúdio para locação." }] }
-    ];
-    const filtros = [ /* ... (sem alterações nos filtros) ... */
-        { id: "todos", label: "Todos os Serviços", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg>` },
-        { id: "pre-producao", label: "Pré-Produção", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>` },
-        { id: "producao", label: "Produção", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 1 0 .836L16 20.818V13Z"/><rect width="14" height="18" x="2" y="3" rx="2"/></svg>` },
-        { id: "pos-producao", label: "Pós-Produção", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M6.5 8.76V19h11V8.76L12 14l-5.5-5.24Z"/><path d="M12 14v7"/><path d="M6.5 19H17.5"/></svg>` },
-        { id: "corporativo", label: "Corporativo", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>` },
-        { id: "eventos", label: "Eventos", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg>` },
-        { id: "infraestrutura", label: "Infraestrutura", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l-.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>` }
-    ];
-
-    // --- DOM Elements ---
-    const filterButtonsContainer = document.getElementById('filter-buttons');
-    const servicesGrid = document.getElementById('services-grid');
-    const filterCountElement = document.getElementById('filter-count');
-    const gridWrapper = document.getElementById('services-grid-wrapper');
-
-    let filtroAtivo = "todos"; // Estado inicial
-
-    // --- Funções de Renderização ---
-
-    function createFilterButtonHTML(filtro, isAtivo) {
-        return `
-            <button
-                class="filter-button ${isAtivo ? 'active' : ''}"
-                data-filter="${filtro.id}"
-            >
-                ${filtro.icon}
-                <span>${filtro.label}</span>
-            </button>
-        `;
-    }
-
-    // Função para gerar card de CATEGORIA (com lista de links)
-    function createCategoryCardHTML(servicoData, index) {
-        // Agora acessamos item.nome e item.descricao
-        const itemsHTML = servicoData.items.map((item, idx) => {
-            const email = "alomnesia@gmail.com";
-            // Usamos item.nome para o assunto e corpo
-            const subject = encodeURIComponent(`Interesse no Serviço: ${servicoData.categoria} - ${item.nome}`);
-            const body = encodeURIComponent(
-                `Olá Alomnésia,\n\nGostaria de solicitar um orçamento ou mais informações sobre o serviço:\n"${item.nome}"\n\n[Por favor, adicione aqui mais detalhes sobre seu projeto ou dúvida]\n\nObrigado,\n[Seu Nome]`
-            );
-            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
-
-             return `
-                <li data-animate="fade-up" data-delay="${index * 100 + idx * 50}">
-                    <div class="item-bullet"></div>
-                    <a href="${gmailLink}" target="_blank" rel="noopener noreferrer" class="item-link">
-                        <span>${item.nome}</span>
-                    </a>
-                </li>
-            `;
-        }).join('');
-
-        return `
-            <div class="service-card category-card" data-animate="fade-up" data-delay="${index * 100}">
-                <div class="card-colored-header">
-                    <div class="card-header-content">
-                        <div class="card-icon-container">${servicoData.icon}</div>
-                        <div class="card-header-text"><h3>${servicoData.categoria}</h3></div>
-                    </div>
-                </div>
-                <div class="category-card-body">
-                    <ul class="category-items-list">${itemsHTML}</ul>
-                </div>
-                <div class="card-bottom-bar" style="background-color: var(--orange);"></div> </div>
-        `;
-    }
-
-    // Função para gerar card de ITEM CLICÁVEL (com descrição)
-    function createClickableItemCardHTML(itemData, index) {
-        const email = "alomnesia@gmail.com";
-        // Usa itemData.nome (que é o nome do serviço)
-        const subject = encodeURIComponent(`Interesse no Serviço: ${itemData.nome}`);
-        const body = encodeURIComponent(
-            `Olá Alomnésia,\n\nGostaria de solicitar um orçamento ou mais informações sobre o serviço:\n"${itemData.nome}"\n\n[Por favor, adicione aqui mais detalhes sobre seu projeto ou dúvida]\n\nObrigado,\n[Seu Nome]`
-        );
-        const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
-
-        // O card inteiro é envolvido pelo link <a>
-        // A descrição (itemData.descricao) é adicionada ao corpo
-        return `
-            <a href="${gmailLink}" target="_blank" rel="noopener noreferrer" class="clickable-card service-card item-card" data-animate="fade-up" data-delay="${index * 80}">
-                <div class="card-colored-header">
-                    <div class="card-header-content">
-                        <div class="card-icon-container">${itemData.icon}</div>
-                        <div class="card-header-text"><h3>${itemData.nome}</h3></div>
-                    </div>
-                </div>
-                <div class="category-card-body">
-                    <p class="clickable-item-description">${itemData.descricao}</p>
-                    <p class="click-prompt">Clique para solicitar informações.</p> </div>
-                <div class="card-bottom-bar" style="background-color: var(--orange);"></div> </a>
-        `;
-    }
-
-
-    function renderServices() {
-        gridWrapper.classList.add('fade-out');
-
-        setTimeout(() => {
-            servicesGrid.innerHTML = '';
-            let count = 0;
-            let countLabel = '';
-            servicesGrid.className = 'services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8';
-
-            if (filtroAtivo === "todos") {
-                servicos.forEach((servico, index) => {
-                    servicesGrid.innerHTML += createCategoryCardHTML(servico, index);
-                });
-                count = servicos.length;
-                countLabel = count === 1 ? 'categoria' : 'categorias';
+    // --- LÓGICA NAVBAR SCROLLED ---
+    const nav = document.getElementById('main-nav');
+    let isCarouselVisible = true; // Estado inicial
+    function updateNavBackground() {
+        if (nav) {
+            if (window.scrollY > 50 || !isCarouselVisible) {
+                nav.classList.add('scrolled');
             } else {
-                const categoriaFiltrada = servicos.find(s => s.slug === filtroAtivo);
-                if (categoriaFiltrada) {
-                    // Mapeia os itens, agora passando o objeto item inteiro
-                    const itemsParaCard = categoriaFiltrada.items.map((item, index) => ({
-                        id: `${categoriaFiltrada.id}-${index}`,
-                        icon: categoriaFiltrada.icon, // Ícone da categoria pai
-                        nome: item.nome,            // Nome do item vira título
-                        descricao: item.descricao,  // Descrição do item
-                        slug: filtroAtivo + '-' + index
-                    }));
-
-                    // Chama a função para cards de item clicáveis
-                    itemsParaCard.forEach((itemParaCard, index) => {
-                        servicesGrid.innerHTML += createClickableItemCardHTML(itemParaCard, index);
-                    });
-
-                    count = itemsParaCard.length;
-                    countLabel = count === 1 ? 'serviço' : 'serviços';
-                } else {
-                    servicesGrid.innerHTML = `<div class="empty-state">Nenhum serviço encontrado.</div>`;
-                    countLabel = 'serviços';
-                }
+                nav.classList.remove('scrolled');
             }
-
-            filterCountElement.innerHTML = `Mostrando <span>${count}</span> ${countLabel}`;
-            void gridWrapper.offsetWidth;
-            gridWrapper.classList.remove('fade-out');
-            observeAnimatedElements();
-
-        }, 400);
+        }
     }
+    if (nav) { window.addEventListener('scroll', updateNavBackground); }
 
-    function renderFilterButtons() {
-        filterButtonsContainer.innerHTML = filtros.map(filtro =>
-            createFilterButtonHTML(filtro, filtro.id === filtroAtivo)
-        ).join('');
+    // --- LÓGICA DO CARROSSEL DE VÍDEO (Adaptada para Vimeo com HASH 'h') ---
+    const videoCarouselHero = document.getElementById('video-carousel-hero');
+    const slidesContainer = document.getElementById('video-carousel-slides');
+    const videoDotsContainer = document.getElementById('video-carousel-dots');
+    const titleContainer = document.getElementById('video-carousel-title-container');
+    const titleTextElement = document.getElementById('video-carousel-title-text');
+    const titleElement = titleContainer ? titleContainer.querySelector('.video-carousel-title') : null;
+    const progressInner = document.getElementById('video-carousel-progress-inner');
+    const scrollIndicator = document.getElementById('video-carousel-scroll-indicator');
+    const contentBelowHero = document.getElementById('content-below-hero');
 
-        const buttons = filterButtonsContainer.querySelectorAll('.filter-button');
-        buttons.forEach(button => {
-            button.addEventListener('click', () => {
-                filtroAtivo = button.dataset.filter;
-                renderFilterButtons();
-                renderServices();
-            });
+    // IDs VIMEO ATUALIZADOS
+    const movies = [
+        { id: 1, title: "Traços de uma nova página", vimeoId: "1067145734", h: "23ffd82e34" },
+        { id: 2, title: "Família Fergus  Juntos pelo mundo", vimeoId: "1088783508", h: "98aac31fb5" },
+        { id: 3, title: "Era uma vez...", vimeoId: "1074502769", h: "4625e723ec" }
+    ];
+
+    let currentIndex = 0;
+    let isScrolling = false;
+    const playerInstances = [];
+    const slideElements = [];
+
+    function createCarousel() {
+        if (!videoCarouselHero || !slidesContainer || !videoDotsContainer || !titleTextElement || !progressInner || !scrollIndicator || !contentBelowHero || movies.length === 0) {
+             console.error("Elementos do carrossel ou conteúdo principal não encontrados, ou lista de vídeos vazia.");
+             if(videoCarouselHero) videoCarouselHero.classList.add('hidden');
+             if(contentBelowHero) { contentBelowHero.style.opacity = '1'; contentBelowHero.style.pointerEvents = 'auto'; }
+             isCarouselVisible = false; updateNavBackground(); return;
+        }
+
+        slidesContainer.innerHTML = '';
+        videoDotsContainer.innerHTML = '';
+
+        movies.forEach((movie, index) => {
+            const slide = document.createElement('div');
+            slide.className = `video-carousel-slide ${index === 0 ? 'active' : ''}`;
+            slide.id = `vimeo-player-${index}`;
+
+            // *** MUDANÇA AQUI: Adicionado dnt=1 (Do Not Track) ***
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://player.vimeo.com/video/${movie.vimeoId}?h=${movie.h}&background=1&muted=1&autopause=0&loop=0&byline=0&title=0&quality=auto&dnt=1`; // Adicionado dnt=1
+            iframe.width = "100%"; iframe.height = "100%"; iframe.frameborder = "0";
+            iframe.allow = "autoplay; fullscreen; picture-in-picture";
+            iframe.allowfullscreen = true;
+
+            const overlay = document.createElement('div'); overlay.className = 'video-carousel-overlay';
+
+            slide.appendChild(iframe); slide.appendChild(overlay); slidesContainer.appendChild(slide);
+            slideElements[index] = slide;
+
+            const player = new Vimeo.Player(iframe);
+            playerInstances[index] = player;
+
+            player.on('ended', () => handleVideoEnd(index));
+            player.on('play', () => console.log(`Vimeo ${index} started playing`));
+            player.on('pause', () => console.log(`Vimeo ${index} paused`));
+            player.on('error', (error) => console.error(`Vimeo ${index} error:`, error));
+
+            const dot = document.createElement('button');
+            dot.className = `video-carousel-dot ${index === 0 ? 'active' : ''}`; dot.dataset.index = index;
+            dot.addEventListener('click', handleDotClick); videoDotsContainer.appendChild(dot);
         });
+
+        window.addEventListener('wheel', handleGlobalWheel, { passive: false });
+
+        contentBelowHero.style.opacity = '0'; contentBelowHero.style.pointerEvents = 'none';
+        videoCarouselHero.classList.remove('hidden'); isCarouselVisible = true;
+
+        updateUI(0, false);
+
+         if (playerInstances[0]) {
+             playerInstances[0].ready().then(() => {
+                 console.log("Player 0 ready, attempting play...");
+                 playCurrentVideo();
+             }).catch(error => console.error("Player 0 ready error:", error));
+         } else {
+            setTimeout(playCurrentVideo, 300);
+         }
+
+        updateNavBackground();
     }
 
-    // --- Lógica de Animação (Scroll) ---
-    let observer;
+    function playCurrentVideo() {
+        if (!isCarouselVisible || !playerInstances[currentIndex]) return;
 
-    function observeAnimatedElements() {
-        if (observer) { observer.disconnect(); }
-        const animatedElements = document.querySelectorAll('[data-animate]');
-        if (animatedElements.length === 0) return;
-
-        observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const delay = entry.target.dataset.delay || 0;
-                    setTimeout(() => {
-                        entry.target.classList.add('is-visible');
-                    }, parseInt(delay));
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        animatedElements.forEach(el => {
-            el.classList.remove('is-visible');
-            void el.offsetWidth;
-            observer.observe(el);
+        // Pausa outros players
+        playerInstances.forEach((player, idx) => {
+            if (idx !== currentIndex) {
+                player.pause().catch(e => {});
+                player.setCurrentTime(0).catch(e => {});
+            }
         });
+
+        // *** MUDANÇA AQUI: Espera ready() antes de tocar ***
+        playerInstances[currentIndex].ready().then(() => {
+            console.log(`Player ${currentIndex} ready, playing.`);
+            playerInstances[currentIndex].play().catch(error => { console.warn("Vimeo Autoplay impedido:", error); });
+        }).catch(error => console.error(`Player ${currentIndex} ready error on play:`, error));
     }
 
-    // --- Inicialização ---
-    renderFilterButtons();
-    renderServices();
-    observeAnimatedElements();
 
-});
+    function pauseCurrentVideo() {
+        if (playerInstances[currentIndex]) {
+             playerInstances[currentIndex].pause().catch(e => {});
+        }
+    }
+
+
+    function updateUI(newIndex, playVideo = true) {
+         if (!isCarouselVisible && playVideo && newIndex !== currentIndex) return;
+        const oldIndex = currentIndex;
+        currentIndex = newIndex;
+
+        slideElements.forEach((slide, index) => { slide.classList.toggle('active', index === currentIndex); });
+        const dots = videoDotsContainer.querySelectorAll('.video-carousel-dot');
+        dots.forEach((dot, index) => { dot.classList.toggle('active', index === currentIndex); });
+
+        if (titleElement) {
+            titleElement.classList.remove('visible');
+             setTimeout(() => {
+                 if(movies[currentIndex]) { titleTextElement.textContent = movies[currentIndex].title; titleElement.classList.add('visible'); }
+             }, 50);
+        } else if (titleTextElement && movies[currentIndex]) { titleTextElement.textContent = movies[currentIndex].title; }
+
+        if (progressInner) { progressInner.style.width = `${((currentIndex + 1) / movies.length) * 100}%`; }
+        if (scrollIndicator) { scrollIndicator.classList.toggle('hidden', currentIndex === movies.length - 1); }
+
+        // Pausa o vídeo anterior
+        if (playVideo && oldIndex !== newIndex && playerInstances[oldIndex]) {
+            playerInstances[oldIndex].pause().catch(e => {});
+            playerInstances[oldIndex].setCurrentTime(0).catch(e => {});
+        }
+
+        if (playVideo) {
+            // *** MUDANÇA AQUI: Usa a função playCurrentVideo que já tem o ready() ***
+            // Pequeno delay pode ser útil para a transição CSS
+             setTimeout(playCurrentVideo, 150);
+        }
+    }
+
+    function handleVideoEnd(endedIndex) {
+        console.log(`Video ${endedIndex} ended.`);
+        if (!isCarouselVisible || endedIndex !== currentIndex) return;
+        if (currentIndex < movies.length - 1) { updateUI(currentIndex + 1); }
+        else { transitionToMainContent(); }
+    }
+
+    function handleGlobalWheel(e) { /* ... (igual ao anterior) ... */
+        if (isCarouselVisible) { handleCarouselWheel(e); }
+        else { handlePageWheel(e); }
+    }
+    function handleCarouselWheel(e) { /* ... (igual ao anterior) ... */
+        if (isScrolling) { e.preventDefault(); return };
+        e.preventDefault();
+        const scrollThreshold = 10;
+        if (e.deltaY > scrollThreshold) {
+            if (currentIndex < movies.length - 1) { setIsScrolling(true); updateUI(currentIndex + 1); setTimeout(() => setIsScrolling(false), 800); }
+            else { transitionToMainContent(); }
+        } else if (e.deltaY < -scrollThreshold) {
+            if (currentIndex > 0) { setIsScrolling(true); updateUI(currentIndex - 1); setTimeout(() => setIsScrolling(false), 800); }
+        }
+    }
+    function handlePageWheel(e) { /* ... (igual ao anterior) ... */
+        if (isScrolling) { e.preventDefault(); return };
+         const scrollThreshold = 10;
+         const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0;
+         if (e.deltaY < -scrollThreshold && contentTop >= 0 && window.scrollY < 50) { e.preventDefault(); transitionToVideoCarousel(); }
+    }
+    function handleDotClick(event) { /* ... (igual ao anterior) ... */
+        if (isScrolling || !isCarouselVisible) return;
+        const newIndex = parseInt(event.target.dataset.index);
+        if (newIndex !== currentIndex) { updateUI(newIndex); }
+    }
+    function setIsScrolling(value) { isScrolling = value; }
+
+    function transitionToMainContent() { /* ... (igual ao anterior) ... */
+        if (!isCarouselVisible) return;
+        console.log("Transicionando para conteúdo principal...");
+        isCarouselVisible = false; pauseCurrentVideo();
+        videoCarouselHero.classList.add('hidden');
+        if(contentBelowHero) { contentBelowHero.style.opacity = '1'; contentBelowHero.style.pointerEvents = 'auto'; }
+        updateNavBackground();
+        setTimeout(() => { const navHeight = nav ? nav.offsetHeight : 65; const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0; if (contentTop > navHeight + 10) { if(contentBelowHero) contentBelowHero.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }, 700);
+    }
+    function transitionToVideoCarousel() { /* ... (igual ao anterior) ... */
+        if (isCarouselVisible || isScrolling) return;
+        console.log("Transicionando de volta para o carrossel...");
+        isCarouselVisible = true; setIsScrolling(true);
+        if(contentBelowHero) { contentBelowHero.style.opacity = '0'; contentBelowHero.style.pointerEvents = 'none'; }
+        videoCarouselHero.classList.remove('hidden');
+        updateUI(currentIndex, true);
+        updateNavBackground();
+        setTimeout(() => setIsScrolling(false), 700);
+    }
+
+    // --- Inicialização Carrossel Vídeo ---
+    createCarousel();
+
+    // --- Lógica do Carrossel de Imagens (Preservada com IDs ajustados) ---
+    const imageCarouselTrack = document.getElementById('image-carousel-track');
+    const imageDotsContainer = document.getElementById('image-carousel-dots');
+    const imageNextButton = document.getElementById('image-next-btn');
+    const imagePrevButton = document.getElementById('image-prev-btn');
+
+    if (imageCarouselTrack && imageDotsContainer && imageNextButton && imagePrevButton) {
+        // ... (código COMPLETO do carrossel de imagens v10, sem alterações internas) ...
+        const imageProductions = [ /* Seus dados de imagem aqui... */
+             { id: "tracos-de-uma-nova-pagina", title: "Traços de Uma Nova Página", type: "Longa", poster: "cartaz/cartaz1.jpg", url: "tracospagina.html" },
+             { id: "familia-fergus", title: "Família Fergus", type: "Série", poster: "cartaz/cartaz2.jpg", url: "familia.html" },
+             { id: "era-uma-vez-serie", title: "Era Uma Vez - Série", type: "Série", poster: "cartaz/cartaz1.jpg", url: "eraumavez.html" },
+             { id: "erva-daninha", title: "Erva Daninha", type: "Curta", poster: "cartaz/cartaz2.jpg" },
+             { id: "interludio", title: "Interlúdio", type: "Curta", poster: "cartaz/cartaz1.jpg", url: "interludio.html" },
+             { id: "era-uma-vez-em-cordel", title: "Era Uma Vez em Cordel", type: "Curta", poster: "cartaz/cartaz era uma vez.jpg", url: "cordel.html" },
+             { id: "cyberfunk", title: "CyberFunk", type: "Curta", poster: "cartaz/Cartaz Cyberfunk.png", url: "cyberfunk.html" },
+             { id: "lembrancas-de-uma-caminhada", title: "Lembranças de Uma Caminhada", type: "Curta", poster: "cartaz/cartaz LEMBRANÇAS DE UMA CAMINHADA 2.png", url: "lembrancas.html" }
+        ];
+
+        let imageCurrentIndex = 0; let imageTrackIndex = 0; let imageVisibleSlides = 0; let imageCloneCount = 0;
+        let imageIsTransitioning = false; let imageAutoplayInterval; let imageRestartAutoplayTimer;
+
+        function createImageSlideHTML(prod) { return `<div class="carousel-slide"><a href="${prod.url}" class="slide-content"><img src="${prod.poster}" alt="${prod.title}"><div class="slide-overlay"><div><span class="slide-type">${prod.type}</span><h3>${prod.title}</h3></div></div></a></div>`; }
+        function renderImageSlides() { imageVisibleSlides = getImageVisibleSlidesCount(); imageCloneCount = imageVisibleSlides > 0 ? imageVisibleSlides : 1; const clonesStart = imageProductions.slice(-imageCloneCount); const clonesEnd = imageProductions.slice(0, imageCloneCount); imageCarouselTrack.innerHTML = [ ...(clonesStart.length > 0 ? clonesStart.map(createImageSlideHTML) : []), ...imageProductions.map(createImageSlideHTML), ...(clonesEnd.length > 0 ? clonesEnd.map(createImageSlideHTML) : []) ].join(''); imageCurrentIndex = 0; imageTrackIndex = imageCloneCount; updateImageCarousel(false); renderImageDots(); }
+        function renderImageDots() { imageDotsContainer.innerHTML = ''; const numDots = imageProductions.length; if (numDots <= imageVisibleSlides || numDots === 0) { imageDotsContainer.style.display = 'none'; return; } imageDotsContainer.style.display = 'flex'; for (let i = 0; i < numDots; i++) { const dot = document.createElement('button'); dot.className = 'dot'; dot.addEventListener('click', () => { if (imageIsTransitioning) return; imageCurrentIndex = i; imageTrackIndex = i + imageCloneCount; updateImageCarousel(true); resetImageAutoplay(); }); imageDotsContainer.appendChild(dot); } updateImageDots(); }
+        function updateImageCarousel(withAnimation = true) { if (imageIsTransitioning && withAnimation) return; imageIsTransitioning = withAnimation; const slides = imageCarouselTrack.children; if (slides.length === 0) return; const slideWidth = slides.length > imageCloneCount * 2 ? slides[imageCloneCount].offsetWidth : 0; const gap = parseInt(window.getComputedStyle(imageCarouselTrack).gap || '0px'); const offset = -imageTrackIndex * (slideWidth + gap); imageCarouselTrack.style.transition = withAnimation ? 'transform 0.5s ease-out' : 'none'; imageCarouselTrack.style.transform = `translateX(${offset}px)`; updateImageDots(); }
+        function updateImageDots() { const dots = imageDotsContainer.children; if (imageProductions.length === 0) return; Array.from(dots).forEach((dot, index) => { let activeIndex = (imageCurrentIndex + imageProductions.length) % imageProductions.length; dot.classList.toggle('active', index === activeIndex); }); }
+        function getImageVisibleSlidesCount() { if (window.innerWidth >= 768) return 3; if (window.innerWidth > 0) return 1; return 0; }
+        function nextImage() { if (imageIsTransitioning || imageProductions.length === 0) return; imageCurrentIndex++; imageTrackIndex++; updateImageCarousel(true); }
+        function prevImage() { if (imageIsTransitioning || imageProductions.length === 0) return; imageCurrentIndex--; imageTrackIndex--; updateImageCarousel(true); }
+        function handleImageTransitionEnd() { imageIsTransitioning = false; if (imageProductions.length === 0) return; if (imageCurrentIndex >= imageProductions.length) { imageCurrentIndex = 0; imageTrackIndex = imageCloneCount; updateImageCarousel(false); } if (imageCurrentIndex < 0) { imageCurrentIndex = imageProductions.length - 1; imageTrackIndex = (imageProductions.length - 1) + imageCloneCount; updateImageCarousel(false); } }
+        imageNextButton.addEventListener('click', () => { nextImage(); resetImageAutoplay(); }); imagePrevButton.addEventListener('click', () => { prevImage(); resetImageAutoplay(); }); imageCarouselTrack.addEventListener('transitionend', handleImageTransitionEnd);
+        function startImageAutoplay() { clearInterval(imageAutoplayInterval); if (imageProductions.length > imageVisibleSlides) { imageAutoplayInterval = setInterval(nextImage, 3000); } }
+        function resetImageAutoplay() { clearInterval(imageAutoplayInterval); clearTimeout(imageRestartAutoplayTimer); if (imageProductions.length > imageVisibleSlides) { imageRestartAutoplayTimer = setTimeout(startImageAutoplay, 5000); } }
+        renderImageSlides(); startImageAutoplay();
+        window.addEventListener('resize', () => { renderImageSlides(); startImageAutoplay(); });
+
+    } else { console.warn("Elementos do carrossel de imagens não encontrados. Ele não será inicializado."); }
+    // --- FIM LÓGICA DO CARROSSEL DE IMAGENS ---
+
+}); // Fim do DOMContentLoaded
