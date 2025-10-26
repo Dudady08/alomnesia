@@ -1,0 +1,124 @@
+# =================================================================
+# Arquivo: _headers
+# Objetivo: Redirecionamentos 301 (Permanentes) para Cloudflare Pages
+# =================================================================
+
+/quem-somos
+  Location: /equipe.html
+  Status: 301
+
+/clipes
+  Location: /
+  Status: 301
+
+/cinema
+  Location: /producoes.html
+  Status: 301
+
+/contato
+  Location: /contatos.html
+  Status: 301
+
+/o-que-fazemos-produtora-de-audiovisual
+  Location: /sobrealomnesia.html
+  Status: 301
+
+/servicos
+  Location: /prestacaodeservicos.html
+  Status: 301
+
+/teatro
+  Location: /
+  Status: 301
+
+/projetos
+  Location: /producoes.html
+  Status: 301
+
+/fotos-evento
+  Location: /
+  Status: 301
+
+/foto-evento
+  Location: /
+  Status: 301
+
+/ensaios
+  Location: /
+  Status: 301
+
+/projetos/abrickadabra
+  Location: /
+  Status: 301
+
+/retorica
+  Location: /
+  Status: 301
+
+/cazuza-conversa
+  Location: /
+  Status: 301
+
+/dance-hitorinhas
+  Location: /
+  Status: 301
+
+/sala-de-reunioes
+  Location: /
+  Status: 301
+
+/quem-somos-copy-2
+  Location: /equipe.html
+  Status: 301
+
+/curtas-e-documentarios
+  Location: /producoes.html
+  Status: 301
+
+/making-off
+  Location: /
+  Status: 301
+
+/portfolio-fotos
+  Location: /producoes.html
+  Status: 301
+
+/quem-somos-copy
+  Location: /equipe.html
+  Status: 301
+
+/portfolio-videos
+  Location: /producoes.html
+  Status: 301
+
+/construcao
+  Location: /
+  Status: 301
+
+/portfolio_page
+  Location: /producoes.html
+  Status: 301
+
+/portfolio_page/vimeo-fx-showreel
+  Location: /producoes.html
+  Status: 301
+
+/portfolio_page/venice-art-pavilion
+  Location: /producoes.html
+  Status: 301
+
+/portfolio_page/berlin-design-week
+  Location: /producoes.html
+  Status: 301
+
+/portfolio_page/stockholm-fashion
+  Location: /producoes.html
+  Status: 301
+
+/portfolio_page/last-iceland-sunshine
+  Location: /producoes.html
+  Status: 301
+
+/portfolio_page/art-design-blvd
+  Location: /producoes.html
+  Status: 301

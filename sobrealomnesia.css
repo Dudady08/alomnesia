@@ -598,7 +598,9 @@ a {
 }
 
 
-
+.logo:hover {
+    color: orangered;
+}
 
 .footer-links a {
     color: white;

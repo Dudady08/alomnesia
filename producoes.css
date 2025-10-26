@@ -357,8 +357,8 @@ a {
     align-items: center;
     justify-content: center;
     gap: 0.5rem; /* gap-2 */
-    background-color: white;
-    color: black;
+    background-color: rgb(249, 107, 55);
+    color: whitesmoke;
     padding: 0.625rem 1.25rem; /* px-5 py-2.5 */
     border-radius: 0.3rem; /* rounded-sm */
     font-size: 0.875rem; /* text-sm */
@@ -368,7 +368,7 @@ a {
 }
 
 .details-button:hover {
-    background-color: #F3F4F6; /* hover:bg-gray-100 */
+    background-color: orangered; /* hover:bg-gray-100 */
 }
 
 .details-button svg {
@@ -474,6 +474,10 @@ a {
 .logo img {
   width: 60px; /* ajuste o tamanho conforme quiser */
   height: auto;
+}
+
+.logo:hover {
+    color: orangered;
 }
 
 .footer-links a {

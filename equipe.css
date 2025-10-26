@@ -263,7 +263,7 @@ a {
 .card-image {
     position: relative;
     width: 40%;
-    height: 90vh;
+    height: 100%;
     overflow: hidden;
     display: flex;
 }
@@ -405,6 +405,20 @@ a {
     font-weight: 300;
     margin-bottom: 1.5rem;
     letter-spacing: 0.05em;
+}
+.logo {
+  display: flex;
+  gap: 0.6rem; /* espaço entre o ícone e o texto */
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.logo img {
+  width: 60px; /* ajuste o tamanho conforme quiser */
+  height: auto;
+}
+.logo:hover {
+    color: orangered;
 }
 .footer-links {
     list-style: none;

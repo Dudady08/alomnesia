@@ -328,9 +328,9 @@ body {
     background-color: var(--filter-button-bg); color: var(--text-gray-300);
     border: 1px solid var(--border-blue-900-30);
 }
-.filter-button:hover { background-color: var(--filter-button-hover); color: var(--text-white); }
+.filter-button:hover { background-color: rgb(253, 90, 30); color: var(--text-white); }
 .filter-button.active {
-    background: linear-gradient(to right, var(--filter-button-active-start), var(--filter-button-active-end));
+    background: orangered;
     color: var(--text-white);
     box-shadow: 0 10px 15px -3px var(--shadow-blue-500-30), 0 4px 6px -4px var(--shadow-blue-500-30); /* shadow-lg shadow-blue-500/30 */
     border-color: transparent;
@@ -408,7 +408,7 @@ body {
     border-radius: 9999px; margin-top: 0.6em; /* Aprox mt-2 based on line-height */
     transition: transform 0.3s ease;
 }
-.category-items-list li:hover .item-bullet { transform: scale(1.5); }
+.category-items-list li:hover .item-bullet { transform: scale(1.5); background: orangered;}
 .category-items-list li span {
     color: var(--text-gray-300); font-size: 1.125rem; line-height: 1.75; /* text-gray-200 text-lg leading-relaxed */
     transition: all 0.3s ease;
@@ -440,14 +440,14 @@ body {
 .cta-content h2 { font-size: 1.875rem; font-weight: 700; color: var(--text-white); margin-bottom: 1rem; } /* text-3xl md:text-4xl mb-4 */
 .cta-content p { font-size: 1.25rem; color: var(--text-blue-100); margin-bottom: 2rem; max-width: 42rem; margin-left: auto; margin-right: auto; } /* text-xl mb-8 max-w-2xl mx-auto */
 .cta-button {
-    background-color: var(--text-white); color: var(--bg-gradient-mid);
+    background-color: rgb(244, 96, 42); color: whitesmoke;
     padding: 1rem 2rem; /* px-8 py-4 */ border-radius: 0.75rem; /* rounded-xl */
     font-weight: 600; font-size: 1.125rem; /* font-semibold text-lg */
     border: none; cursor: pointer; text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); /* shadow-xl */
 }
-.cta-button:hover { background-color: var(--text-blue-100); transform: scale(1.05); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); }
+.cta-button:hover { background-color: rgba(255, 68, 0, 0.849); transform: scale(1.05); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); }
 @media (min-width: 768px) {
     .cta-box { padding: 4rem; }
     .cta-content h2 { font-size: 2.25rem; }
@@ -553,8 +553,9 @@ body {
   height: auto;
 }
 
-
-
+.logo:hover {
+    color: orangered;
+}
 
 .footer-links a {
     color: white;
