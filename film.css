@@ -180,6 +180,7 @@ a { text-decoration: none; color: inherit; }
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    margin-left: 1.5rem;
 }
 .poster-image img {
     width: 100%;
@@ -208,6 +209,9 @@ a { text-decoration: none; color: inherit; }
     font-size: 1.125rem;
     line-height: 1.75;
     color: whitesmoke;
+     text-align: justify;
+  text-justify: inter-word; /* distribui o espaço entre palavras */
+  margin-right: 1.5rem;
 }
 .meta-info {
     display: grid;
@@ -218,7 +222,7 @@ a { text-decoration: none; color: inherit; }
 .meta-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;}
 .meta-item svg { color: var(--orange); flex-shrink: 0; }
 .meta-label { font-size: 0.875rem; color: whitesmoke; text-transform: uppercase; }
-.meta-value { font-size: 1rem; font-weight: 600; color: whitesmoke; }
+.meta-value { font-size: 1rem; font-weight: 600; color: whitesmoke; margin-top: 0.6rem; }
 
 /* Conteúdo que fica abaixo do grid */
 .full-width-content {

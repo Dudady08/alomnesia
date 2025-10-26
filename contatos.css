@@ -53,7 +53,7 @@ body {
     left: 0;
     right: 0;
     z-index: 50;
-    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40), var(--navy));
+    background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -656,14 +656,22 @@ body {
     color: var(--orange);
 }
 
+/* CÓDIGO CORRIGIDO */
 .footer-bottom {
-    text-align: center;
-    width: 100%;
-    padding: 10px 0;
-    font-size: 14px;
-    border-top: 1px solid #333;
-    margin-top: 1.3rem;
-    margin-bottom: -2.7rem;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 14px;
+  border-top: 1px solid #333;
+  margin-top: 1.3rem;
+  /* margin-bottom: -2.7rem; */ /* Remova ou comente esta linha */
+  margin-bottom: 1rem; /* Opcional: Adicione uma pequena margem positiva se necessário */
+}
+/* FORÇAR CLIQUE (Adicione se os passos 1 e 2 não funcionarem) */
+.footer-column .footer-links a {
+  pointer-events: auto !important; /* Força os links a serem clicáveis */
+  position: relative; /* Garante que não fiquem "atrás" de outros elementos */
+  z-index: 1; /* Garante que fiquem "acima" */
 }
 
 /* =====================================================

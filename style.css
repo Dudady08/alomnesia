@@ -204,12 +204,12 @@ main#main-content {
 .section-container h2 { font-size: 3rem; font-weight: 900; color: var(--white); margin-bottom: 1rem; }
 .section.bg-light .section-container h2 { color: var(--navy); }
 .title-underline { width: 5rem; height: 4px; background-color: var(--orange); margin: 0 auto 2rem; }
-.description { font-size: 1.125rem; color: #cbd5e1; line-height: 1.75; }
-.section.bg-light .description { color: #475569; }
+.description { font-size: 1.2rem; color: #cbd5e1; line-height: 1.75; }
+.section.bg-light .description { color: #475569;}
 
 /* ============ CARROSSEL DE IMAGENS ORIGINAL ============ */
 .carousel-wrapper { position: relative; padding: 0 4rem; }
-.carousel-container { overflow: hidden; }
+.carousel-container { overflow: hidden; margin-top:14rem }
 .carousel-track { display: flex; gap: 1.5rem; transition: transform 0.5s ease-out; }
 .carousel-slide { flex: 0 0 100%; aspect-ratio: 2 / 3; border-radius: 0.75rem; overflow: hidden; position: relative; }
 @media (min-width: 768px) { .carousel-slide { flex-basis: calc((100% / 3) - 1rem); } }

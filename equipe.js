@@ -32,5 +32,31 @@ document.addEventListener('DOMContentLoaded', function() {
             // Por enquanto, ela é sempre escura.
         });
     }
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (seu código existente do menu, formulário, etc.) ...
 
+    // --- LÓGICA PARA LINK DO WHATSAPP ---
+    const whatsappLink = document.getElementById('whatsapp-link');
+
+    if (whatsappLink) {
+        // Função simples para detetar mobile (baseado no User Agent ou touch events)
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        }
+
+        if (isMobileDevice()) {
+            // Se for mobile, muda o href para o esquema whatsapp://
+            // Remove o código do país se já estiver no formato internacional correto para whatsapp://
+            const phoneNumber = "5521988871005"; // Garanta que está SÓ NÚMEROS
+            whatsappLink.href = `whatsapp://send?phone=${phoneNumber}`;
+            whatsappLink.removeAttribute('target'); // target="_blank" não é necessário para app nativo
+            console.log("Link do WhatsApp ajustado para mobile:", whatsappLink.href); 
+        } else {
+            // Mantém o link wa.me para desktop
+            console.log("Link do WhatsApp mantido para desktop:", whatsappLink.href);
+        }
+    }
+    // --- FIM LÓGICA WHATSAPP ---
+
+}); // Fim do DOMContentLoaded
 });
