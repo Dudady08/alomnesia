@@ -4,7 +4,41 @@ if ('scrollRestoration' in history) {
 }
 window.scrollTo(0, 0);
 
+// --- VARIÁVEIS GLOBAIS PARA CONTROLE DE API ---
+let ytApiReady = false;
+let domReady = false;
+let playerInstances = [];
+const slideElements = [];
+
+// =================================================================
+// === DADOS DOS VÍDEOS ATUALIZADOS PARA YOUTUBE ===
+// =================================================================
+const movies = [
+    { id: 1, title: "Traços de uma nova página", youtubeId: "c33Ivt9gLPM" },
+    { id: 2, title: "Família Fergus  Juntos pelo mundo", youtubeId: "Oq0vVGJ2dJ0" },
+    { id: 3, title: "Era uma vez...", youtubeId: "mV_rM-o0Tzc" }
+];
+// =================================================================
+
+
+// --- ELEMENTOS DO CARROSSEL DE VÍDEO (definidos no escopo global do script) ---
+let videoCarouselHero, slidesContainer, videoDotsContainer, titleContainer, titleTextElement, titleElement, progressInner, scrollIndicator, contentBelowHero;
+let currentIndex = 0;
+let isScrolling = false;
+let isCarouselVisible = true;
+let nav;
+
+// --- FUNÇÃO CHAMADA PELA API DO YOUTUBE QUANDO PRONTA ---
+function onYouTubeIframeAPIReady() {
+    console.log("YouTube API Pronta.");
+    ytApiReady = true;
+    startCarouselIfReady();
+}
+
+// --- FUNÇÃO CHAMADA QUANDO O DOM ESTÁ PRONTO ---
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM Pronto.");
+    domReady = true;
 
     // --- FORÇA SCROLL PARA O TOPO (DENTRO DO DOMCONTENTLOADED) ---
     setTimeout(() => window.scrollTo(0, 0), 0);
@@ -30,301 +64,348 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- FIM LÓGICA DO MENU MOBILE ---
 
     // --- LÓGICA NAVBAR SCROLLED ---
-    const nav = document.getElementById('main-nav');
-    let isCarouselVisible = true; // Estado inicial
-    function updateNavBackground() {
-        if (nav) {
-            if (window.scrollY > 50 || !isCarouselVisible) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        }
-    }
+    nav = document.getElementById('main-nav');
     if (nav) { window.addEventListener('scroll', updateNavBackground); }
-
-    // --- LÓGICA DO CARROSSEL DE VÍDEO (Adaptada para Vimeo com HASH 'h') ---
-    const videoCarouselHero = document.getElementById('video-carousel-hero');
-    const slidesContainer = document.getElementById('video-carousel-slides');
-    const videoDotsContainer = document.getElementById('video-carousel-dots');
-    const titleContainer = document.getElementById('video-carousel-title-container');
-    const titleTextElement = document.getElementById('video-carousel-title-text');
-    const titleElement = titleContainer ? titleContainer.querySelector('.video-carousel-title') : null;
-    const progressInner = document.getElementById('video-carousel-progress-inner');
-    const scrollIndicator = document.getElementById('video-carousel-scroll-indicator');
-    const contentBelowHero = document.getElementById('content-below-hero');
-
-    // IDs VIMEO ATUALIZADOS
-    const movies = [
-        { id: 1, title: "Traços de uma nova página", vimeoId: "1067145734", h: "23ffd82e34" },
-        { id: 2, title: "Família Fergus  Juntos pelo mundo", vimeoId: "1088783508", h: "98aac31fb5" },
-        { id: 3, title: "Era uma vez...", vimeoId: "1074502769", h: "4625e723ec" }
-    ];
-
-    let currentIndex = 0;
-    let isScrolling = false;
-    const playerInstances = [];
-    const slideElements = [];
-
-    function createCarousel() {
-        if (!videoCarouselHero || !slidesContainer || !videoDotsContainer || !titleTextElement || !progressInner || !scrollIndicator || !contentBelowHero || movies.length === 0) {
-             console.error("Elementos do carrossel ou conteúdo principal não encontrados, ou lista de vídeos vazia.");
-             if(videoCarouselHero) videoCarouselHero.classList.add('hidden');
-             if(contentBelowHero) { contentBelowHero.style.opacity = '1'; contentBelowHero.style.pointerEvents = 'auto'; }
-             isCarouselVisible = false; updateNavBackground(); return;
-        }
-
-        slidesContainer.innerHTML = '';
-        videoDotsContainer.innerHTML = '';
-
-        movies.forEach((movie, index) => {
-            const slide = document.createElement('div');
-            slide.className = `video-carousel-slide ${index === 0 ? 'active' : ''}`;
-            slide.id = `vimeo-player-${index}`;
-
-            // *** MUDANÇA AQUI: Adicionado dnt=1 (Do Not Track) ***
-            const iframe = document.createElement('iframe');
-            iframe.src = `https://player.vimeo.com/video/${movie.vimeoId}?h=${movie.h}&background=1&muted=1&autopause=0&loop=0&byline=0&title=0&quality=auto&dnt=1`; // Adicionado dnt=1
-            iframe.width = "100%"; iframe.height = "100%"; iframe.frameborder = "0";
-            iframe.allow = "autoplay; fullscreen; picture-in-picture";
-            iframe.allowfullscreen = true;
-
-            const overlay = document.createElement('div'); overlay.className = 'video-carousel-overlay';
-
-            slide.appendChild(iframe); slide.appendChild(overlay); slidesContainer.appendChild(slide);
-            slideElements[index] = slide;
-
-            const player = new Vimeo.Player(iframe);
-            playerInstances[index] = player;
-
-            player.on('ended', () => handleVideoEnd(index));
-            player.on('play', () => console.log(`Vimeo ${index} started playing`));
-            player.on('pause', () => console.log(`Vimeo ${index} paused`));
-            player.on('error', (error) => console.error(`Vimeo ${index} error:`, error));
-
-            const dot = document.createElement('button');
-            dot.className = `video-carousel-dot ${index === 0 ? 'active' : ''}`; dot.dataset.index = index;
-            dot.addEventListener('click', handleDotClick); videoDotsContainer.appendChild(dot);
-        });
-
-// --- LÓGICA DE DETECÇÃO DE SCROLL/SWIPE (Desktop & Mobile) ---
-    let touchStartY = 0;
-    let touchEndY = 0;
-    const swipeThreshold = 50; // Mínimo de pixels para considerar um swipe
-
-    function handleTouchStart(e) {
-        // Ignora se for pinch zoom
-        if (e.touches.length > 1) return;
-        touchStartY = e.touches[0].clientY;
-        touchEndY = touchStartY; // Reseta o endY
-    }
-
-    function handleTouchMove(e) {
-        // Ignora se for pinch zoom
-        if (e.touches.length > 1) return;
-        touchEndY = e.touches[0].clientY;
-        // Previne o scroll padrão APENAS se o carrossel estiver visível
-        if (isCarouselVisible) {
-             e.preventDefault();
-        }
-    }
-
-    function handleTouchEnd(e) {
-        // Ignora se for pinch zoom
-        if (e.changedTouches.length > 1) return;
-
-        const deltaY = touchStartY - touchEndY; // Positivo = Swipe para cima, Negativo = Swipe para baixo
-
-        if (Math.abs(deltaY) > swipeThreshold) { // Verifica se foi um swipe significativo
-            if (isCarouselVisible) {
-                // Lógica DENTRO do carrossel (semelhante ao handleCarouselWheel)
-                if (isScrolling) return; // Ignora se já está processando
-                 if (deltaY > 0) { // Swipe para Cima (Avançar / Mostrar Conteúdo)
-                    if (currentIndex < movies.length - 1) {
-                         setIsScrolling(true);
-                        updateUI(currentIndex + 1);
-                        setTimeout(() => setIsScrolling(false), 800);
-                    } else {
-                        transitionToMainContent();
-                    }
-                } else { // Swipe para Baixo (Voltar)
-                    if (currentIndex > 0) {
-                        setIsScrolling(true);
-                        updateUI(currentIndex - 1);
-                        setTimeout(() => setIsScrolling(false), 800);
-                     }
-                 }
-            } else {
-                // Lógica FORA do carrossel (semelhante ao handlePageWheel)
-                const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0;
-                 if (deltaY < 0 && contentTop >= 0 && window.scrollY < 50) { // Swipe para Baixo e no topo do conteúdo
-                     // Não previne default aqui, mas chama a transição
-                     transitionToVideoCarousel();
-                }
-             }
-         }
-         // Reseta as posições para o próximo toque
-         touchStartY = 0;
-         touchEndY = 0;
-     }
-
-    // Adiciona os listeners
-    window.addEventListener('wheel', handleGlobalWheel, { passive: false }); // Mantém para Desktop
+    
+    // --- Lógica de Scroll/Swipe (Adicionada aqui para ter acesso às funções) ---
+    window.addEventListener('wheel', handleGlobalWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('touchend', handleTouchEnd, { passive: false });
-    // --- FIM LÓGICA DE DETECÇÃO DE SCROLL/SWIPE ---
-    
-        contentBelowHero.style.opacity = '0'; contentBelowHero.style.pointerEvents = 'none';
-        videoCarouselHero.classList.remove('hidden'); isCarouselVisible = true;
 
-        updateUI(0, false);
+    // --- LÓGICA DO CARROSSEL DE IMAGENS (Preservada) ---
+    initializeImageCarousel();
 
-         if (playerInstances[0]) {
-             playerInstances[0].ready().then(() => {
-                 console.log("Player 0 ready, attempting play...");
-                 playCurrentVideo();
-             }).catch(error => console.error("Player 0 ready error:", error));
-         } else {
-            setTimeout(playCurrentVideo, 300);
-         }
+    // --- TENTA INICIAR O CARROSSEL DE VÍDEO ---
+    startCarouselIfReady();
+}); // Fim do DOMContentLoaded
 
-        updateNavBackground();
+
+// --- INICIALIZAÇÃO DO CARROSSEL DE VÍDEO (controlado por flags) ---
+function startCarouselIfReady() {
+    // Só executa se AMBOS o DOM e a API do YT estiverem prontos
+    if (ytApiReady && domReady) {
+        console.log("DOM e API prontos. Criando carrossel de vídeo...");
+        createCarousel();
+    }
+}
+
+function createCarousel() {
+    // Seleciona os elementos do carrossel de vídeo
+    videoCarouselHero = document.getElementById('video-carousel-hero');
+    slidesContainer = document.getElementById('video-carousel-slides');
+    videoDotsContainer = document.getElementById('video-carousel-dots');
+    titleContainer = document.getElementById('video-carousel-title-container');
+    titleTextElement = document.getElementById('video-carousel-title-text');
+    titleElement = titleContainer ? titleContainer.querySelector('.video-carousel-title') : null;
+    progressInner = document.getElementById('video-carousel-progress-inner');
+    scrollIndicator = document.getElementById('video-carousel-scroll-indicator');
+    contentBelowHero = document.getElementById('content-below-hero');
+
+    if (!videoCarouselHero || !slidesContainer || !videoDotsContainer || !titleTextElement || !progressInner || !scrollIndicator || !contentBelowHero || movies.length === 0) {
+        console.error("Elementos do carrossel ou conteúdo principal não encontrados, ou lista de vídeos vazia.");
+        if(videoCarouselHero) videoCarouselHero.classList.add('hidden');
+        if(contentBelowHero) { contentBelowHero.style.opacity = '1'; contentBelowHero.style.pointerEvents = 'auto'; }
+        isCarouselVisible = false; updateNavBackground(); return;
     }
 
-    function playCurrentVideo() {
-        if (!isCarouselVisible || !playerInstances[currentIndex]) return;
+    slidesContainer.innerHTML = '';
+    videoDotsContainer.innerHTML = '';
+    let playersReadyCount = 0;
 
-        // Pausa outros players
-        playerInstances.forEach((player, idx) => {
-            if (idx !== currentIndex) {
-                player.pause().catch(e => {});
-                player.setCurrentTime(0).catch(e => {});
+    movies.forEach((movie, index) => {
+        // Cria a estrutura do slide
+        const slide = document.createElement('div');
+        slide.className = `video-carousel-slide ${index === 0 ? 'active' : ''}`;
+        
+        // Cria o placeholder para o player do YouTube
+        const playerDiv = document.createElement('div');
+        playerDiv.id = `yt-player-${index}`;
+        slide.appendChild(playerDiv);
+
+        const overlay = document.createElement('div'); 
+        overlay.className = 'video-carousel-overlay';
+        slide.appendChild(overlay); 
+        
+        slidesContainer.appendChild(slide);
+        slideElements[index] = slide;
+
+        // Cria o player do YouTube
+        playerInstances[index] = new YT.Player(playerDiv.id, {
+            height: '100%',
+            width: '100%',
+            videoId: movie.youtubeId,
+            playerVars: {
+                'autoplay': 0, // Controlado manualmente
+                'controls': 0,
+                'mute': 1, // Começa mutado para autoplay funcionar
+                'playsinline': 1,
+                'loop': 0, // Controlamos o 'ended' manualmente
+                'rel': 0,
+                'showinfo': 0,
+                'modestbranding': 1,
+                'iv_load_policy': 3, // Sem anotações
+                'disablekb': 1,
+                'origin': window.location.origin
+            },
+            events: {
+                'onReady': (event) => onPlayerReady(event, index),
+                'onStateChange': (event) => onPlayerStateChange(event, index),
+                'onError': (event) => console.error(`Erro no Player ${index}:`, event.data)
             }
         });
 
-        // *** MUDANÇA AQUI: Espera ready() antes de tocar ***
-        playerInstances[currentIndex].ready().then(() => {
-            console.log(`Player ${currentIndex} ready, playing.`);
-            playerInstances[currentIndex].play().catch(error => { console.warn("Vimeo Autoplay impedido:", error); });
-        }).catch(error => console.error(`Player ${currentIndex} ready error on play:`, error));
-    }
+        // Cria o dot de navegação
+        const dot = document.createElement('button');
+        dot.className = `video-carousel-dot ${index === 0 ? 'active' : ''}`;
+        dot.dataset.index = index;
+        dot.addEventListener('click', handleDotClick);
+        videoDotsContainer.appendChild(dot);
+    });
 
+    function onPlayerReady(event, index) {
+        playersReadyCount++;
+        console.log(`Player ${index} está pronto.`);
+        event.target.mute(); // Garante que está mutado
 
-    function pauseCurrentVideo() {
-        if (playerInstances[currentIndex]) {
-             playerInstances[currentIndex].pause().catch(e => {});
+        // Se o PRIMEIRO player está pronto, iniciamos a UI
+        if (index === 0) {
+            contentBelowHero.style.opacity = '0'; 
+            contentBelowHero.style.pointerEvents = 'none';
+            videoCarouselHero.classList.remove('hidden'); 
+            isCarouselVisible = true;
+            updateUI(0, false);
+            playCurrentVideo();
+            updateNavBackground();
         }
     }
 
-
-    function updateUI(newIndex, playVideo = true) {
-         if (!isCarouselVisible && playVideo && newIndex !== currentIndex) return;
-        const oldIndex = currentIndex;
-        currentIndex = newIndex;
-
-        slideElements.forEach((slide, index) => { slide.classList.toggle('active', index === currentIndex); });
-        const dots = videoDotsContainer.querySelectorAll('.video-carousel-dot');
-        dots.forEach((dot, index) => { dot.classList.toggle('active', index === currentIndex); });
-
-        if (titleElement) {
-            titleElement.classList.remove('visible');
-             setTimeout(() => {
-                 if(movies[currentIndex]) { titleTextElement.textContent = movies[currentIndex].title; titleElement.classList.add('visible'); }
-             }, 50);
-        } else if (titleTextElement && movies[currentIndex]) { titleTextElement.textContent = movies[currentIndex].title; }
-
-        if (progressInner) { progressInner.style.width = `${((currentIndex + 1) / movies.length) * 100}%`; }
-        if (scrollIndicator) { scrollIndicator.classList.toggle('hidden', currentIndex === movies.length - 1); }
-
-        // Pausa o vídeo anterior
-        if (playVideo && oldIndex !== newIndex && playerInstances[oldIndex]) {
-            playerInstances[oldIndex].pause().catch(e => {});
-            playerInstances[oldIndex].setCurrentTime(0).catch(e => {});
-        }
-
-        if (playVideo) {
-            // *** MUDANÇA AQUI: Usa a função playCurrentVideo que já tem o ready() ***
-            // Pequeno delay pode ser útil para a transição CSS
-             setTimeout(playCurrentVideo, 150);
+    function onPlayerStateChange(event, index) {
+        // Se o vídeo terminou E é o vídeo atual
+        if (event.data === YT.PlayerState.ENDED && index === currentIndex) {
+            console.log(`Player ${index} terminou.`);
+            handleVideoEnd(index);
         }
     }
+}
 
-    function handleVideoEnd(endedIndex) {
-        console.log(`Video ${endedIndex} ended.`);
-        if (!isCarouselVisible || endedIndex !== currentIndex) return;
-        if (currentIndex < movies.length - 1) { updateUI(currentIndex + 1); }
-        else { transitionToMainContent(); }
+function playCurrentVideo() {
+    if (!isCarouselVisible || !playerInstances[currentIndex]) return;
+
+    // Pausa todos os outros players
+    playerInstances.forEach((player, idx) => {
+        if (idx !== currentIndex && player && typeof player.pauseVideo === 'function') {
+            player.pauseVideo();
+            player.seekTo(0);
+        }
+    });
+
+    // Toca o player atual
+    if (playerInstances[currentIndex] && typeof playerInstances[currentIndex].playVideo === 'function') {
+        console.log(`Tocando vídeo ${currentIndex}`);
+        playerInstances[currentIndex].playVideo();
+    }
+}
+
+function pauseCurrentVideo() {
+    if (playerInstances[currentIndex] && typeof playerInstances[currentIndex].pauseVideo === 'function') {
+        console.log(`Pausando vídeo ${currentIndex}`);
+        playerInstances[currentIndex].pauseVideo();
+    }
+}
+
+function updateUI(newIndex, playVideo = true) {
+    if (!isCarouselVisible && playVideo && newIndex !== currentIndex) return;
+    const oldIndex = currentIndex;
+    currentIndex = newIndex;
+
+    slideElements.forEach((slide, index) => { slide.classList.toggle('active', index === currentIndex); });
+    
+    const dots = videoDotsContainer.querySelectorAll('.video-carousel-dot');
+    dots.forEach((dot, index) => { dot.classList.toggle('active', index === currentIndex); });
+
+    if (titleElement) {
+        titleElement.classList.remove('visible');
+        setTimeout(() => {
+            if(movies[currentIndex]) { 
+                titleTextElement.textContent = movies[currentIndex].title; 
+                titleElement.classList.add('visible'); 
+            }
+        }, 50);
+    } else if (titleTextElement && movies[currentIndex]) { 
+        titleTextElement.textContent = movies[currentIndex].title; 
     }
 
-    function handleGlobalWheel(e) { /* ... (igual ao anterior) ... */
-        if (isCarouselVisible) { handleCarouselWheel(e); }
-        else { handlePageWheel(e); }
+    if (progressInner) { progressInner.style.width = `${((currentIndex + 1) / movies.length) * 100}%`; }
+    if (scrollIndicator) { scrollIndicator.classList.toggle('hidden', currentIndex === movies.length - 1); }
+
+    // Pausa o vídeo anterior
+    if (playVideo && oldIndex !== newIndex && playerInstances[oldIndex] && typeof playerInstances[oldIndex].pauseVideo === 'function') {
+        playerInstances[oldIndex].pauseVideo();
+        playerInstances[oldIndex].seekTo(0);
     }
-    function handleCarouselWheel(e) { /* ... (igual ao anterior) ... */
-        if (isScrolling) { e.preventDefault(); return };
+
+    if (playVideo) {
+        setTimeout(playCurrentVideo, 150);
+    }
+}
+
+function handleVideoEnd(endedIndex) {
+    if (!isCarouselVisible || endedIndex !== currentIndex) return;
+    if (currentIndex < movies.length - 1) { 
+        updateUI(currentIndex + 1); 
+    } else { 
+        transitionToMainContent(); 
+    }
+}
+
+// --- Funções de Navegação (Scroll/Swipe) ---
+
+function handleGlobalWheel(e) {
+    if (isCarouselVisible) { handleCarouselWheel(e); }
+    else { handlePageWheel(e); }
+}
+
+function handleCarouselWheel(e) {
+    if (isScrolling) { e.preventDefault(); return };
+    e.preventDefault();
+    const scrollThreshold = 10;
+    if (e.deltaY > scrollThreshold) {
+        if (currentIndex < movies.length - 1) { 
+            setIsScrolling(true); updateUI(currentIndex + 1); setTimeout(() => setIsScrolling(false), 800); 
+        } else { 
+            transitionToMainContent(); 
+        }
+    } else if (e.deltaY < -scrollThreshold) {
+        if (currentIndex > 0) { 
+            setIsScrolling(true); updateUI(currentIndex - 1); setTimeout(() => setIsScrolling(false), 800); 
+        }
+    }
+}
+
+function handlePageWheel(e) {
+    if (isScrolling) { e.preventDefault(); return };
+    const scrollThreshold = 10;
+    const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0;
+    if (e.deltaY < -scrollThreshold && contentTop >= 0 && window.scrollY < 50) { 
+        e.preventDefault(); 
+        transitionToVideoCarousel(); 
+    }
+}
+
+let touchStartY = 0;
+let touchEndY = 0;
+const swipeThreshold = 50;
+
+function handleTouchStart(e) {
+    if (e.touches.length > 1) return;
+    touchStartY = e.touches[0].clientY;
+    touchEndY = touchStartY;
+}
+
+function handleTouchMove(e) {
+    if (e.touches.length > 1) return;
+    touchEndY = e.touches[0].clientY;
+    if (isCarouselVisible) {
         e.preventDefault();
-        const scrollThreshold = 10;
-        if (e.deltaY > scrollThreshold) {
-            if (currentIndex < movies.length - 1) { setIsScrolling(true); updateUI(currentIndex + 1); setTimeout(() => setIsScrolling(false), 800); }
-            else { transitionToMainContent(); }
-        } else if (e.deltaY < -scrollThreshold) {
-            if (currentIndex > 0) { setIsScrolling(true); updateUI(currentIndex - 1); setTimeout(() => setIsScrolling(false), 800); }
+    }
+}
+
+function handleTouchEnd(e) {
+    if (e.changedTouches.length > 1) return;
+    const deltaY = touchStartY - touchEndY;
+
+    if (Math.abs(deltaY) > swipeThreshold) {
+        if (isCarouselVisible) {
+            if (isScrolling) return;
+            if (deltaY > 0) { // Swipe Cima
+                if (currentIndex < movies.length - 1) {
+                    setIsScrolling(true); updateUI(currentIndex + 1); setTimeout(() => setIsScrolling(false), 800);
+                } else {
+                    transitionToMainContent();
+                }
+            } else { // Swipe Baixo
+                if (currentIndex > 0) {
+                    setIsScrolling(true); updateUI(currentIndex - 1); setTimeout(() => setIsScrolling(false), 800);
+                }
+            }
+        } else { // Fora do carrossel
+            const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0;
+            if (deltaY < 0 && contentTop >= 0 && window.scrollY < 50) {
+                transitionToVideoCarousel();
+            }
         }
     }
-    function handlePageWheel(e) { /* ... (igual ao anterior) ... */
-        if (isScrolling) { e.preventDefault(); return };
-         const scrollThreshold = 10;
-         const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0;
-         if (e.deltaY < -scrollThreshold && contentTop >= 0 && window.scrollY < 50) { e.preventDefault(); transitionToVideoCarousel(); }
-    }
-    function handleDotClick(event) { /* ... (igual ao anterior) ... */
-        if (isScrolling || !isCarouselVisible) return;
-        const newIndex = parseInt(event.target.dataset.index);
-        if (newIndex !== currentIndex) { updateUI(newIndex); }
-    }
-    function setIsScrolling(value) { isScrolling = value; }
+    touchStartY = 0;
+    touchEndY = 0;
+}
 
-    function transitionToMainContent() { /* ... (igual ao anterior) ... */
-        if (!isCarouselVisible) return;
-        console.log("Transicionando para conteúdo principal...");
-        isCarouselVisible = false; pauseCurrentVideo();
-        videoCarouselHero.classList.add('hidden');
-        if(contentBelowHero) { contentBelowHero.style.opacity = '1'; contentBelowHero.style.pointerEvents = 'auto'; }
-        updateNavBackground();
-        setTimeout(() => { const navHeight = nav ? nav.offsetHeight : 65; const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0; if (contentTop > navHeight + 10) { if(contentBelowHero) contentBelowHero.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }, 700);
-    }
-    function transitionToVideoCarousel() { /* ... (igual ao anterior) ... */
-        if (isCarouselVisible || isScrolling) return;
-        console.log("Transicionando de volta para o carrossel...");
-        isCarouselVisible = true; setIsScrolling(true);
-        if(contentBelowHero) { contentBelowHero.style.opacity = '0'; contentBelowHero.style.pointerEvents = 'none'; }
-        videoCarouselHero.classList.remove('hidden');
-        updateUI(currentIndex, true);
-        updateNavBackground();
-        setTimeout(() => setIsScrolling(false), 700);
-    }
+function handleDotClick(event) {
+    if (isScrolling || !isCarouselVisible) return;
+    const newIndex = parseInt(event.target.dataset.index);
+    if (newIndex !== currentIndex) { updateUI(newIndex); }
+}
 
-    // --- Inicialização Carrossel Vídeo ---
-    createCarousel();
+function setIsScrolling(value) { isScrolling = value; }
 
-    // --- Lógica do Carrossel de Imagens (Preservada com IDs ajustados) ---
+function transitionToMainContent() {
+    if (!isCarouselVisible) return;
+    console.log("Transicionando para conteúdo principal...");
+    isCarouselVisible = false; 
+    pauseCurrentVideo();
+    videoCarouselHero.classList.add('hidden');
+    if(contentBelowHero) { contentBelowHero.style.opacity = '1'; contentBelowHero.style.pointerEvents = 'auto'; }
+    updateNavBackground();
+    setTimeout(() => { 
+        const navHeight = nav ? nav.offsetHeight : 65; 
+        const contentTop = contentBelowHero ? contentBelowHero.getBoundingClientRect().top : 0; 
+        if (contentTop > navHeight + 10) { 
+            if(contentBelowHero) contentBelowHero.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+        } 
+    }, 700);
+}
+
+function transitionToVideoCarousel() {
+    if (isCarouselVisible || isScrolling) return;
+    console.log("Transicionando de volta para o carrossel...");
+    isCarouselVisible = true; setIsScrolling(true);
+    if(contentBelowHero) { contentBelowHero.style.opacity = '0'; contentBelowHero.style.pointerEvents = 'none'; }
+    videoCarouselHero.classList.remove('hidden');
+    updateUI(currentIndex, true);
+    updateNavBackground();
+    setTimeout(() => setIsScrolling(false), 700);
+}
+
+function updateNavBackground() {
+    if (nav) {
+        if (window.scrollY > 50 || !isCarouselVisible) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    }
+}
+
+
+// --- LÓGICA DO CARROSSEL DE IMAGENS (Função de inicialização) ---
+function initializeImageCarousel() {
     const imageCarouselTrack = document.getElementById('image-carousel-track');
     const imageDotsContainer = document.getElementById('image-carousel-dots');
     const imageNextButton = document.getElementById('image-next-btn');
     const imagePrevButton = document.getElementById('image-prev-btn');
 
+// [ SUBSTITUA PELO BLOCO ABAIXO ]
     if (imageCarouselTrack && imageDotsContainer && imageNextButton && imagePrevButton) {
-        // ... (código COMPLETO do carrossel de imagens v10, sem alterações internas) ...
-        const imageProductions = [ /* Seus dados de imagem aqui... */
-             { id: "tracos-de-uma-nova-pagina", title: "Traços de Uma Nova Página", type: "Longa", poster: "cartaz/cartaz1.jpg", url: "tracospagina.html" },
-             { id: "familia-fergus", title: "Família Fergus", type: "Série", poster: "cartaz/cartaz2.jpg", url: "familia.html" },
-             { id: "era-uma-vez-serie", title: "Era Uma Vez - Série", type: "Série", poster: "cartaz/cartaz1.jpg", url: "eraumavez.html" },
-             { id: "erva-daninha", title: "Erva Daninha", type: "Curta", poster: "cartaz/cartaz2.jpg" },
-             { id: "interludio", title: "Interlúdio", type: "Curta", poster: "cartaz/cartaz1.jpg", url: "interludio.html" },
-             { id: "era-uma-vez-em-cordel", title: "Era Uma Vez em Cordel", type: "Curta", poster: "cartaz/cartaz era uma vez.jpg", url: "cordel.html" },
-             { id: "cyberfunk", title: "CyberFunk", type: "Curta", poster: "cartaz/Cartaz Cyberfunk.png", url: "cyberfunk.html" },
-             { id: "lembrancas-de-uma-caminhada", title: "Lembranças de Uma Caminhada", type: "Curta", poster: "cartaz/cartaz LEMBRANÇAS DE UMA CAMINHADA 2.png", url: "lembrancas.html" }
+        // --- ORDEM DOS POSTERS ATUALIZADA (Conforme sua última solicitação) ---
+        const imageProductions = [
+            { id: "era-uma-vez-em-cordel", title: "Era Uma Vez em Cordel", type: "Curta", poster: "cartaz/cartaz era uma vez.jpg", url: "cordel.html" },
+            { id: "tracos-de-uma-nova-pagina", title: "Traços de Uma Nova Página", type: "Longa", poster: "cartaz/cartaz1.jpg", url: "tracospagina.html" },
+            { id: "familia-fergus", title: "Família Fergus", type: "Série", poster: "cartaz/cartaz2.jpg", url: "familia.html" },
+            { id: "cyberfunk", title: "CyberFunk", type: "Curta", poster: "cartaz/Cartaz Cyberfunk.png", url: "cyberfunk.html" },
+            { id: "era-uma-vez-serie", title: "Era Uma Vez - Série", type: "Série", poster: "cartaz/cartaz1.jpg", url: "eraumavez.html" },
+            { id: "erva-daninha", title: "Erva Daninha", type: "Curta", poster: "cartaz/cartaz2.jpg" },
+            { id: "lembrancas-de-uma-caminhada", title: "Lembranças de Uma Caminhada", type: "Curta", poster: "cartaz/cartaz LEMBRANÇAS DE UMA CAMINHADA 2.png", url: "lembrancas.html" },
+            { id: "interludio", title: "Interlúdio", type: "Curta", poster: "cartaz/cartaz1.jpg", url: "interludio.html" }
         ];
 
         let imageCurrentIndex = 0; let imageTrackIndex = 0; let imageVisibleSlides = 0; let imageCloneCount = 0;
@@ -342,10 +423,11 @@ document.addEventListener('DOMContentLoaded', function() {
         imageNextButton.addEventListener('click', () => { nextImage(); resetImageAutoplay(); }); imagePrevButton.addEventListener('click', () => { prevImage(); resetImageAutoplay(); }); imageCarouselTrack.addEventListener('transitionend', handleImageTransitionEnd);
         function startImageAutoplay() { clearInterval(imageAutoplayInterval); if (imageProductions.length > imageVisibleSlides) { imageAutoplayInterval = setInterval(nextImage, 3000); } }
         function resetImageAutoplay() { clearInterval(imageAutoplayInterval); clearTimeout(imageRestartAutoplayTimer); if (imageProductions.length > imageVisibleSlides) { imageRestartAutoplayTimer = setTimeout(startImageAutoplay, 5000); } }
-        renderImageSlides(); startImageAutoplay();
+        
+        renderImageSlides(); 
+        startImageAutoplay();
         window.addEventListener('resize', () => { renderImageSlides(); startImageAutoplay(); });
 
     } else { console.warn("Elementos do carrossel de imagens não encontrados. Ele não será inicializado."); }
-    // --- FIM LÓGICA DO CARROSSEL DE IMAGENS ---
-
-}); // Fim do DOMContentLoaded
+}
+// --- FIM LÓGICA DO CARROSSEL DE IMAGENS ---
