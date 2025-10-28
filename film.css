@@ -2,155 +2,222 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:wght@700&display=swap');
 
 :root {
+    /* Variáveis Originais */
     --navy: #0A1628;
     --orange: #FF6B35;
     --white: #FAFAF9;
+    --navbar-height: 74px; /* Ajuste se a altura real for diferente */
+
+    /* Variáveis do Exemplo para o Efeito Carrossel */
+    --text-light: #E5E7EB;
+    --text-medium: #9CA3AF;
+    --text-gray-300: #D1D5DB;
+    --text-gray-400: #9CA3AF;
+    --text-gray-500: #6B7280;
+    --bg-gray-900: #111827;
+    --bg-gray-800: #1F2937;
+    --bg-gray-700: #374151;
+    --bg-black: #000000;
+    --accent-blue-500: #3B82F6;
+    --accent-purple-500: #8B5CF6;
+    --accent-pink-500: #EC4899;
+    --white-alpha-5: rgba(255, 255, 255, 0.05);
+    --white-alpha-10: rgba(255, 255, 255, 0.10);
+    --white-alpha-40: rgba(255, 255, 255, 0.40);
+    --black-alpha-70: rgba(0, 0, 0, 0.70);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-body { background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));; color: whitesmoke; display: flex; flex-direction: column; min-height: 100vh; }
-main { flex-grow: 1; }
-a { text-decoration: none; color: inherit; }
-
-
-
-/* ============ SEÇÃO DE DETALHES (CORREÇÃO) ============ */
-.section { padding: 5rem 1.5rem; }
-.bg-white {background-image: linear-gradient(to bottom, rgba(6, 15, 30, 0.763), rgba(10, 22, 40, 0.746));}
-.bg-light { background-color: #FAFAF9; }
-
-.details-container {
-    max-width: 80rem;
-    margin: 0 auto;
-    padding-top: 6rem;
-}
-
-/* GRID INICIAL: Pôster + Sinopse */
-.details-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* 1 coluna no mobile */
-    gap: 3rem;
-    align-items: flex-start; /* Alinha os itens no topo */
-    margin-bottom: 5rem; /* Espaço entre o grid e o conteúdo de baixo */
-}
-
-.poster-image {
-    aspect-ratio: 2 / 3;
-    border-radius: 1rem;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    margin-left: 1.5rem;
-}
-.poster-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.content-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: white;
-    margin-bottom: 0.2rem;
-}
-.title-underline {
-    width: 4rem;
-    height: 4px;
-    background-color: var(--orange);
-    margin-bottom: 1.5rem;
-}
-
-.content-tite {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-.description {
-    font-size: 1.125rem;
-    line-height: 1.75;
-    color: whitesmoke;
-     text-align: justify;
-  text-justify: inter-word; /* distribui o espaço entre palavras */
-  margin-right: 1.5rem;
-}
-.meta-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-.meta-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;}
-.meta-item svg { color: var(--orange); flex-shrink: 0; }
-.meta-label { font-size: 0.875rem; color: whitesmoke; text-transform: uppercase; }
-.meta-value { font-size: 1rem; font-weight: 600; color: whitesmoke; margin-top: 0.6rem; }
-
-/* Conteúdo que fica abaixo do grid */
-.full-width-content {
-    margin: 0 auto;
-    max-width: 56rem; /* Limita a largura para melhor leitura */
-}
-.content-block {
-    margin-bottom: 4rem;
-}
-.content-title-icon { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-.content-title-icon h2 { margin-bottom: 0; }
-.content-title-icon svg { color: var(--orange); flex-shrink: 0; }
-
-.trailer-container { aspect-ratio: 16 / 9; border-radius: 1rem; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); background-color: #e5e7eb; }
-.trailer-container iframe { width: 100%; height: 100%; border: none; }
-
-.awards-list { display: flex; flex-direction: column; gap: 1rem; }
-.award-item { background: rgba(0, 51, 126, 0.405); border-left: 4px solid var(--orange); padding: 1rem 1.5rem; font-size: 1.125rem; font-weight: 600; color: whitesmoke; border-radius: 0 0.5rem 0.5rem 0; }
-
-.tech-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-.tech-item { padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; }
-
-
-/* =====================================================
-   MENSAGEM DE SUCESSO
-   ===================================================== */
-.success-card {
-    max-width: 768px;
+html { scroll-behavior: smooth; }
+body {
+    background-color: var(--bg-gray-900); /* Fundo base escuro consistente */
+    color: var(--text-light);
+    line-height: 1.6;
+    /* Ajuste display flex se o footer precisar ser empurrado */
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    border-color: rgba(30, 58, 138, 0.5);
-    animation: fade-in-scale 0.5s ease-out forwards;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main { flex-grow: 1; position: relative; /* Para z-index funcionar */ z-index: 5; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ============ NAVBAR (Garantir que está fixa e no topo) ============ */
+.navbar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50 !important; /* Mais alto */
+    transition: background-image 0.3s ease, backdrop-filter 0.3s ease;
+    background-image: linear-gradient(to bottom, rgba(6, 15, 30, 0.9), rgba(10, 22, 40, 0.7), rgba(10, 22, 40, 0.4), transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.navbar.scrolled {
+     background-image: linear-gradient(to bottom, rgb(6, 15, 30), rgb(10, 22, 40));
+     backdrop-filter: blur(10px);
 }
 
-.success-icon-wrapper {
-    width: 3rem;
-    height: 3rem;
-    background-color: rgba(37, 99, 235, 0.2);
-    border-radius: 0.25rem;
+/* ============ SEÇÃO DE DETALHES (Conteúdo Original) ============ */
+/* Adiciona padding-top para compensar navbar fixa */
+.section-details {
+    padding-top: calc(5rem + var(--navbar-height)); /* Padding original + altura da navbar */
+    padding-bottom: 5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    background-image: linear-gradient(to bottom, var(--bg-gray-900), var(--bg-gray-800)); /* Fundo escuro */
+}
+/* Ajuste de cor de fundo e texto se usar .bg-light */
+.bg-light { background-color: #FAFAF9; color: var(--navy); }
+.bg-light .content-title, .bg-light h2, .bg-light h3, .bg-light .meta-label,
+.bg-light .meta-value, .bg-light .description, .bg-light .award-item { color: #1f2937; }
+.bg-light .title-underline, .bg-light .meta-item svg, .bg-light .content-title-icon svg { color: var(--orange); }
+.bg-light .award-item { background: #e5e7eb; border-left-color: var(--orange); }
+.bg-light .tech-item { border-bottom-color: #d1d5db; }
+
+.details-container { max-width: 80rem; margin: 0 auto; }
+.details-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: flex-start; margin-bottom: 5rem; }
+.poster-image { aspect-ratio: 2 / 3; border-radius: 1rem; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.poster-image img { width: 100%; height: 100%; object-fit: cover; }
+.content-title { font-size: 2.5rem; font-weight: 900; color: var(--text-light); margin-bottom: 0.2rem; }
+.title-underline { width: 4rem; height: 4px; background-color: var(--orange); margin-bottom: 1.5rem; }
+.content-tite { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-light); font-weight: 700; }
+.description { font-size: 1.125rem; line-height: 1.75; color: var(--text-medium); text-align: justify; text-justify: inter-word; }
+.meta-info { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; margin-bottom: 1.5rem; }
+.meta-item { display: flex; align-items: center; gap: 0.75rem; }
+.meta-item svg { color: var(--orange); flex-shrink: 0; }
+.meta-label { font-size: 0.875rem; color: var(--text-medium); text-transform: uppercase; }
+.meta-value { font-size: 1rem; font-weight: 600; color: var(--text-light); margin-top: 0.2rem; }
+.full-width-content { margin: 0 auto; max-width: 56rem; }
+.content-block { margin-bottom: 4rem; }
+.content-title-icon { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.content-title-icon h2 { margin-bottom: 0; color: var(--text-light); font-size: 2rem; }
+.content-title-icon svg { color: var(--orange); flex-shrink: 0; }
+.content-block > h2.content-title { font-size: 2rem; margin-bottom: 1.5rem; text-align: center; }
+.trailer-container { aspect-ratio: 16 / 9; border-radius: 1rem; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); background-color: #000; }
+.trailer-container iframe { width: 100%; height: 100%; border: none; }
+.awards-list { display: flex; flex-direction: column; gap: 1rem; }
+.award-item { background: var(--white-alpha-5); border-left: 4px solid var(--orange); padding: 1rem 1.5rem; font-size: 1.125rem; font-weight: 600; color: var(--text-light); border-radius: 0 0.5rem 0.5rem 0; }
+.tech-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.tech-item { padding-bottom: 1rem; border-bottom: 1px solid var(--bg-dark-3); }
+.text-center { text-align: center; }
+
+
+/* ============ SEÇÃO CARROSSEL INTERATIVO ============ */
+.carousel-section-wrapper {
+    position: relative;
+    /* Altura definida pelo JS (ex: 700vh) */
+}
+
+/* Container que fica fixo (sticky) */
+.sticky-content-container {
+    position: sticky;
+    top: 0; /* Gruda no topo quando atinge */
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    z-index: 5; /* Abaixo da cortina */
+}
+/* Conteúdo interno do sticky */
+.sticky-content {
+    height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    background-image: linear-gradient(to bottom, var(--bg-gray-800), var(--bg-gray-700));
+    padding: 5rem 1.5rem; /* Ajustado padding */
+    color: white;
+}
+.container-large { /* Container usado no sticky e footer */
+    max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; width: 100%;
+}
+.discover-grid { display: grid; gap: 4rem; align-items: center; }
+.discover-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 2rem; }
+.discover-text { font-size: 1.125rem; line-height: 1.75; color: var(--text-gray-300); margin-bottom: 2rem; }
+.tags-container { display: flex; flex-wrap: wrap; gap: 1rem; }
+.tag { background-color: var(--white-alpha-10); backdrop-filter: blur(4px); padding: 0.75rem 1.5rem; border-radius: 9999px; }
+.tag span { font-weight: 600; font-size: 0.875rem; }
+.discover-image-wrapper { position: relative; }
+.discover-image { border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); width: 100%; }
+.discover-blur-orb { position: absolute; bottom: -2rem; left: -2rem; width: 8rem; height: 8rem; background-image: linear-gradient(to bottom right, var(--accent-blue-500), var(--accent-purple-500)); border-radius: 9999px; filter: blur(48px); opacity: 0.5; z-index: -1; }
+
+/* Camada da Cortina/Carrossel que sobe (Cobre o sticky) */
+.curtain { /* Renomeado de .curtain-layer para corresponder ao JS */
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+    height: 100vh; /* Ocupa a altura da tela */
+    background-color: var(--bg-black);
+    z-index: 10; /* Acima do sticky */
+    will-change: transform;
+    transform: translateY(100%); /* Começa fora (embaixo) */
+    /* transition: transform 0ms linear; /* Controlado pelo JS */
 }
 
-.success-icon-wrapper .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    color: var(--blue-400);
+/* Container das imagens dentro da cortina */
+.curtain-image-container { position: relative; width: 100%; height: 100%; }
+.carousel-image-item { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease-in-out; z-index: 0; }
+.carousel-image-item.active { opacity: 1; z-index: 10; } /* Z-index maior para a ativa */
+.carousel-img { width: 100%; height: 100%; object-fit: cover; }
+.image-gradient-overlay { position: absolute; inset: 0; background-image: linear-gradient(to top, var(--black-alpha-70), transparent 50%); pointer-events: none; z-index: 5; }
+
+/* Overlay com informações sobre a imagem */
+.carousel-overlay { /* Renomeado de .carousel-info-overlay */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    z-index: 30; /* Acima das imagens */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+}
+.carousel-overlay.visible { opacity: 1; } /* Classe adicionada por JS */
+.info-content-wrapper { /* Novo wrapper para centralizar conteúdo */
+    text-align: center; color: white; width: 90%; max-width: 42rem;
 }
 
-.success-text h3 {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-}
+.overlay-title { font-size: 3rem; font-weight: 700; margin-bottom: 1rem; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
+.overlay-counter { font-size: 1.25rem; color: var(--text-gray-300); margin-bottom: 2rem; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); }
+.pagination-container { display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 3rem; }
+.pagination-dot { height: 0.5rem; border-radius: 9999px; transition: all 0.3s ease; background-color: var(--white-alpha-40); width: 0.5rem; }
+.pagination-dot.active-dot { background-color: white; width: 3rem; }
+.scroll-prompt { font-size: 1.125rem; color: var(--text-gray-300); margin-top: 3rem; animation: bounce 2s infinite; opacity: 1; transition: opacity 0.3s ease; }
 
-.success-text p {
-    color: var(--slate-400);
-    font-weight: 300;
+
+/* ============ FOOTER ============ */
+.footer {
+    background-color: var(--bg-black);
+    color: var(--text-medium);
+    padding: 5rem 1.5rem; /* Ajustado padding */
+    text-align: center;
+    position: relative; /* Garante que fique no fluxo normal após a seção alta */
+    z-index: 25;
 }
+.footer-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-light); }
+.footer-subtitle { font-size: 1.25rem; color: var(--text-gray-400); margin-bottom: 2rem; }
+.footer-copy { font-size: 1rem; color: var(--text-gray-500); }
+/* Estilos do seu footer original (.footer-container, .footer-grid, etc.) podem ser mantidos/adaptados aqui se preferir */
 
 
 /* ============ RESPONSIVIDADE ============ */
-@media (min-width: 768px) {
-   
-    
-    .details-grid { grid-template-columns: 3fr 5fr; } /* Proporção mais equilibrada */
+@media (min-width: 768px) { /* md: */
+    /* Seus estilos responsivos originais */
+    .details-grid { grid-template-columns: 3fr 7fr; gap: 4rem; }
     .tech-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Estilos responsivos do efeito */
+    .discover-grid { grid-template-columns: repeat(2, 1fr); }
+    .discover-title { font-size: 3.75rem; }
+    .discover-text { font-size: 1.25rem; }
+    .overlay-title { font-size: 4.5rem; }
+    .overlay-counter { font-size: 1.5rem; }
+    .footer-title { font-size: 3rem; }
+    .footer-subtitle { font-size: 1.25rem; }
+}
+
+@media (min-width: 1024px) { /* lg: */
+    /* Seus estilos responsivos originais */
+     .details-grid { grid-template-columns: 2fr 5fr; }
 }
