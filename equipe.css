@@ -161,8 +161,19 @@ a {
     padding: 2rem;
     flex: 1;
 }
+.card-content-fe {
+    padding: 2rem;
+    flex: 1;
+}
 
 .card-content h3 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+    transition: color 0.3s;
+}
+.card-content-fe h3 {
     font-size: 1.8rem;
     font-weight: 900;
     color: var(--navy);
@@ -173,6 +184,9 @@ a {
 .team-card:hover .card-content h3 {
     color: var(--orange);
 }
+.team-card:hover .card-content-fe h3 {
+    color: var(--orange);
+}
 
 .card-content h4 {
     font-size: 1.1rem;
@@ -180,9 +194,22 @@ a {
     color: #475569;
     margin-bottom: 1rem;
 }
+.card-content-fe h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 1rem;
+}
 
 .card-content p {
-    font-size: 1rem;
+    font-size: 1.1rem;
+    color: #64748B;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.card-content-fe p {
+    font-size: 1.3rem;
     color: #64748B;
     font-weight: 500;
     line-height: 1.6;

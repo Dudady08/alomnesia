@@ -13,28 +13,6 @@ main { flex-grow: 1; }
 a { text-decoration: none; color: inherit; }
 
 
-/* ============ HERO (DETALHES DO FILME) ============ */
-.hero.short-hero {
-  position: relative;
-  width: 100%;
-  height: auto; /* deixa a altura se ajustar automaticamente */
-  overflow: hidden;
-}
-
-.hero-background {
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-
-.hero-background img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain; /* mostra a imagem inteira */
-  object-position: center;
-}
-
 
 /* ============ SEÇÃO DE DETALHES (CORREÇÃO) ============ */
 .section { padding: 5rem 1.5rem; }
@@ -44,6 +22,7 @@ a { text-decoration: none; color: inherit; }
 .details-container {
     max-width: 80rem;
     margin: 0 auto;
+    padding-top: 6rem;
 }
 
 /* GRID INICIAL: Pôster + Sinopse */

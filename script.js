@@ -14,15 +14,16 @@ const slideElements = [];
 // === DADOS DOS VÍDEOS ATUALIZADOS PARA YOUTUBE ===
 // =================================================================
 const movies = [
-    { id: 1, title: "Traços de uma nova página", youtubeId: "c33Ivt9gLPM" },
-    { id: 2, title: "Família Fergus  Juntos pelo mundo", youtubeId: "Oq0vVGJ2dJ0" },
-    { id: 3, title: "Era uma vez...", youtubeId: "mV_rM-o0Tzc" }
+    // Adicionando a propriedade 'url' a cada objeto
+    { id: 1, title: "Traços de uma nova página", youtubeId: "c33Ivt9gLPM", url: "tracospagina.html" },
+    { id: 2, title: "Família Fergus  Juntos pelo mundo", youtubeId: "Oq0vVGJ2dJ0", url: "familia.html" },
+    { id: 3, title: "Era uma vez...", youtubeId: "mV_rM-o0Tzc", url: "eraumavez.html" } // Assumindo que este linka para a página da série/longa
 ];
 // =================================================================
 
-
 // --- ELEMENTOS DO CARROSSEL DE VÍDEO (definidos no escopo global do script) ---
 let videoCarouselHero, slidesContainer, videoDotsContainer, titleContainer, titleTextElement, titleElement, progressInner, scrollIndicator, contentBelowHero;
+let titleLinkElement; // <--- ADICIONE ESTA LINHA
 let currentIndex = 0;
 let isScrolling = false;
 let isCarouselVisible = true;
@@ -96,6 +97,7 @@ function createCarousel() {
     slidesContainer = document.getElementById('video-carousel-slides');
     videoDotsContainer = document.getElementById('video-carousel-dots');
     titleContainer = document.getElementById('video-carousel-title-container');
+    titleLinkElement = document.getElementById('video-carousel-title-link'); // <--- ADICIONE ESTA LINHA
     titleTextElement = document.getElementById('video-carousel-title-text');
     titleElement = titleContainer ? titleContainer.querySelector('.video-carousel-title') : null;
     progressInner = document.getElementById('video-carousel-progress-inner');
@@ -220,26 +222,44 @@ function updateUI(newIndex, playVideo = true) {
     currentIndex = newIndex;
 
     slideElements.forEach((slide, index) => { slide.classList.toggle('active', index === currentIndex); });
-    
+
     const dots = videoDotsContainer.querySelectorAll('.video-carousel-dot');
     dots.forEach((dot, index) => { dot.classList.toggle('active', index === currentIndex); });
 
     if (titleElement) {
         titleElement.classList.remove('visible');
         setTimeout(() => {
-            if(movies[currentIndex]) { 
-                titleTextElement.textContent = movies[currentIndex].title; 
-                titleElement.classList.add('visible'); 
+            const currentMovie = movies[currentIndex]; // Pega o filme atual
+            if(currentMovie) {
+                // Atualiza o texto do H1
+                titleTextElement.textContent = currentMovie.title;
+
+                // ATUALIZA O LINK (href) da tag <a>
+                if (titleLinkElement && currentMovie.url) {
+                    titleLinkElement.href = currentMovie.url;
+                } else if (titleLinkElement) {
+                    // Se não houver URL definida para este filme, remove o link (ou aponta para #)
+                    titleLinkElement.href = '#'; // Ou titleLinkElement.removeAttribute('href');
+                }
+
+                titleElement.classList.add('visible');
             }
         }, 50);
-    } else if (titleTextElement && movies[currentIndex]) { 
-        titleTextElement.textContent = movies[currentIndex].title; 
+    } else if (titleTextElement && movies[currentIndex]) { // Fallback caso titleElement não exista
+        titleTextElement.textContent = movies[currentIndex].title;
+         // ATUALIZA O LINK (href) também no fallback
+         const currentMovie = movies[currentIndex];
+         if (titleLinkElement && currentMovie.url) {
+             titleLinkElement.href = currentMovie.url;
+         } else if (titleLinkElement) {
+             titleLinkElement.href = '#';
+         }
     }
 
+    // ... resto da função updateUI (progressInner, scrollIndicator, pause/play video) ...
     if (progressInner) { progressInner.style.width = `${((currentIndex + 1) / movies.length) * 100}%`; }
     if (scrollIndicator) { scrollIndicator.classList.toggle('hidden', currentIndex === movies.length - 1); }
 
-    // Pausa o vídeo anterior
     if (playVideo && oldIndex !== newIndex && playerInstances[oldIndex] && typeof playerInstances[oldIndex].pauseVideo === 'function') {
         playerInstances[oldIndex].pauseVideo();
         playerInstances[oldIndex].seekTo(0);
@@ -405,7 +425,9 @@ function initializeImageCarousel() {
             { id: "era-uma-vez-serie", title: "Era Uma Vez - Série", type: "Série", poster: "cartaz/cartaz1.jpg", url: "eraumavez.html" },
             { id: "erva-daninha", title: "Erva Daninha", type: "Curta", poster: "cartaz/cartaz2.jpg" },
             { id: "lembrancas-de-uma-caminhada", title: "Lembranças de Uma Caminhada", type: "Curta", poster: "cartaz/cartaz LEMBRANÇAS DE UMA CAMINHADA 2.png", url: "lembrancas.html" },
-            { id: "interludio", title: "Interlúdio", type: "Curta", poster: "cartaz/cartaz1.jpg", url: "interludio.html" }
+            { id: "interludio", title: "Interlúdio", type: "Curta", poster: "cartaz/cartaz1.jpg", url: "interludio.html" },
+            { id: "A melodia do Comércio Popular", title: "A melodia do Comércio Popular", type: "Curta", poster: "cartaz/cartaz2.jpg", url: "comercio.html" },
+            { id: "Alomnésia", title: "Alomnésia", type: "Curta", poster: "cartaz/cartaz1.jpg", url: "alomnesia.html" }
         ];
 
         let imageCurrentIndex = 0; let imageTrackIndex = 0; let imageVisibleSlides = 0; let imageCloneCount = 0;

@@ -107,10 +107,25 @@ a {
     margin-right: auto;
 }
 
+/* SUBSTITUA A REGRA .grid POR ESTA */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr); /* Padrão mobile: 1 coluna */
-    gap: 2.5rem; /* gap-6 md:gap-8 lg:gap-10 */
+    display: flex;         /* <--- MUDOU DE GRID PARA FLEX */
+    flex-wrap: wrap;       /* <--- ADICIONADO (Permite quebra de linha) */
+    justify-content: center; /* <--- ADICIONADO (Centraliza a última linha) */
+    gap: 2.5rem;
+    --grid-gap: 2.5rem;    /* <--- ADICIONADO (Variável para o gap) */
+    /* Remove grid-template-columns daqui */
+}
+
+/* ADICIONE ESTA NOVA REGRA PARA CONTROLAR A LARGURA DOS CARDS */
+.grid > .film-card {
+    flex-grow: 0; /* Não deixa crescer */
+    flex-shrink: 0; /* Não deixa encolher além do basis */
+    /* Mobile (1 coluna): O padrão flex já faz isso, mas podemos ser explícitos */
+    flex-basis: 100%; /* Ocupa toda a largura */
+     max-width: 450px; /* Limite máximo opcional para mobile */
+     margin-left: auto; /* Centraliza no mobile se max-width for atingido */
+     margin-right: auto;
 }
 
 /* ============ CARD DE FILME INDIVIDUAL ============ */
@@ -283,19 +298,32 @@ a {
 
 
 /* Telas médias (lg) */
-@media (min-width: 1024px) {
+/* AJUSTE A MEDIA QUERY DE 1024px */
+@media (min-width: 1024px) { /* lg */
     .grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2.5rem; /* lg:gap-10 */
+         /* Remove grid-template-columns: repeat(3, 1fr); */
+         gap: 2.5rem; /* Mantém ou ajusta o gap se necessário */
+         --grid-gap: 2.5rem; /* Garante que a variável esteja definida */
+    }
+    /* Define a largura para 3 colunas */
+    .grid > .film-card {
+         /* Calcula a largura: (100% - espaço total dos gaps) / número de colunas */
+         flex-basis: calc((100% - var(--grid-gap) * 2) / 3);
+         max-width: none; /* Remove o max-width do mobile */
+         margin-left: 0; /* Remove centralização do mobile */
+         margin-right: 0;
     }
     .short-hero h1 {
-        font-size: 5rem; /* lg:text-8xl */
+         font-size: 5rem;
     }
+    /* ... Mantenha o resto ... */
 }
-
 /* Telas grandes (xl) */
-@media (min-width: 1280px) {
-    .grid {
-        grid-template-columns: repeat(4, 1fr);
+/* AJUSTE A MEDIA QUERY DE 1280px */
+@media (min-width: 1280px) { /* xl */
+    /* Define a largura para 4 colunas */
+    .grid > .film-card {
+        /* Calcula a largura: (100% - espaço total dos gaps) / número de colunas */
+         flex-basis: calc((100% - var(--grid-gap) * 3) / 4);
     }
 }

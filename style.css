@@ -237,6 +237,12 @@ main#main-content {
     width: 2rem; border-radius: 0.25rem; background-color: var(--orange);
 }
 
+.negrito {
+    font-weight: bold;
+    color: rgb(220, 220, 220);
+    font-size: 1rem;
+}
+
 
 /* =====================================================
     RODAPÉ
@@ -388,3 +394,25 @@ main#main-content {
 
 .video-carousel-progress-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background-color: rgba(255, 255, 255, 0.2); z-index: 2; }
 .video-carousel-progress-inner { height: 100%; background-color: white; width: 0%; transition: width 0.3s ease-out; }
+
+/* --- Estilos para o Link do Título do Carrossel de Vídeo --- */
+
+#video-carousel-title-link {
+    display: block; /* Faz o link ocupar a área do título */
+    text-decoration: none; /* Remove sublinhado padrão */
+    color: inherit; /* Mantém a cor original do H1 (branca) */
+    cursor: pointer; /* Mostra a mãozinha ao passar o mouse */
+    transition: color 0.3s ease; /* Suaviza a mudança de cor no hover */
+}
+
+/* Efeito hover opcional no texto do título */
+#video-carousel-title-link:hover h1#video-carousel-title-text {
+    color: #f0f0f0; /* Um pouco mais claro no hover */
+    /* Ou use a cor laranja: color: var(--orange); */
+}
+
+/* Opcional: Fazer o underline reagir ao hover também */
+#video-carousel-title-link:hover + .video-carousel-title-underline {
+   background-color: #ff8535; /* Laranja um pouco mais claro */
+   /* Ou um efeito de escala: transform: scaleX(1.05); */
+}

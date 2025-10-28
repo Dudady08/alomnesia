@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nav = document.getElementById('main-nav');
     if (nav) {
         window.addEventListener('scroll', () => {
+
             if (window.scrollY > 50) {
                 nav.classList.add('scrolled');
             } else {
