@@ -418,11 +418,11 @@ function initializeImageCarousel() {
     if (imageCarouselTrack && imageDotsContainer && imageNextButton && imagePrevButton) {
         // --- ORDEM DOS POSTERS ATUALIZADA (Conforme sua última solicitação) ---
         const imageProductions = [
-            { id: "era-uma-vez-em-cordel", title: "Era Uma Vez em Cordel", type: "Curta", poster: "cartaz/cartaz era uma vez.jpg", url: "cordel.html" },
+            { id: "era-uma-vez-em-cordel", title: "Era Uma Vez...em Cordel", type: "Curta", poster: "cartaz/cartaz era uma vez.jpg", url: "cordel.html" },
             { id: "tracos-de-uma-nova-pagina", title: "Traços de Uma Nova Página", type: "Longa", poster: "cartaz/cartaz1.jpg", url: "tracospagina.html" },
             { id: "familia-fergus", title: "Família Fergus", type: "Série", poster: "cartaz/cartaz2.jpg", url: "familia.html" },
             { id: "cyberfunk", title: "CyberFunk", type: "Curta", poster: "cartaz/Cartaz Cyberfunk.png", url: "cyberfunk.html" },
-            { id: "era-uma-vez-serie", title: "Era Uma Vez - Série", type: "Série", poster: "cartaz/cartaz1.jpg", url: "eraumavez.html" },
+            { id: "era-uma-vez-serie", title: "Era Uma Vez...", type: "Série", poster: "cartaz/cartaz1.jpg", url: "eraumavez.html" },
             { id: "erva-daninha", title: "Erva Daninha", type: "Curta", poster: "cartaz/cartaz2.jpg" },
             { id: "lembrancas-de-uma-caminhada", title: "Lembranças de Uma Caminhada", type: "Curta", poster: "cartaz/cartaz LEMBRANÇAS DE UMA CAMINHADA 2.png", url: "lembrancas.html" },
             { id: "interludio", title: "Interlúdio", type: "Curta", poster: "cartaz/cartaz1.jpg", url: "interludio.html" },
