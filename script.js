@@ -17,7 +17,7 @@ const movies = [
     // Adicionando a propriedade 'url' a cada objeto
     { id: 1, title: "Traços de uma nova página", youtubeId: "c33Ivt9gLPM", url: "tracospagina.html" },
     { id: 2, title: "Família Fergus  Juntos pelo mundo", youtubeId: "Oq0vVGJ2dJ0", url: "familia.html" },
-    { id: 3, title: "Era uma vez...", youtubeId: "mV_rM-o0Tzc", url: "eraumavez.html" } // Assumindo que este linka para a página da série/longa
+    { id: 3, title: "Era uma vez... em cordel", youtubeId: "mV_rM-o0Tzc", url: "eraumavez.html" } // Assumindo que este linka para a página da série/longa
 ];
 // =================================================================
 
@@ -396,8 +396,25 @@ function transitionToVideoCarousel() {
     setTimeout(() => setIsScrolling(false), 700);
 }
 
+// VERSÃO CORRIGIDA
 function updateNavBackground() {
+
+    // --- NOVA LÓGICA DE DETECÇÃO DE SCROLLBAR ---
+    // Se o carousel ESTIVER visível (isCarouselVisible === true)
+    // E o usuário scrolou para baixo (usamos 10px como um pequeno "limite")
+    // Isso significa que ele usou a barra de scroll, "pulando" a lógica do wheel.
+    // Devemos forçar a transição para o conteúdo principal.
+    if (isCarouselVisible && window.scrollY > 10) {
+        console.log("Scrollbar detectado, forçando transição para conteúdo.");
+        // Chama a mesma função que o evento 'wheel' chamaria
+        transitionToMainContent(); 
+    }
+    // --- FIM DA NOVA LÓGICA ---
+
+    // Lógica original da navbar (continua funcionando)
     if (nav) {
+        // A condição "|| !isCarouselVisible" garante que o nav fique 'scrolled'
+        // assim que a transição acima for chamada.
         if (window.scrollY > 50 || !isCarouselVisible) {
             nav.classList.add('scrolled');
         } else {
@@ -405,7 +422,6 @@ function updateNavBackground() {
         }
     }
 }
-
 
 // --- LÓGICA DO CARROSSEL DE IMAGENS (Função de inicialização) ---
 function initializeImageCarousel() {

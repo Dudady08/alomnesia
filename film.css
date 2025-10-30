@@ -154,139 +154,228 @@ a { text-decoration: none; color: inherit; }
     .details-grid { grid-template-columns: 3fr 5fr; } /* Proporção mais equilibrada */
     .tech-grid { grid-template-columns: 1fr 1fr; }
 }
-/* ============ CARROSSEL COM EFEITO CORTINA ============ */
-.carousel-section-wrapper {
-  position: relative;
+/* ============ CARROSSEL SCROLL (GALERIA) ============ */
+
+/* 1. O Wrapper da Seção
+   Define a altura total da área de rolagem.
+   O JS vai definir isso para algo como 700vh (100vh * (5 imagens + 2 de buffer)) 
+   para dar espaço para o efeito de rolagem. */
+.scroll-carousel-wrapper {
+    position: relative;
+    margin-top: 2rem; /* Um respiro acima do carrossel */
+    background-color: rgba(37, 99, 235, 0.2); /* Cor de fundo caso a imagem demore */
 }
 
-.sticky-container {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
+/* 2. O Container Sticky
+   Este e o container de 100vh que "gruda" no topo da tela
+   enquanto rolamos dentro do .scroll-carousel-wrapper. */
+/* DEPOIS (CORRIGIDO) */
+.scroll-sticky-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    
+    /* LINHAS MOVIDAS PARA CÁ */
+    background-color: black;
+}
+/* 3. O Container das Imagens
+   e o "pai" de todas as imagens do carrossel. */
+.image-carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
-/* Cortina (a que sobe) */
-.curtain {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #0A1628;
-  transition: transform 0ms linear;
-  transform: translateY(100%);
-  z-index: 20;
-}
-
-.curtain-image-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
+/* 4. Cada Item de Imagem
+   Cada imagem fica absoluta, uma em cima da outra.
+   O JS vai controlar qual delas tem opacidade 1. */
 .carousel-image-item {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transition: opacity 700ms;
-  opacity: 0;
-  z-index: 0;
+    position: absolute;
+    inset: 0; /* (top, right, bottom, left: 0) */
+    width: 100%;
+    height: 100%;
+    transition: opacity 700ms;
+    opacity: 0; /* Começa invisível */
+    z-index: 0; /* Fica atrás */
 }
 
+/* 5. A Imagem em si
+   Garante que ela cubra todo o container. */
 .carousel-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobre o espaço sem distorcer */
 }
 
+/* 6. O Degradê
+   Uma sombra suave na parte de baixo para dar legibilidade ao texto. */
 .image-gradient-overlay {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(
-    to top,
-    rgba(10, 22, 40, 0.8),
-    transparent,
-    transparent
-  );
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.7),
+        transparent,
+        transparent
+    );
 }
 
-/* Overlay (texto e paginação) */
+/* 7. O Overlay de Texto
+   Container para o título, contador e paginação. */
 .carousel-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  pointer-events: none;
-  transition: opacity 700ms;
-  z-index: 30;
-  opacity: 0;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centraliza o conteúdo */
+    color: white;
+    pointer-events: none; /* Permite clicar "atraves" do texto */
+    transition: opacity 700ms;
+    z-index: 30; /* Fica na frente das imagens */
+    opacity: 1; /* Sempre visível (simplificamos a logica) */
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
+/* 8. Utilitário de Texto */
+.text-center {
+    text-align: center;
+}
+
+.galeria{
+    text-align: center;
+    font-size: 2.7rem;
+    font-weight: 900px;
+    margin-top: 1.5rem;
+}
+
+/* 9. Título do Overlay */
 .overlay-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-  font-family: 'Playfair Display', serif;
+    font-size: 5rem; 
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Sombra para legibilidade */
 }
 
+/* 10. Contador (Imagem 1 de 5) */
 .overlay-counter {
-  font-size: 1.125rem;
-  color: rgb(229, 231, 235);
-  margin-bottom: 2rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.pagination-container {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: center;
-}
-
-.pagination-dot {
-  height: 0.5rem;
-  border-radius: 9999px;
-  transition: all 300ms;
-  width: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.4);
-}
-
-.pagination-dot.active-dot {
-  width: 2.5rem;
-  background-color: var(--orange);
-}
-
-.scroll-prompt {
-  font-size: 1.125rem;
-  color: rgb(209, 213, 219);
-  margin-top: 3rem;
-  animation: bounce 1s infinite;
-  display: none;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-  }
-  50% {
-    transform: translateY(0);
-    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  }
-}
-
-@media (min-width: 768px) {
-  .overlay-title {
-    font-size: 3.5rem;
-  }
-  .overlay-counter {
     font-size: 1.25rem;
-  }
+    color: rgb(229, 231, 235);
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 11. Container da Paginação (AGORA NA ESQUERDA) */
+.pagination-container {
+    position: absolute;
+    left: 3rem; /* Distância da borda esquerda */
+    top: 50%; /* Centraliza verticalmente */
+    transform: translateY(-50%); /* Ajuste fino da centralização */
+    
+    display: flex;
+    flex-direction: column; /* Coloca as bolinhas em uma coluna vertical */
+    gap: 1rem; /* Espaço ENTRE as bolinhas */
+    
+    pointer-events: auto; /* Permite o clique */
+}
+
+/* 12. Bolinha de Paginação (Inativa) */
+.pagination-dot {
+    height: 0.5rem; /* 8px */
+    width: 0.5rem;  /* 8px */
+    border-radius: 9999px; /* Círculo perfeito */
+    transition: all 300ms;
+    background-color: rgba(255, 255, 255, 0.4); /* Cor inativa */
+    cursor: pointer; /* Adicionado para indicar clique */
+}
+
+/* 13. Efeito Hover para as bolinhas */
+.pagination-dot:hover {
+    background-color: orangered; /* Fica mais clara no hover */
+    transform: scale(1.1); /* Efeito de zoom sutil */
+}
+
+/* 14. Bolinha de Paginação (Ativa) - FORMATO VERTICAL */
+    .pagination-dot.active-dot {
+        width: 0.5rem; /* Mantem a largura de 8px */
+        height: 3rem; /* Aumenta a altura para 48px */
+        background-color: orangered; /* Cor ativa */
+    }
+
+/* 15. Garantir que a bolinha ativa não mude no hover */
+.pagination-dot.active-dot:hover {
+    background-color: white;
+    transform: none; /* Remove o zoom do hover */
+}
+/* ==========================================================
+   --- 🚀 NOVO CoDIGO (SETA "PULANDO") ---
+   ========================================================== */
+
+/* ==========================================================
+   --- 🚀 NOVO CoDIGO (SETA "PULANDO") ---
+   ========================================================== */
+
+/* 1. A Animação "Pulando" (Keyframes) */
+@keyframes bounce-arrow {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(10px); /* O quanto ela "cai" */
+        opacity: 1;
+    }
+}
+
+/* 2. O Estilo da Seta */
+.scroll-prompt-arrow {
+    position: absolute;
+    bottom: 3rem; /* Posição (3rem do fundo) */
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza horizontalmente */
+    z-index: 31; /* Fica na frente de tudo */
+    
+    /* Aplica a animação */
+    animation: bounce-arrow 1.5s infinite;
+    
+    opacity: 0.7; /* Opacidade inicial */
+    transition: opacity 0.3s ease-out;
+    pointer-events: none; /* Não pode ser clicada */
+}
+
+/* 3. O ícone SVG dentro da seta */
+.scroll-prompt-arrow svg {
+    width: 2.5rem; /* Tamanho da seta */
+    height: 2.5rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 4. Classe para esconder a seta (o JS vai usar) */
+.scroll-prompt-arrow.hidden {
+    opacity: 0;
+}
+/* ==========================================================
+   --- 🚀 NOVO CoDIGO (SOBREPOSIÇÃO DA NAVBAR) ---
+   ========================================================== */
+
+/* * Esta regra força a navbar a ficar transparente
+ * quando o carrossel de scroll está ativo.
+*/
+.navbar.nav-transparent-override {
+    background-image: none; /* Remove o gradiente padrão */
+    background-color: transparent !important; /* Força o fundo transparente */
+    backdrop-filter: none; /* Remove o blur */
+    border-bottom: none; /* Remove a borda inferior */
+}
+
+/* * Esta regra garante que ela continue transparente
+ * MESMO que a classe .scrolled (que adiciona fundo solido)
+ * tambem esteja ativa.
+*/
+.navbar.scrolled.nav-transparent-override {
+    background-image: none;
+    background-color: transparent !important;
 }

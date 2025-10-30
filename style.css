@@ -237,6 +237,20 @@ main#main-content {
     width: 2rem; border-radius: 0.25rem; background-color: var(--orange);
 }
 
+/* 1. Efeito Hover para as bolinhas INATIVAS */
+#image-carousel-dots .dot:hover {
+    /* Muda para a cor laranja total no hover */
+    background-color: var(--orange); 
+    /* Efeito de zoom sutil (pode usar 1.1 ou 1.2) */
+    transform: scale(1.2); 
+}
+
+/* 2. Garante que a bolinha ATIVA (o tracinho) não dê zoom */
+#image-carousel-dots .dot.active:hover {
+    background-color: var(--orange); /* Apenas garante a cor */
+    transform: none; /* Remove o efeito de zoom do hover */
+}
+
 .negrito {
     font-weight: bold;
     color: rgb(220, 220, 220);
