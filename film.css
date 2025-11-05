@@ -358,24 +358,20 @@ a { text-decoration: none; color: inherit; }
     opacity: 0;
 }
 /* ==========================================================
-   --- 🚀 NOVO CoDIGO (SOBREPOSIÇÃO DA NAVBAR) ---
+   --- 🚀 CORREÇÃO (Carrossel Mobile - Imagem Completa) ---
    ========================================================== */
 
-/* * Esta regra força a navbar a ficar transparente
- * quando o carrossel de scroll está ativo.
+/*
+ * Aplica esta regra apenas em ecrãs com largura
+ * máxima de 767px (ou seja, telemóveis)
 */
-.navbar.nav-transparent-override {
-    background-image: none; /* Remove o gradiente padrão */
-    background-color: transparent !important; /* Força o fundo transparente */
-    backdrop-filter: none; /* Remove o blur */
-    border-bottom: none; /* Remove a borda inferior */
-}
-
-/* * Esta regra garante que ela continue transparente
- * MESMO que a classe .scrolled (que adiciona fundo solido)
- * tambem esteja ativa.
-*/
-.navbar.scrolled.nav-transparent-override {
-    background-image: none;
-    background-color: transparent !important;
+@media (max-width: 767px) {
+    
+    .carousel-img {
+        /* * Muda de 'cover' (cortar) para 'contain' (conter) em ecrãs móveis.
+         * Isto vai mostrar a imagem inteira e adicionar faixas pretas
+         * (letterboxing) em cima e em baixo, como pediu.
+         */
+        object-fit: contain;
+    }
 }

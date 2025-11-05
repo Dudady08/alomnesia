@@ -153,7 +153,7 @@ a {
     z-index: 49;
     padding: 1rem 0;
     position: fixed;
-    top: 74px;
+    top:96px;
     left: 0;
     right: 0;
 }
@@ -429,4 +429,123 @@ main#main-content {
 #video-carousel-title-link:hover + .video-carousel-title-underline {
    background-color: #ff8535; /* Laranja um pouco mais claro */
    /* Ou um efeito de escala: transform: scaleX(1.05); */
+}
+/* ==========================================================
+   --- 🚀 NOVO CÓDIGO (SELETOR DE IDIOMA) ---
+   ========================================================== */
+
+/* 1. O estilo base do botão-pílula */
+.lang-switcher {
+    display: flex;
+    border-radius: 9999px; /* Totalmente arredondado */
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    margin-left: 1.5rem;
+}
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaço entre a bandeira e o texto */
+    padding: 0.5rem 0.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.lang-option img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* 2. O estado ATIVO (a página atual) */
+.lang-option.active {
+    color: var(--white);
+    background-color: rgb(255, 84, 22);
+}
+
+/* 3. O estado INATIVO (a outra língua) */
+.lang-option.inactive {
+    color: #999; /* Cor do texto cinzento */
+    background-color: rgba(10, 22, 40, 0.5); /* Fundo escuro/cinzento */
+    opacity: 0.7;
+}
+
+/* 4. Efeito Hover no botão inativo */
+.lang-option.inactive:hover {
+    color: var(--white);
+    background-color: rgb(254, 105, 50);
+    opacity: 1;
+}
+
+/* 5. Posicionamento (Desktop vs Mobile) */
+
+/* No Mobile: esconde o de Desktop e mostra o de Mobile */
+.lang-switcher-desktop {
+    display: none; /* Escondido por defeito */
+}
+/* ==========================================================
+   --- 🚀 CORREÇÃO 2.0 (Seletor de Idioma Mobile) ---
+   ========================================================== */
+
+.lang-switcher-mobile {
+    /* 1. Remove os estilos de "bloco" que estragavam */
+    padding: 0;
+    border-bottom: none;
+
+    /* 2. Adiciona espaçamento vertical (como na última tentativa) */
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+
+    /* --- A CORREÇÃO MÁGICA --- */
+    
+    /* 3. Diz ao "bloco" para ter a largura exata do seu conteúdo (a pílula) */
+    width: fit-content; 
+
+    /* 4. Agora que o bloco tem uma largura, centra-o */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* No Desktop (usando o seu breakpoint) */
+@media (min-width: 768px) {
+    .lang-switcher-desktop {
+        display: flex; /* Mostra a versão desktop */
+        margin-left: 0.5rem; /* Dá um espaço dos links de navegação */
+    }
+    .lang-switcher-mobile {
+        display: none; /* Esconde a versão mobile */
+    }
+}
+/* ==========================================================
+   --- 🚀 CORREÇÃO DO LAYOUT DA NAVBAR (DESKTOP) ---
+   (A ser adicionado ao style.css)
+   ========================================================== */
+
+/* Esta regra aplica-se apenas a ecrãs de computador */
+@media (min-width: 768px) {
+    
+    /* 1. Impede a navbar de "espalhar" os itens */
+    .navbar-container {
+        /* Em vez de 'space-between', alinhamos tudo ao início */
+        justify-content: flex-start;
+    }
+
+    /* 2. "Empurra" os links de navegação para a direita */
+    .nav-links {
+        /* Isto cria um espaço automático que empurra os links
+           e tudo o que vem depois deles para a direita. */
+        margin-left: auto;
+        /* Adiciona um espaço entre os links e o seletor */
+        margin-right: 2.0rem; /* Ajuste este valor como desejar */
+    }
+
+    /* 3. Remove margens desnecessárias do seletor */
+    .lang-switcher-desktop {
+        margin-left: 0; /* A margem agora é controlada pelo .nav-links */
+    }
 }

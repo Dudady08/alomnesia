@@ -316,48 +316,6 @@ body {
     .cta-content h2 { font-size: 2.25rem; }
 }
 
-/* =====================================================
-   MENSAGEM DE SUCESSO
-   ===================================================== */
-.success-card {
-    max-width: 768px;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    border-color: rgba(30, 58, 138, 0.5);
-    animation: fade-in-scale 0.5s ease-out forwards;
-}
-
-.success-icon-wrapper {
-    width: 3rem;
-    height: 3rem;
-    background-color: rgba(37, 99, 235, 0.2);
-    border-radius: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.success-icon-wrapper .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    color: var(--blue-400);
-}
-
-.success-text h3 {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-}
-
-.success-text p {
-    color: var(--slate-400);
-    font-weight: 300;
-}
-
-
 @media (min-width: 1024px) {
     .services-grid { grid-template-columns: repeat(3, 1fr); }
 }
