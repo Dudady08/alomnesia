@@ -429,3 +429,22 @@ body {
     font-weight: 300;
 }
 
+/* =====================================================
+    CORREÇÃO DE RESPONSIVIDADE (Mobile)
+    ===================================================== */
+
+/* * Aplica estas regras apenas em telemóveis
+ * (largura máxima de 767px).
+*/
+@media (max-width: 767px) {
+    .social-card {
+        /* 1. Reduz o padding interno dos cards */
+        padding: 1.5rem; 
+    }
+
+    .social-card .icon {
+        /* 2. Reduz o tamanho dos ícones */
+        width: 4rem; 
+        height: 4rem;
+    }
+}
