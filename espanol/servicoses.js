@@ -1,5 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
-
+// ==========================================================
+    // --- 🚀 INÍCIO DO NOVO CÓDIGO (DETETOR DE MOBILE) ---
+    // ==========================================================
+    function isMobile() {
+        // Uma forma simples de verificar se é um dispositivo móvel
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    // ==========================================================
+    // --- 🚀 FIM DO NOVO CÓDIGO ---
+    // ==========================================================
     // --- LÓGICA DEL MENÚ MÓVIL ---
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -101,16 +110,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const body = encodeURIComponent(
                 `Hola Alomnésia,\n\nMe gustaría solicitar una cotización o más información sobre el servicio:\n"${item.nome}"\n\n[Por favor, añade más detalles sobre tu proyecto o pregunta aquí]\n\nGracias,\n[Tu Nombre]`
             );
-            const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+            // (O seu código DEPOIS - CORRIGIDO)
+let linkHref = '';
+let linkTarget = 'rel="noopener"'; // 'rel="noopener"' é para todos
 
-            return `
-                <li data-animate="fade-up" data-delay="${index * 100 + idx * 50}">
-                    <div class="item-bullet"></div>
-                    <a href="${mailtoLink}" rel="noopener" class="item-link">
-                        <span>${item.nome}</span>
-                    </a>
-                </li>
-            `;
+if (isMobile()) {
+    // SOLUÇÃO PARA TELEMÓVEL (Mobile)
+    linkHref = `mailto:${email}?subject=${subject}&body=${body}`;
+} else {
+    // SOLUÇÃO PARA COMPUTADOR (Desktop)
+    linkHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+    linkTarget += ' target="_blank"'; // Adiciona target="_blank" só para desktop
+}
+
+ return `
+     <li data-animate="fade-up" data-delay="${index * 100 + idx * 50}">
+         <div class="item-bullet"></div>
+         <a href="${linkHref}" ${linkTarget} class="item-link">
+             <span>${item.nome}</span>
+         </a>
+     </li>
+ `;
         }).join('');
 
         return `
@@ -137,12 +157,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const body = encodeURIComponent(
             `Hola Alomnésia,\n\nMe gustaría solicitar una cotización o más información sobre el servicio:\n"${itemData.nome}"\n\n[Por favor, añade más detalles sobre tu proyecto o pregunta aquí]\n\nGracias,\n[Tu Nombre]`
         );
-        const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+// (O seu código DEPOIS - CORRIGIDO)
+let linkHref = '';
+let linkTarget = 'rel="noopener"'; // 'rel="noopener"' é para todos
 
-        // La tarjeta entera está envuelta por el enlace <a>
-        // La descripción (itemData.descricao) se añade al cuerpo
-        return `
-            <a href="${mailtoLink}" rel="noopener" class="clickable-card service-card item-card" data-animate="fade-up" data-delay="${index * 80}">
+if (isMobile()) {
+    // SOLUÇÃO PARA TELEMÓVEL (Mobile)
+    linkHref = `mailto:${email}?subject=${subject}&body=${body}`;
+} else {
+    // SOLUÇÃO PARA COMPUTADOR (Desktop)
+    linkHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+    linkTarget += ' target="_blank"'; // Adiciona target="_blank" só para desktop
+}
+
+// O card inteiro é envolvido pelo link <a>
+// A descrição (itemData.descricao) é adicionada ao corpo
+return `
+    <a href="${linkHref}" ${linkTarget} class="clickable-card service-card item-card" data-animate="fade-up" data-delay="${index * 80}">
                 <div class="card-colored-header">
                     <div class="card-header-content">
                         <div class="card-icon-container">${itemData.icon}</div>
