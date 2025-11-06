@@ -101,12 +101,12 @@ document.addEventListener('DOMContentLoaded', function() {
 const body = encodeURIComponent(
     `Hello Alomnésia,\n\nI would like to request a quote or more information about the service:\n"${item.nome}"\n\n[Please add more details about your project or question here]\n\nThank you,\n[Your Name]`
 );
-const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
 
 return `
     <li data-animate="fade-up" data-delay="${index * 100 + idx * 50}">
         <div class="item-bullet"></div>
-        <a href="${gmailLink}" target="_blank" rel="noopener noreferrer" class="item-link">
+        <a href="${mailtoLink}" rel="noopener" class="item-link">
             <span>${item.nome}</span>
         </a>
     </li>
@@ -137,12 +137,12 @@ function createClickableItemCardHTML(itemData, index) {
     const body = encodeURIComponent(
         `Hello Alomnésia,\n\nI would like to request a quote or more information about the service:\n"${itemData.nome}"\n\n[Please add more details about your project or question here]\n\nThank you,\n[Your Name]`
     );
-    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+    const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
 
     // The entire card is wrapped by the <a> link
     // The description (itemData.descricao) is added to the body
     return `
-        <a href="${gmailLink}" target="_blank" rel="noopener noreferrer" class="clickable-card service-card item-card" data-animate="fade-up" data-delay="${index * 80}">
+        <a href="${mailtoLink}" rel="noopener" class="clickable-card service-card item-card" data-animate="fade-up" data-delay="${index * 80}">
             <div class="card-colored-header">
                 <div class="card-header-content">
                     <div class="card-icon-container">${itemData.icon}</div>
