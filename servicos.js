@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const body = encodeURIComponent(
                 `Olá Alomnésia,\n\nGostaria de solicitar um orçamento ou mais informações sobre o serviço:\n"${item.nome}"\n\n[Por favor, adicione aqui mais detalhes sobre seu projeto ou dúvida]\n\nObrigado,\n[Seu Nome]`
             );
-            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+            const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
 
              return `
                 <li data-animate="fade-up" data-delay="${index * 100 + idx * 50}">
                     <div class="item-bullet"></div>
-                    <a href="${gmailLink}" target="_blank" rel="noopener noreferrer" class="item-link">
+                    <a href="${mailtoLink}" rel="noopener" class="item-link">
                         <span>${item.nome}</span>
                     </a>
                 </li>
@@ -107,12 +107,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const body = encodeURIComponent(
             `Olá Alomnésia,\n\nGostaria de solicitar um orçamento ou mais informações sobre o serviço:\n"${itemData.nome}"\n\n[Por favor, adicione aqui mais detalhes sobre seu projeto ou dúvida]\n\nObrigado,\n[Seu Nome]`
         );
-        const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+        const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
 
         // O card inteiro é envolvido pelo link <a>
         // A descrição (itemData.descricao) é adicionada ao corpo
         return `
-            <a href="${gmailLink}" target="_blank" rel="noopener noreferrer" class="clickable-card service-card item-card" data-animate="fade-up" data-delay="${index * 80}">
+            <a href="${mailtoLink}" rel="noopener" class="clickable-card service-card item-card" data-animate="fade-up" data-delay="${index * 80}">
                 <div class="card-colored-header">
                     <div class="card-header-content">
                         <div class="card-icon-container">${itemData.icon}</div>

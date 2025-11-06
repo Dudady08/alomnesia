@@ -390,3 +390,18 @@ a.clickable-card .category-card-body {
     flex-direction: column;
     flex-grow: 1; /* Ocupa o espaço vertical restante */
 }
+/* ==========================================================
+   --- 🚀 CORREÇÕES DE RESPONSIVIDADE (Mobile) ---
+   ========================================================== */
+
+/* Aplica-se apenas a ecrãs pequenos (ex: telemóveis) */
+@media (max-width: 767px) {
+    
+    /* 1. Corrige o botão "Solicitar novo serviço" */
+    .cta-button {
+        white-space: nowrap; /* Impede o texto de quebrar a linha */
+        padding: 0.875rem 1.5rem; /* Reduz o padding (era 1rem 2rem) */
+        font-size: 1rem; /* Reduz a fonte (era 1.125rem) */
+    }
+
+}
