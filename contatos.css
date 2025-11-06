@@ -430,20 +430,38 @@ body {
 }
 
 /* =====================================================
-    CORREÇÃO DE RESPONSIVIDADE (Mobile)
+    CORREÇÃO DE RESPONSIVIDADE (Mobile) - VERSÃO 2
     ===================================================== */
 
 /* * Aplica estas regras apenas em telemóveis
  * (largura máxima de 767px).
 */
 @media (max-width: 767px) {
+    
+    /* ========================================= */
+    /* --- 🚀 A NOVA CORREÇÃO ESTÁ AQUI 🚀 --- */
+    /* ========================================= */
+    .social-grid {
+        /* * Em vez de '1fr' (que estica), 'auto' faz com que 
+         * as colunas tenham a largura do seu conteúdo.
+        */
+        grid-template-columns: repeat(2, auto); 
+
+        /* * Agora que as colunas são mais estreitas, 
+         * centramo-las dentro do container do grid.
+        */
+        justify-content: center;
+    }
+    /* ========================================= */
+    /* --- 🚀 FIM DA NOVA CORREÇÃO --- */
+    /* ========================================= */
+
+    /* O código anterior (que reduz o tamanho, ainda é necessário) */
     .social-card {
-        /* 1. Reduz o padding interno dos cards */
         padding: 1.5rem; 
     }
 
     .social-card .icon {
-        /* 2. Reduz o tamanho dos ícones */
         width: 4rem; 
         height: 4rem;
     }
