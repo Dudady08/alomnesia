@@ -79,7 +79,7 @@ a {
 }
 
 .short-hero h1 {
-    font-size: 4rem;
+    font-size: 2.5rem;
     font-weight: 900;
     color: white;
     margin-bottom: 1rem;
@@ -296,7 +296,14 @@ a {
     font-weight: 300;
 }
 
-
+/* ==========================================================
+   --- 🚀 NOVO BLOCO (Tamanho para Tablet) ---
+   ========================================================== */
+@media (min-width: 768px) { /* md (Tablets) */
+    .short-hero h1 {
+        font-size: 4rem; /* Retorna ao tamanho original em tablets */
+    }
+}
 /* Telas médias (lg) */
 /* AJUSTE A MEDIA QUERY DE 1024px */
 @media (min-width: 1024px) { /* lg */
