@@ -1,6 +1,9 @@
 // script.js (v10 - A Solução "Dispare e Esqueça")
 document.addEventListener('DOMContentLoaded', function() {
-    
+    function isMobile() {
+        // Uma forma simples de verificar se é um dispositivo móvel
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
     // COLE A SUA *NOVA* URL DE IMPLANTAÇÃO AQUI
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOYfxLUiN9DcLH52NJz5D0R930c1zr5D3RynuPZ4Ar7Kr2iCSNrLGJPkKP2IBel_zD/exec"; // <-- SEU LINK ATUAL
 

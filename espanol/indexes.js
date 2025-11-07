@@ -15,9 +15,9 @@ const slideElements = [];
 // =================================================================
 const movies = [
     // Adicionando a propriedade 'url' a cada objeto
-    { id: 1, title: "Traços de uma nova página", youtubeId: "c33Ivt9gLPM", url: "tracospagina.html" },
-    { id: 2, title: "Família Fergus  Juntos pelo mundo", youtubeId: "Oq0vVGJ2dJ0", url: "familia.html" },
-    { id: 3, title: "Era uma vez... em cordel", youtubeId: "mV_rM-o0Tzc", url: "cordel.html" } // Assumindo que este linka para a página da série/longa
+    { id: 1, title: "Trazos de una Nueva Página", youtubeId: "c33Ivt9gLPM", url: "tracospages.html" },
+    { id: 2, title: "Familia Fergus – Juntos por el mundo", youtubeId: "Oq0vVGJ2dJ0", url: "familiaes.html" },
+    { id: 3, title: "Érase una vez... en Cordel", youtubeId: "mV_rM-o0Tzc", url: "cordeles.html" } // Assumindo que este linka para a página da série/longa
 ];
 // =================================================================
 
@@ -38,10 +38,6 @@ function onYouTubeIframeAPIReady() {
 
 // --- FUNÇÃO CHAMADA QUANDO O DOM ESTÁ PRONTO ---
 document.addEventListener('DOMContentLoaded', function() {
-        function isMobile() {
-        // Uma forma simples de verificar se é um dispositivo móvel
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
     console.log("DOM Pronto.");
     domReady = true;
 
@@ -83,34 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- TENTA INICIAR O CARROSSEL DE VÍDEO ---
     startCarouselIfReady();
-        /* ==========================================================
-   --- 🚀 INÍCIO DA CORREÇÃO (Email Mobile vs Desktop) ---
-   ========================================================== */
-
-// Esta função deteta se o utilizador está num telemóvel
-function isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-// Esta lógica só corre se for detetado um telemóvel
-if (isMobile()) {
-    // 1. Encontra TODOS os links que apontam para o site do Gmail
-    // (Isto inclui o card de Email e o link no rodapé)
-    const gmailLinks = document.querySelectorAll('a[href*="mail.google.com/mail"]');
-
-    // 2. Faz um loop por cada link encontrado
-    gmailLinks.forEach(link => {
-        // 3. Substitui o link do site (href) pelo link mailto:
-        link.href = "mailto:alomnesia@gmail.com";
-
-        // 4. Remove o target="_blank", que não é necessário no telemóvel
-        link.removeAttribute('target');
-    });
-}
-
-/* ==========================================================
-   --- 🚀 FIM DA CORREÇÃO ---
-   ========================================================== */
 }); // Fim do DOMContentLoaded
 
 
@@ -466,16 +434,16 @@ function initializeImageCarousel() {
     if (imageCarouselTrack && imageDotsContainer && imageNextButton && imagePrevButton) {
         // --- ORDEM DOS POSTERS ATUALIZADA (Conforme sua última solicitação) ---
         const imageProductions = [
-            { id: "era-uma-vez-em-cordel", title: "Era Uma Vez...em Cordel", type: "Curta", poster: "/cartaz/cartaz era uma vez.jpg", url: "cordel.html" },
-            { id: "tracos-de-uma-nova-pagina", title: "Traços de Uma Nova Página", type: "Longa", poster: "/cartaz/cartaz traco.png", url: "tracospagina.html" },
-            { id: "familia-fergus", title: "Família Fergus", type: "Série", poster: "/cartaz/cartaz familia.jpg", url: "familia.html" },
-            { id: "cyberfunk", title: "CyberFunk", type: "Curta", poster: "/cartaz/Cartaz Cyberfunk.png", url: "cyberfunk.html" },
-            { id: "era-uma-vez-serie", title: "Era Uma Vez...", type: "Série", poster: "/cartaz/cartaz1.jpg", url: "eraumavez.html" },
-            { id: "erva-daninha", title: "Erva Daninha", type: "Curta", poster: "/cartaz/cartaz2.jpg", url: "ervadaninha.html" },
-            { id: "lembrancas-de-uma-caminhada", title: "Lembranças de Uma Caminhada", type: "Curta", poster: "/cartaz/cartaz caminhada.jpg", url: "lembrancas.html" },
-            { id: "interludio", title: "Interlúdio", type: "Curta", poster: "/cartaz/cartaz1.jpg", url: "interludio.html" },
-            { id: "A melodia do Comércio Popular", title: "A melodia do Comércio Popular", type: "Curta", poster: "/cartaz/cartaz2.jpg", url: "comercio.html" },
-            { id: "Alomnésia", title: "Alomnésia", type: "Curta", poster: "/cartaz/cartaz1.jpg", url: "alomnesia.html" }
+            { id: "era-uma-vez-em-cordel", title: "Érase una vez... en Cordel", type: "Cortometraje", poster: "/cartaz/cartaz era uma vez.jpg", url: "cordeles.html" },
+            { id: "tracos-de-uma-nova-pagina", title: "Trazos de una Nueva Página", type: "Largometraje", poster: "/cartaz/cartaz traco.png", url: "tracospages.html" },
+            { id: "familia-fergus", title: "Familia Fergus", type: "Serie", poster: "/cartaz/cartaz familia.jpg", url: "familiaes.html" },
+            { id: "cyberfunk", title: "CyberFunk", type: "Cortometraje", poster: "/cartaz/Cartaz Cyberfunk.png", url: "cyberfunkes.html" },
+            { id: "era-uma-vez-serie", title: "Érese una vez...", type: "Serie", poster: "/cartaz/cartaz1.jpg", url: "eraumavezes.html" },
+            { id: "erva-daninha", title: "Maleza", type: "Cortometraje", poster: "/cartaz/cartaz2.jpg", url: "ervadaninhaes.html"},
+            { id: "lembrancas-de-uma-caminhada", title: "Recuerdos de una Caminata", type: "Cortometraje", poster: "/cartaz/cartaz caminhada.jpg", url: "lembrancases.html" },
+            { id: "interludio", title: "Interludio", type: "Cortometraje", poster: "/cartaz/cartaz1.jpg", url: "interludioes.html" },
+            { id: "A melodia do Comércio Popular", title: "La Melodía del Comercio Popular", type: "Cortometraje", poster: "/cartaz/cartaz2.jpg", url: "comercioes.html" },
+            { id: "Alomnésia", title: "Alomnésia", type: "Cortometraje", poster: "/cartaz/cartaz1.jpg", url: "alomnesiaes.html" }
         ];
 
         let imageCurrentIndex = 0; let imageTrackIndex = 0; let imageVisibleSlides = 0; let imageCloneCount = 0;
