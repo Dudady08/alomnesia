@@ -38,6 +38,10 @@ function onYouTubeIframeAPIReady() {
 
 // --- FUNÇÃO CHAMADA QUANDO O DOM ESTÁ PRONTO ---
 document.addEventListener('DOMContentLoaded', function() {
+        function isMobile() {
+        // Uma forma simples de verificar se é um dispositivo móvel
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
     console.log("DOM Pronto.");
     domReady = true;
 
@@ -79,6 +83,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- TENTA INICIAR O CARROSSEL DE VÍDEO ---
     startCarouselIfReady();
+        function isMobile() {
+        // Uma forma simples de verificar se é um dispositivo móvel
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
 }); // Fim do DOMContentLoaded
 
 
