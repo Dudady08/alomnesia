@@ -406,6 +406,14 @@ function transitionToMainContent() {
     isCarouselVisible = false; 
     pauseCurrentVideo();
     videoCarouselHero.classList.add('hidden');
+    /* ==========================================================
+       --- 🚀 INÍCIO DA CORREÇÃO (LINK FANTASMA) ---
+       ========================================================== */
+    
+    // Força o link do título a ficar não-clicável
+    if (titleLinkElement) {
+        titleLinkElement.style.pointerEvents = 'none';
+    }
     if(contentBelowHero) { contentBelowHero.style.opacity = '1'; contentBelowHero.style.pointerEvents = 'auto'; }
     updateNavBackground();
     setTimeout(() => { 
@@ -421,6 +429,18 @@ function transitionToVideoCarousel() {
     if (isCarouselVisible || isScrolling) return;
     console.log("Transicionando de volta para o carrossel...");
     isCarouselVisible = true; setIsScrolling(true);
+    /* ==========================================================
+       --- 🚀 INÍCIO DA CORREÇÃO (REATIVAR LINK) ---
+       ========================================================== */
+    
+    // Reativa o link do título
+    if (titleLinkElement) {
+        titleLinkElement.style.pointerEvents = 'auto';
+    }
+
+    /* ==========================================================
+       --- 🚀 FIM DA CORREÇÃO ---
+       ========================================================== */
     if(contentBelowHero) { contentBelowHero.style.opacity = '0'; contentBelowHero.style.pointerEvents = 'none'; }
     videoCarouselHero.classList.remove('hidden');
     updateUI(currentIndex, true);
